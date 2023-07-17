@@ -69,6 +69,9 @@ export class ProjectDashboardComponent {
   inviting: any = 'N';
   sharing: any = 'N';
   managing: any = 'N';
+  show_import: any = 'N';
+  show_upload: any = 'N';
+  media_type: any = '';
 
   version: any = 'N';
   k: any;
@@ -101,6 +104,26 @@ export class ProjectDashboardComponent {
           }) 
   }
 
+  addVideo(m:any) {
+    this.data.importData['import_id']=m.id;
+    this.data.importData['import_type']='video';
+    this.postImport();
+  }
+
+  addAudio(m:any) {
+    this.data.importData['import_id']=m.id;
+    this.data.importData['import_type']='audio';
+    this.postImport();
+  }
+
+  postImport() {
+    this._dataService.postForm("post-import", this.data.importData).subscribe((data:any)=>{
+    //    this.data=data;
+        location.reload();
+    //    this._router.navigate(['/job-queue']);
+     });
+  }
+
   toggleUpload() {
     if (this.uploading=='Y') {
       this.uploading='N';
@@ -108,6 +131,16 @@ export class ProjectDashboardComponent {
       this.uploading='Y';
     }
   }
+
+  toggleImport() {
+    if (this.show_import=='Y') {
+      this.show_import='N';
+    } else {
+      this.show_import='Y';
+    }
+  }
+
+
 closeUpload() {
   this.uploading='N';
 }

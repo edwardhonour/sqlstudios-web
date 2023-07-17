@@ -39,6 +39,7 @@ import { VoiceListComponent } from './pages/voice-list/voice-list.component';
 import { FacesListComponent } from './pages/faces-list/faces-list.component';
 import { UploadsListComponent } from './pages/uploads-list/uploads-list.component';
 import { JobQueueComponent } from './pages/job-queue/job-queue.component';
+import { ProjectListComponent } from './pages/project-list/project-list.component';
 
 const routes: Routes = [
   { path: '', component: NewSigninComponent },
@@ -47,6 +48,8 @@ const routes: Routes = [
   { path: 'faces', component: FacesListComponent, resolve: { data: DataResolver }},
   { path: 'job-queue', component: JobQueueComponent, resolve: { data: DataResolver }},
   { path: 'text-to-voice', component: AudioListComponent, resolve: { data: DataResolver }},
+  { path: 'projects', component: ProjectListComponent, resolve: { data: DataResolver }},
+  { path: 'project/:1', component: ProjectDashboardComponent, resolve: { data: DataResolver }},
   { path: 'text-to-video', component: VideoListComponent, resolve: { data: DataResolver }},
   { path: 'video', component: VideoListComponent, resolve: { data: DataResolver }},
   { path: 'voices', component: VoiceListComponent, resolve: { data: DataResolver }},
