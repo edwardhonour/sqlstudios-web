@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <div class="card">
+        <div *ngFor="let m of data?.questions" class="row">
+            <app-asset-question-panel [asset_id]="asset_id" [survey_id]="survey_id" [question_id]="m.option_id"></app-asset-question-panel> 
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card">
+<div *ngIf="newsaa=='N'" class="row">
+    <div (click)="showNew()" class="col-12" style="text-align: right;"><button class="btn btn-light">Add Another Area of This Type</button></div>
+</div>
+<div *ngIf="newsaa=='Y'" class="row">
+    <div class="col-12">
+        <app-add-saa-form (close)="hideNew()" [data]="data" [saa_type]="data.saa_type"></app-add-saa-form>
+    </div>
+</div>
+    </div>
+</div>

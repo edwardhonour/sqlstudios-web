@@ -1,0 +1,279 @@
+<div class="row">
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
+      <app-sitebar-wrapper></app-sitebar-wrapper>       
+    </div>
+  <div class="col-lg-8 col-xl-9 col-xxl-10">
+  <div class="content-wrappe">
+      <div class="row">
+        <div class="col-12">
+<div class="card">
+  <div class="card-header" style="margin-top: 0px;">
+    <h2>Organization Threats, Risks & Consequenses</h2>
+</div>
+<div class="card-body">
+  <div class="row">
+    <div class="col-6" style="background-color: #f3f2f7">
+      <div class="row">
+        <div class="col-12">
+          <h2>Facility Assessment Profile</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 mb-3">
+          <span style="margin-right: 20px; margin-left: -20px;">
+            <p>Start Date:</p>
+            <mat-form-field [appearance]="appearance">
+            <mat-label>Start Date</mat-label>
+            <input [(ngModel)]="start_date" matInput [matDatepicker]="picker"
+                   (dateChange)="handleStartDateChange()">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </span>  
+        </div>
+        <div class="col-6 mb-3">
+          <span style="margin-right: 20px; margin-left: -20px;">
+            <p>Completion Date:</p>
+            <mat-form-field [appearance]="appearance">
+            <mat-label>Start Date</mat-label>
+            <input [(ngModel)]="complete_date" matInput [matDatepicker]="picker2"
+                   (dateChange)="handleCompleteDateChange()">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </span>  
+        </div>
+        </div>
+        <div class="row mt-3 mb-3">
+          <div class="col-12">
+            <div [class]="bs_col">
+              <p>Organization Name</p>       
+              <mat-form-field 
+                [ngClass]="''" 
+                [style]="'width: 95%;'" 
+                (change)="handleOrgNameChange()"
+                appearance="outline">
+                  <mat-label>Organization Name</mat-label>
+                  <input  [name]="'org_name'" [id]="'org_name'" [(ngModel)]="data.formData['org_name']" matInput autocomplete="false" placeholder="Organization Name">
+                      <mat-icon matSuffix></mat-icon>
+                      <mat-hint></mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-1 mb-3">
+          <div class="col-12">
+            <div [class]="bs_col">
+              <p>Facility / Location Name</p>       
+              <mat-form-field 
+                [ngClass]="''" 
+                [style]="'width: 95%;'" 
+                (change)="handleOrgNameChange()"
+                appearance="outline">
+                  <mat-label>Facility / Location Name</mat-label>
+                  <input  [name]="'facility_name'" [id]="'facility_name'" [(ngModel)]="data.formData['facility_name']" matInput autocomplete="false" placeholder="Facility Name">
+                      <mat-icon matSuffix></mat-icon>
+                      <mat-hint></mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>        
+        <div class="row mt-1 mb-3">
+          <div class="col-12">
+            <div [class]="bs_col">
+              <p>Address</p>       
+              <mat-form-field 
+                [ngClass]="''" 
+                [style]="'width: 95%;'" 
+                (change)="handleOrgNameChange()"
+                appearance="outline">
+                  <mat-label>Facility Address</mat-label>
+                  <input  [name]="'facility_address'" [id]="'facility_address'" [(ngModel)]="data.formData['facility_address']" matInput autocomplete="false" placeholder="Address">
+                      <mat-icon matSuffix></mat-icon>
+                      <mat-hint></mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>  
+        <div class="row mt-1 mb-3">
+          <div class="col-6">
+            <div [class]="bs_col">
+              <p>City</p>       
+              <mat-form-field 
+                [ngClass]="''" 
+                [style]="'width: 95%;'" 
+                (change)="handleOrgNameChange()"
+                appearance="outline">
+                  <mat-label>City</mat-label>
+                  <input  [name]="'facility_city'" [id]="'facility_city'" [(ngModel)]="data.formData['facility_city']" matInput autocomplete="false" placeholder="City">
+                      <mat-icon matSuffix></mat-icon>
+                      <mat-hint></mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-6">
+            <div [class]="bs_col">
+              <p>State</p>       
+              <mat-form-field 
+                [ngClass]="''" 
+                [style]="'width: 95%;'" 
+                (change)="handleOrgNameChange()"
+                appearance="outline">
+                  <mat-label>State</mat-label>
+                  <input  [name]="'facility_state'" [id]="'facility_state'" [(ngModel)]="data.formData['facility_state']" matInput autocomplete="false" placeholder="State">
+                      <mat-icon matSuffix></mat-icon>
+                      <mat-hint></mat-hint>
+              </mat-form-field>
+            </div>
+          </div>          
+        </div>  
+        <div class="row mt-1 mb-3">
+          <div class="col-6">
+
+          </div>
+          <div class="col-6">
+            <div [class]="bs_col">
+              <p>Zipcode</p>       
+              <mat-form-field 
+                [ngClass]="''" 
+                [style]="'width: 95%;'" 
+                (change)="handleOrgNameChange()"
+                appearance="outline">
+                  <mat-label>Zipcode</mat-label>
+                  <input  [name]="'facility_zip'" [id]="'facility_zip'" [(ngModel)]="data.formData['facility_zip']" matInput autocomplete="false" placeholder="Zipcode">
+                      <mat-icon matSuffix></mat-icon>
+                      <mat-hint></mat-hint>
+              </mat-form-field>
+            </div>
+          </div>          
+        </div>  
+      </div>
+      <div class="col-6">
+        <div class="row">
+          <div class="col-12">
+            <h2>Assessment Contact</h2>
+          </div>
+        </div>        
+        <div class="row mt-1 mb-3">
+          <div class="col-12">
+            <div [class]="bs_col">
+              <p>Contact Name</p>       
+              <mat-form-field 
+                [ngClass]="''" 
+                [style]="'width: 95%;'" 
+                (change)="handleOrgNameChange()"
+                appearance="outline">
+                  <mat-label>Contact Name</mat-label>
+                  <input  [name]="'contact_name'" [id]="'contact_name'" [(ngModel)]="data.formData['contact_name']" matInput autocomplete="false" placeholder="Contact Name">
+                      <mat-icon matSuffix></mat-icon>
+                      <mat-hint></mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>  
+        <div class="row mt-1 mb-3">
+          <div class="col-12">
+            <div [class]="bs_col">
+              <p>Contact Title</p>       
+              <mat-form-field 
+                [ngClass]="''" 
+                [style]="'width: 95%;'" 
+                (change)="handleOrgNameChange()"
+                appearance="outline">
+                  <mat-label>Title</mat-label>
+                  <input  [name]="'contact_title'" [id]="'contact_title'" [(ngModel)]="data.formData['contact_title']" matInput autocomplete="false" placeholder="Title">
+                      <mat-icon matSuffix></mat-icon>
+                      <mat-hint></mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-1 mb-3">
+          <div class="col-6">
+            <div [class]="bs_col">
+              <p>Email</p>       
+              <mat-form-field 
+                [ngClass]="''" 
+                [style]="'width: 95%;'" 
+                (change)="handleOrgNameChange()"
+                appearance="outline">
+                  <mat-label>Contact Email</mat-label>
+                  <input  [name]="'contact_email'" [id]="'contact_email'" [(ngModel)]="data.formData['contact_email']" matInput autocomplete="false" placeholder="Email">
+                      <mat-icon matSuffix></mat-icon>
+                      <mat-hint></mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-6">
+            <div [class]="bs_col">
+              <p>Phone</p>       
+              <mat-form-field 
+                [ngClass]="''" 
+                [style]="'width: 95%;'" 
+                (change)="handleOrgNameChange()"
+                appearance="outline">
+                  <mat-label>Contact Phone</mat-label>
+                  <input  [name]="'contact_phone'" [id]="'contact_phone'" [(ngModel)]="data.formData['contact_phone']" matInput autocomplete="false" placeholder="Phone">
+                      <mat-icon matSuffix></mat-icon>
+                      <mat-hint></mat-hint>
+              </mat-form-field>
+            </div>
+          </div>          
+        </div>    
+
+<!--      <div class="row mt-3 mb-3">
+        <div class="col-12">
+          <div [class]="bs_col">
+            <p>Description of Business/Location</p>  
+            <mat-form-field appearance="outline" [style]="'width: 95%;'" [class]="class">
+              <mat-label>{{ label }}</mat-label>
+              <textarea (change)="handleOrgNameChange()" [(ngModel)]="data.formData['facility_name']" matInput
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="5"
+                        cdkAutosizeMaxRows="20"></textarea>
+                        <mat-icon matSuffix></mat-icon>
+                        <mat-hint>*Briefly provide a description of the business or location you are assessing.  This will be used in generating the assessment report. (you can come back to this later)</mat-hint>
+            </mat-form-field>  
+          </div>
+        </div>
+      </div>      
+      <div class="row mt-3 mb-3" style="margin-top: 30px;">
+        <div class="col-12" style="margin-top: 30px;">
+          <div [class]="bs_col">
+            <p>Reason for Assessment</p>  
+            <mat-form-field appearance="outline" [style]="'width: 95%;'" [class]="class">
+              <mat-label>{{ label }}</mat-label>
+              <textarea (change)="handleOrgNameChange()" [(ngModel)]="data.formData['facility_name']" matInput
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="5"
+                        cdkAutosizeMaxRows="20"></textarea>
+                        <mat-icon matSuffix></mat-icon>
+                        <mat-hint>*Briefly state the reason for the assessment.  This will be used in generating the assessment report. (you can come back to this later)</mat-hint>
+            </mat-form-field>  
+          </div>
+        </div>
+      </div> -->
+      <div class="row mt-1 mb-3" style="margin-top: 30px;">
+        <div class="col-6"  style="margin-top: 30px;">
+
+        </div>
+        <div class="col-6"  style="margin-top: 30px;">
+          <div [class]="bs_col">
+            <button [routerLink]="['/assessments']"    class="btn btn-light">Cancel</button>    
+            <button (click)="postForm();" class="btn btn-primary" style="margin-left: 30px;">Save Assessment</button>    
+          </div>
+        </div>          
+      </div> 
+    </div>
+  </div> 
+</div>
+</div>
+        </div>
+      </div>
+  </div>
+  </div>
+  </div>

@@ -1,0 +1,24 @@
+.fileUpload
+{
+    color: #0808FF;
+    outline: 3px dashed #0808FF;
+    max-width: 800px;
+    border-radius: 30px;
+}
+
+.uploadBtn
+{
+    color: #0808FF;
+    padding: 5px;
+    font-size:16px;
+    border-radius: 8px;
+
+}
+
+.icon[_ngcontent-dlc-c3]
+{
+    color: #0808FF;
+}
+.fileUpload .upload-input, .upload-text[_ngcontent-gah-c3], .icon[_ngcontent-gah-c3] {
+    color: #0808FF;
+}

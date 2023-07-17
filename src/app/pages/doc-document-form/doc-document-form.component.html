@@ -1,0 +1,43 @@
+<sql-form 
+ [table]="'doc_document'" [embedded]="'Y'"
+ [title]="'doc_document'"
+ [id]="'0'" [id2]="''" [id3]="''"
+ [default_col]= "''" [default_value]="''">
+
+  
+<div class="row">
+<div class="col-sm-12 col-lg-6 col-xl-4">
+   <sql-data-select [col]="'doc_type_id'" [style]="'width:400px;'" [label]="'doc_type_id'" [sql]="'select id, option from doc_doc_type order by 2'">
+   </sql-data-select>
+ 
+   <sql-data-select [col]="'workspace_id'" [style]="'width:400px;'" [label]="'workspace_id'" [sql]="'select id, option from doc_workspace order by 2'">
+   </sql-data-select>
+ 
+   <sql-data-select [col]="'user_id'" [style]="'width:400px;'" [label]="'user_id'" [sql]="'select id, option from nua_user order by 2'">
+   </sql-data-select>
+ 
+</div>
+<div class="col-sm-12 col-lg-6 col-xl-4">
+   <sql-data-select [col]="'workgroup_id'" [style]="'width:400px;'" [label]="'workgroup_id'" [sql]="'select id, option from doc_workgroup order by 2'">
+   </sql-data-select>
+ 
+    <sql-input [col]="'document_name'" [style]="'width:400px;'" [label]="'document_name'">
+    </sql-input>
+
+</div>
+<div class="col-sm-12 col-lg-6 col-xl-4">
+    <sql-input [col]="'document_dsc'" [style]="'width:400px;'" [label]="'document_dsc'">
+    </sql-input>
+
+    <sql-input [col]="'storage_key'" [style]="'width:400px;'" [label]="'storage_key'">
+    </sql-input>
+
+<div class="row">
+<div class="col-sm-12">
+<sql-submit></sql-submit><sql-delete></sql-delete>
+</div>
+</div>
+</div>
+</div>
+</sql-form>
+

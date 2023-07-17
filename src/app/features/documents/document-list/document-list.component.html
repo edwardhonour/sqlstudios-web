@@ -1,0 +1,53 @@
+<div class="row">
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
+      <app-sitebar-wrapper></app-sitebar-wrapper>       
+    </div>
+  <div class="col-lg-8 col-xl-9 col-xxl-10">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-sm-12 p-4">
+                    <h1 style="font-size: 24px; font-weight: bold;">Document Search (All Documents)</h1>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12">
+                <div class="row" style="width:1000px;">
+                    <div class="col-2">
+                        <span style="font-size:16px;"><b>Search:</b></span> 
+                    </div>
+                    <div class="col-10">
+                        <input type="text" [(ngModel)]="term" class="form-control">
+                    </div>
+                </div>
+        <table class="table table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Document Name</th>
+                    <th>Created By</th>
+                    <th>Workspace</th>
+                    <th>Version</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let m of data?.list | filter: term | paginate: { currentPage: p, itemsPerPage: 25 }">
+                    <td>{{ m.create_timestamp }}</td>
+                    <td>{{ m.document_name }}</td>
+                    <td>{{ m.user_name }}</td>
+                    <td>{{ m.workspace_name }}</td>
+                    <td>{{ m.version }}</td>
+                    <td><button class="btn btn-primary" [routerLink]="['/document-dashboard',m.storage_key]"><i class="bi bi-clipboard-data"></i></button></td>
+                </tr>
+            </tbody>
+        </table>
+        <paging-controls (pageChange)="p = $event" [isItemsPerPage]="false"  
+        class="my-pagination"></paging-controls>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>

@@ -1,0 +1,68 @@
+<sql-form 
+ [table]="'cyber_survey'" [embedded]="'Y'"
+ [title]="'cyber_survey'"
+ [id]="'0'" [id2]="''" [id3]="''"
+ [default_col]= "''" [default_value]="''">
+  
+  <div class="row p-2">
+        <div class="col-3">
+          <sql-datepicker  [col]="'due_date'" [style]="'width:400px;'"     [label]="'due_date'"></sql-datepicker>  
+        </div>
+        <div class="col-5">
+          <sql-input  [col]="'Organization Name'" [style]="'width:370px;'" [label]="'org_name'"></sql-input>
+        </div>
+        <div class="col-4">
+          <sql-input [col]="'State'" [style]="'width:150px;'" [label]="'facility_state'">
+          </sql-input>
+        </div>
+    </div>
+  <div class="row  p-2">
+        <div class="col-3">
+            <sql-datepicker  [col]="'est_start_date'" [style]="'width:400px;'" [label]="'est_start_date'"></sql-datepicker>
+          </div>
+          <div class="col-5">
+            <sql-input  [col]="'Facility Name'" [style]="'width:370px;'" [label]="'facility_name'"></sql-input>
+          </div>
+          <div class="col-4">
+            <sql-input [col]="'facility_zip'" [style]="'width:180px;'" [label]="'facility_zip'">
+            </sql-input>
+          </div>
+    </div>
+    <div class="row  p-2">
+          <div class="col-3 p-3">
+            <sql-datepicker      [col]="'est_complete_date'"     [style]="'width:400px;'"     [label]="'est_complete_date'"></sql-datepicker>
+            </div>
+            <div class="col-5 p-3">
+            <sql-input  [col]="'Address'" [style]="'width:370px;'" [label]="'facility_address'"></sql-input>
+            </div>
+            <div class="col-4 p-3">
+              <sql-input  [col]="'contact_title'" [style]="'width:300px;'" [label]="'contact_title'">
+              </sql-input>
+            </div>
+    </div>
+    <div class="row  p-2">
+      <div class="col-3 p-3">
+        <sql-datepicker      [col]="'start_date'"     [style]="'width:400px;'"     [label]="'start_date'"></sql-datepicker>
+        </div>
+        <div class="col-5 p-3">
+          <sql-input  [col]="'City'" [style]="'width:370px;'" [label]="'facility_city'"></sql-input>
+        </div>
+        <div class="col-4 p-3">
+          <sql-input  [col]="'contact_title'" [style]="'width:300px;'" [label]="'contact_email'">
+          </sql-input>
+        </div>
+    </div>
+    <div class="row  p-2">
+      <div class="col-3 p-3">
+        <sql-submit></sql-submit>
+        </div>
+        <div class="col-5 p-3">
+          <sql-delete></sql-delete>
+        </div>
+        <div class="col-4 p-3">
+          <sql-input  [col]="'contact_title'" [style]="'width:300px;'" [label]="'contact_phone'">
+          </sql-input>
+        </div>
+    </div>
+</sql-form>
+

@@ -1,0 +1,39 @@
+<sql-form 
+ [table]="'doc_organization'" [embedded]="'Y'"
+ [title]="'Register New Organization'"
+ [id]="'0'" [id2]="''" [id3]="''"
+ [default_col]= "''" [default_value]="''">
+
+  
+<div class="row">
+<div class="col-sm-12 col-lg-6 col-xl-6">
+    <sql-input [col]="'org_name'" [style]="'width:95%;'" [label]="'Organization Name'"></sql-input>
+    <sql-input [col]="'admninistrator_name'" [style]="'width:95%;'" [label]="'Administrator Name'"></sql-input>
+    <sql-input [col]="'contact_name'" [style]="'width:95%;'" [label]="'Contact Name'"></sql-input>
+    <sql-input [col]="'mailing_address'" [style]="'width:95%;'" [label]="'Mailing Address'"></sql-input>
+    <sql-input [col]="'delivery_address'" [style]="'width:95%;'" [label]="'Delivery Address'"></sql-input>
+    <sql-input [col]="'city'" [style]="'width:95%;'" [label]="'City'"></sql-input>   
+    <sql-input [col]="'state'" [style]="'width:95%;'" [label]="'State'"></sql-input>
+    <sql-input [col]="'zip'" [style]="'width:95%;'" [label]="'Zip'"></sql-input>
+    <sql-input [col]="'telephone'" [style]="'width:95%;'" [label]="'Telephone'"></sql-input>
+    <sql-input [col]="'website'" [style]="'width:95%;'" [label]="'Website'"></sql-input>
+</div>
+<div class="col-sm-12 col-lg-6 col-xl-6">
+   <sql-input [col]="'county_name'" [style]="'width:95%;'" [label]="'County Name'"></sql-input>
+   <sql-input [col]="'region_id'" [style]="'width:95%;'" [label]="'Region'"></sql-input>
+   <sql-input [col]="'grades'" [style]="'width:95%;'" [label]="'Grades'"></sql-input>
+   <sql-input [col]="'org_type'" [style]="'width:95%;'" [label]="'Type'"></sql-input>
+   <sql-input [col]="'internal_org_id'" [style]="'width:95%;'" [label]="'Internal Org ID'"></sql-input>
+   <sql-input [col]="'state_rep'" [style]="'width:95%;'" [label]="'State Rep'"></sql-input>
+   <sql-input [col]="'state_sen'" [style]="'width:95%;'" [label]="'State Senator'"></sql-input>
+   <sql-input [col]="'fed_cong'" [style]="'width:95%;'" [label]="'Fed Congress'"></sql-input>
+   <sql-input [col]="'nces_id'" [style]="'width:95%;'" [label]="'NCES'"></sql-input>
+   <sql-submit></sql-submit><sql-delete></sql-delete>
+<div class="row">
+<div class="col-sm-12">
+
+</div>
+</div>
+</div>
+</div>
+</sql-form>

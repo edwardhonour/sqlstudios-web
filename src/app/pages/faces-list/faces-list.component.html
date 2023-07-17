@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
+      <app-sitebar-wrapper></app-sitebar-wrapper>       
+    </div>
+  <div class="col-lg-8 col-xl-9 col-xxl-10">
+  <div class="content-wrappe">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <div class="card">
+                <div class="card-header">
+                  <div class="row" style="width:95%">
+                      <div class="col-8">
+                          <h1>Face List</h1>
+                      </div>
+                      <div class="col-2"><button (click)="toggleEdit()" class="btn btn-primary">New Face</button></div>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                    <div *ngIf="edit=='Y'" class="row" style="background-color: aliceblue;">
+                        <div class="col-6">
+                            <div class="card" style="margin-top:20px;">
+                                <h2 style="margin-left:20px;">Add Voice Model</h2>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlInput1" class="form-label">Face Name</label>
+                                                <input [(ngModel)]="data.formData['face_name']" type="text" class="form-control" name="voice_name" id="exampleFormControlInput1" placeholder="">
+                                              </div>       
+                                              <div class="mb-3">
+                                                <label for="exampleFormControlInput1" class="form-label">File Name</label>
+                                                <input [(ngModel)]="data.formData['file_name']" type="text" class="form-control" name="model_id" id="exampleFormControlInput1" placeholder="">
+                                              </div>
+                                              <div class="mb-3">
+                                                <label for="exampleFormControlInput1" class="form-label">Thumbnail</label>
+                                                <input [(ngModel)]="data.formData['img_path']" type="text" class="form-control" name="speaker_index" id="exampleFormControlInput1" placeholder="">
+                                              </div>                                              
+                                              <div class="row">
+                                                <div class="col-12" style="text-align: right;">
+                                                    <button (click)="toggleEdit()" class="btn btn-secondary">Cancel</button>
+                                                    <button style="margin-left:20px;" (click)="postForm()" class="btn btn-primary">Submit</button>
+                                                </div>
+                                              </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                  <div class="row">  
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>File</th>
+                                <th>Thumbnail</th>
+                                <th style="width:100px;">
+    
+                                </th>                              
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let m of data.list">
+                                <td>{{ m.id }}</td>
+                                <td>{{ m.face_name }}</td>
+                                <td>{{ m.file_name }}</td>
+                                <td>{{ m.img_path }}</td>
+                                <td>
+                                    <!--<audio *ngIf="m.file_name!=''" controls><source src="https://sqlstudios.com/audio/{{ m.file_name }}" type="audio/wav"></audio>-->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>                                  
+                  </div>
+                </div>  
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  </div>
+  </div>

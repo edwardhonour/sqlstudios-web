@@ -1,0 +1,68 @@
+<div class="card" style="margin-top:20px;">
+    <div class="card-header">
+        <div class="row" style="width:95%">
+            <div class="col-10">
+                <div style="font-size:18px;">Section Comments</div>
+            </div>
+            <div class="col-2" style="text-align: right;">
+                <div (click)="toggleAdd()" class="btn btn-primary">
+                    <i class="bi bi-clipboard2-plus"></i>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+    <div class="card-body">
+        <div *ngIf="adding=='Y'" class="row">
+            <div class="col-12">
+                  <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Comment:</label>
+                    <textarea [(ngModel)]="text" class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <p>Comment Type:</p>
+                  <select [(ngModel)]="comment_type" class="form-select">
+                    <option selected>Select Comment Type</option>
+                    <option value="1">Include in Report</option>
+                    <option value="2">Private Comment for Team</option>
+                  </select>
+                  </div>
+                  <div class="row">
+                    <div class="col-12" style="text-align: right;">
+                        <button (click)="toggleAdd()" class="btn btn-secondary">Cancel</button>
+                        <button style="margin-left:20px;" (click)="postForm()" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h3>Existing Comments (this section)</h3>
+                <div class="row" style="width:99%" *ngFor="let m of data.comments">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row" style="width:99%" >
+                                        <div class="col-10">
+                                            {{ m.create_timestamp }} - {{ m.full_name }} 
+                                        </div>
+                                        <div style="text-align: right;" class="col-2">
+                                            <button class="btn btn-primary" (click)="edit(m)"><i class="bi bi-pencil-square"></i></button>
+                                        </div>
+                                    </div>                                   
+                                </div>
+                                <div class="card-body">
+                                        {{ m.text }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12" style="text-align: right;">
+                <button (click)="closeIt()" class="btn btn-secondary">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

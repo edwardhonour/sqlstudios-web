@@ -1,0 +1,26 @@
+<sql-form 
+ [table]="'doc_workspace'" [embedded]="'Y'"
+ [title]="'Create New Workspace'"
+ [id]="'0'" [id2]="''" [id3]="''"
+ [default_col]= "''" [default_value]="''">
+
+  
+<div class="row">
+<div class="col-sm-12 col-lg-6 col-xl-6">
+    <sql-input [col]="'workspace_name'" [style]="'width:95%;'" [label]="'Workspace Name'">
+    </sql-input>
+
+</div>
+<div class="col-sm-12 col-lg-6 col-xl-6">
+   <sql-textarea [col]="'workspace_dsc'" [style]="'width:95%;'" [label]="'Decription'">
+   </sql-textarea>
+   <sql-submit></sql-submit><sql-delete></sql-delete>
+<div class="row">
+<div class="col-sm-12">
+
+</div>
+</div>
+</div>
+</div>
+</sql-form>
+

@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
+      <app-sitebar-wrapper></app-sitebar-wrapper>       
+    </div>
+  <div class="col-lg-8 col-xl-9 col-xxl-10">
+  <div class="content-wrappe">
+      <div class="row">
+        <div class="card">
+            <div class="card-header">
+              <div class="row">
+                  <div class="col-12">
+                      <h1>Administrator Menu</h1>
+                  </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                  <div class="col-3">
+                      <a [routerLink]="['/orgs']"><div  class="card">
+                          <img src="assets/org.png" class="card-img-top" alt="...">
+                          <div class="card-body">
+                              <h2>Organizations</h2>
+                          </div>
+                        </div></a>
+                  </div>
+                  <div class="col-3">
+                      <a [routerLink]="['/admin-users']"><div class="card">
+                          <img src="assets/sharing.jpg" class="card-img-top" alt="...">
+                          <div class="card-body">
+                              <h2>Sharing</h2>
+                          </div>
+                        </div></a>
+                  </div>                            
+              </div>
+            </div>  
+          </div>
+      </div>
+  </div>
+  </div>
+  </div>

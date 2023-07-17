@@ -1,0 +1,123 @@
+<div class="container-fluid img-fluid" style="background-image: url('assets/images/bj.png'); background-size: cover">
+    <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+        <div class="row p-3">
+            <div class="card" style="margin-top: 50px;">
+                <div class="card-header card-heading">
+                    <div class="row">
+                        <div class="col-sm-3"><img src="assets/sqllabs-logo-dark.png"></div>
+                        <div class="col-sm-9">
+                            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Protective Security Platform</div>
+                        </div>
+                    </div>
+                    <div class="flex items-baseline mt-0.5 font-medium">
+                        <div>Already have an account?</div>
+                        <a
+                            class="ml-1 text-primary-500 hover:underline"
+                            [routerLink]="['/sadmin']">Sign in
+                        </a>
+                    </div>
+                </div>
+                <div *ngIf="adding=='Y'">
+                    <form>
+                        <div class="card p-3">
+                        <div class="mb-3 p-3">
+                          <label for="exampleInputEmail1" class="form-label">Email address</label>
+                          <input type="email" class="form-control" id="exampleInputEmail1">
+                        </div>
+                        <div class="mb-3 p-3">
+                            <label for="exampleInputEmail1" class="form-label">Company Name</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1">
+                        </div>
+                        <div class="mb-3 p-3">
+                            <label for="exampleInputEmail1" class="form-label">First Name</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1">
+                        </div>
+                        <div class="mb-3 p-3">
+                            <label for="exampleInputEmail1" class="form-label">Middle Initial</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1">
+                        </div>
+                        <div class="mb-3 p-3">
+                            <label for="exampleInputEmail1" class="form-label">Last Name</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1">
+                        </div>
+                        <div class="mb-3 p-3">
+                            <label for="exampleInputEmail1" class="form-label">Address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1">
+                        </div>
+                        <div class="mb-3 px-3">
+                            <label for="exampleInputEmail1" class="form-label"></label>
+                            <input type="email" class="form-control" id="exampleInputEmail1">
+                        </div>
+                        <div class="mb-3 p-3">
+                            <label for="exampleInputEmail1" class="form-label">City</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1">
+                        </div>
+                        <div class="mb-3 p-3">
+                            <label for="exampleInputEmail1" class="form-label">State</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1">
+                        </div>
+                        <div class="mb-3 p-3">
+                            <label for="exampleInputEmail1" class="form-label">Zip Code</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1">
+                        </div>
+                        <div class="mb-3 p-3">
+                            <label for="exampleInputEmail1" class="form-label">Mobile Phone</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-md-6">
+                                <button class="btn btn-primary">Submit</button>  
+                            </div>
+                        </div>
+                        </div>
+                      </form>
+                </div>
+                <div *ngIf="adding=='N'" class="card-body">
+                    <h1><b>Select your Account Type</b></h1>
+                    <h2>Select the description that best describes how you will use the platform.</h2>
+                    <div class="card">
+                        <img src="assets/images/S1.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h2 class="card-title">Facility Owner or Manager</h2>
+                          <p style="font-size: 18px;" class="card-text">I own or manage one or more facilities asssessed or managed by the system.</p>
+                          <a (click)="addFacilityManager();" class="btn btn-dark">Continue as Facility Owner or Manager</a>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="card">
+                        <img src="assets/images/S2.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h2 class="card-title">Security Force/Manager</h2>
+                          <p class="card-text">I am the facility securty manager or part of the security force at a facility managed by the system.</p>
+                          <a (click)="addSecurityForce();" class="btn btn-dark">Continue as Security Force</a>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="card">
+                        <img src="assets/images/S3.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h2 class="card-title">Facility Tenant</h2>
+                          <p style="font-size: 18px;" class="card-text">I am a tenant at a facility managed by the system.</p>
+                          <a (click)="addFacilityTenant();" class="btn btn-dark">Continue as Facility Tenant.</a>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="card">
+                        <img src="assets/images/S4.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h2 class="card-title">Protective Security Advisor</h2>
+                          <p style="font-size: 18px;"  class="card-text">I am a Protective Security Advisor who performs assessments at facilities.</p>
+                          <a (click)="addPSA();" class="btn btn-dark">Continue as PSA.</a>
+                        </div>
+                      </div>
+                </div>
+        </div>
+        </div>
+    </div>
+</div>
+</div>

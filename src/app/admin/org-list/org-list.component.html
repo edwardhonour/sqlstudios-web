@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
+      <app-sitebar-wrapper></app-sitebar-wrapper>       
+    </div>
+  <div class="col-lg-8 col-xl-9 col-xxl-10">
+  <sql-add-table [title]="'Organizations'"
+    [use_parameters]="'Y'"
+    (row_click)="processRow($event)"
+    (button_click)="processButton($event)"
+    [sql]="'select * from doc_organization order by org_name'">
+  <th #column id="id">id</th>
+  <th #column id="org_name" style="width:400px;">Organization</th>
+  <th #column id="contact_name">Contact</th>
+  <th #column id="mailing_address">Mailing Address</th>
+  <th #column id="city">City</th>
+  <th #column id="state">State</th>
+  <th #column id="telephone">Telephone</th>
+  <button #column class="btn btn-primary"><i class="bi bi-clipboard-data"></i></button>
+  <div form>
+    <app-org-form></app-org-form>
+  </div>
+  </sql-add-table>
+  </div>
+  </div>

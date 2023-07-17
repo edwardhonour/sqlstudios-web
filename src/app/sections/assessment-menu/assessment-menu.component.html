@@ -1,0 +1,12 @@
+
+    <h2>Main Menu</h2>
+    <div class="list-group">
+        <ng-container *ngFor="let m of data?.list">
+            <li (click)="processClick(m)" *ngIf="m.id!=active" 
+            class="list-group-item d-flex justify-content-between align-items-center">{{ m.section_name }}
+                    <span *ngIf="m.badge!==''" class="badge bg-primary rounded-pill">{{ m.badge }}</span></li>
+            <li (click)="processClick(m)" *ngIf="m?.id==active" 
+            class="list-group-item d-flex justify-content-between align-items-center active">{{ m.section_name }}
+                    <span *ngIf="m.badge!==''" class="badge bg-primary rounded-pill">{{ m.badge }}</span></li>
+        </ng-container>
+    </div>

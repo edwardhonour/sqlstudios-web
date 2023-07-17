@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="col-3">
+                <lib-sql-edit-preview
+                [sql]="'select * from psp_template_option'"
+            [use_parameters]="'N'"
+            [id] = "'0'"
+            [class] = "''"
+            [style] = "''"
+            [title] = "'This is the title'">
+            <th #row id="id">ID</th>
+            <th #row id="option_text">Label</th>
+            <th #row id="option_type">Option Type</th>
+            <th #row id="option_order">Option Order</th>
+            <div form>
+                Ths is the form...
+            </div>
+        </lib-sql-edit-preview>
+    </div>
+</div> 

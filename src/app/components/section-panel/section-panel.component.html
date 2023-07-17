@@ -1,0 +1,39 @@
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <div class="row" style="width:99%">
+                <div class="col-10"> <h2>Section Overview Questions</h2></div>
+                <div class="col-2" style="text-align: right;">
+                    <button (click)="showSection()" *ngIf="showing=='N'" class="btn btn-primary">Show Questions</button>
+                    <button (click)="hideSection()" *ngIf="showing=='Y'" class="btn btn-secondary">Hide Questions</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="showing=='Y'" class="card-body">
+            <div *ngFor="let m of data?.questions" class="row">
+                <app-question-panel [survey_id]="survey_id" [question_id]="m.option_id"></app-question-panel> 
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div *ngFor="let m of data?.saa" class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row" style="width:99%">
+                        <div class="col-10"> <h2>{{ m.saa_name }}</h2></div>
+                        <div class="col-2" style="text-align: right;">
+                            <button (click)="showSAA(m)" *ngIf="m.showing!='Y'" class="btn btn-primary">Show Questions</button>
+                            <button (click)="hideSAA(m)" *ngIf="m.showing=='Y'" class="btn btn-secondary">Hide Questions</button>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="m.showing=='Y'" class="card-body">
+                        <app-asset-section-panel [asset_id]="m.id" [survey_id]="survey_id" [section_id]="section_id"></app-asset-section-panel>
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="card" style="margin-top:20px;">
+    <div class="card-header">
+        <div class="row" style="width:95%;">
+            <div class="col-10">
+                <div style="font-size: 20px;">Section Photos</div>
+            </div>
+            <div  class="col-2" style="text-align: right;">
+                    <button (click)="toggleUpload()" class="btn btn-primary">Upload</button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div *ngIf="uploading=='Y'" class="row">
+            <div class="col-12">
+                <app-upload-photo [data]="data" [survey_id]="survey_id" [section_id]="section_id" [asset_id]="asset_id" ></app-upload-photo>
+            </div>
+        </div>
+        <div *ngIf="uploading!='Y'" class="row">
+                    <div class="card col-4" *ngFor="let m of data.photos">
+                        <img src="https://protectivesecurity.org/api/show_thumb.php?id={{ m.id }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 *ngIf="m.editing=='N'" class="card-title">{{ m.photo_name }}</h5>
+                          <h5 *ngIf="m.editing=='N'" style="font-size: 16px;" class="card-title">{{ m.type_name }}</h5>
+                          <p *ngIf="m.editing=='N'" class="card-text">{{ m.text }}</p>
+                          <a *ngIf="m.editing=='N'" (click)="edit(m)" class="btn btn-primary">Edit Description</a>
+                          <div *ngIf="m.editing=='Y'" class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Photo Name</label>
+                            <input [(ngModel)]="photo_name" type="text" class="form-control" id="exampleFormControlInput1">
+                          </div>
+                          <div *ngIf="m.editing=='Y'" class="mb-3">
+                            <p>Category</p>
+                          <select [(ngModel)]="photo_type" class="form-select">
+                            <option selected>Select Category</option>
+                            <option *ngFor="let m of data.photo_types" value="{{ m.id }}">{{ m.options }}</option>
+                          </select>
+                          </div>
+                          <div *ngIf="m.editing=='Y'" class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                            <textarea [(ngModel)]="dsc" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                          </div>
+                          <div *ngIf="m.editing=='Y'" class="mb-3">
+                           <button (click)="postForm()" class="btn btn-primary">Update</button>
+                           <button (click)="edit(m)" style="margin-left: 20px;" class="btn btn-secondary">Cancel</button>
+                          </div>
+                        </div>
+                      </div>
+        </div>
+        <div class="row">
+            <div class="col-12" style="text-align: right;">
+                <button (click)="closeIt()" class="btn btn-secondary">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

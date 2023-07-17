@@ -1,0 +1,61 @@
+<div class="row">
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
+      <app-sitebar-wrapper></app-sitebar-wrapper>       
+    </div>
+  <div class="col-lg-8 col-xl-9 col-xxl-10">
+  <div class="content-wrappe">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <div class="card">
+                <div class="card-header">
+                  <div class="row" style="width:95%">
+                      <div class="col-8">
+                          <h1>Job Queue</h1>
+                      </div>
+                      <div class="col-2"><button (click)="toggleEdit()" class="btn btn-primary">New Clip</button></div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row">  
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th style="width:100px;">ID</th>
+                                <th style="width:120px;">Date/Time</th>
+                                <th style="width:200px;">Video Name</th>
+                                <th style="width:200px;">Video Face</th>                                
+                                <th>Script</th>
+                                <th style="width:100px;">Duration</th>
+                                <th style="width:100px;">Status</th>
+                                <th style="width:100px;">Remaining</th> 
+                                <th style="width:100px;">PCT</th> 
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <ng-container *ngFor="let m of data.list">
+                            <tr>
+                              <td>{{ m.id }}</td>
+                              <td>{{ m.create_timestamp }}</td>
+                              <td>{{ m.video_name }}</td>
+                              <td>{{ m.face_name }}</td>
+                              <td>{{ m.script }}</td>
+                              <td>{{ m.duration }}</td>
+                              <td>{{ m.status }}</td>
+                              <td>{{ m.remaining }}</td>
+                              <td>{{ m.pct }}</td>
+                              <td></td>
+                          </tr>                       
+                          </ng-container>
+                        </tbody>
+                    </table>                                  
+                  </div>
+                </div>  
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  </div>
+  </div>

@@ -1,0 +1,129 @@
+<div class="container-fluid">
+    <!-- Radio Group: All Options provide a single value into parent -->
+    <mat-card *ngIf="data?.question.option_type=='Radio Group'" style="margin-bottom: 20px;">
+        <div class="row">
+            <div class="col-12 p-1" style="text-align: right;">
+               <table>
+                    <tr>
+<td style="width:40px;">
+    <span *ngIf="data.question.allow_comment=='N'">&nbsp; </span>
+    <button (click)="showComments()" *ngIf="data.question.allow_comment=='Y'&&data.comments.length==0"  class="btn btn-primary" style="margin-left:20px;"><i class="bi bi-chat-square-text"></i></button>
+    <button (click)="showComments()" *ngIf="data.question.allow_comment=='Y'&&data.comments.length!=0"  class="btn btn-success" style="margin-left:20px;"><i class="bi bi-chat-square-text"></i></button>
+</td>
+<td style="width:40px;">
+    <span *ngIf="data.question.allow_photo=='N'">&nbsp; </span>    
+    <button (click)="showPhotos()" *ngIf="data.question.allow_photo=='Y'&&showingphotos=='N'" class="btn btn-primary" style="margin-left:20px; margin-right:20px;"><i class="bi bi-camera"></i></button>    
+</td>
+                    </tr>
+               </table> 
+            </div>
+        </div>
+        <app-upload-option-photo (close)="hidePhotos()" *ngIf="showingphotos=='Y'" [survey_id]="survey_id" [section_id]="data.question.section_id" [option_id]="data.question.id" [asset_id]="data.question.asset_id" [data]="data"></app-upload-option-photo>
+        <app-upload-option-comments (close)="hideComments()" *ngIf="showingcomments=='Y'" [survey_id]="survey_id" [section_id]="data.question.section_id" [option_id]="data.question.id" [asset_id]="data.question.asset_id" [data]="data"></app-upload-option-comments>
+        <mat-card-title style="padding:20px; font-size: 18px;">
+            <span style="font-size: 16px!important;">{{ data.question.option_text }} ({{ data.question.section_id }}-{{ data.question.option_id }})</span>
+        </mat-card-title>
+        <mat-card-content>
+           <mat-radio-group (change)="primaryRadioChange(data?.question.option_id)" [(ngModel)]="data?.formData[data?.question.model]">
+                <ng-container *ngFor="let m of data.options">
+                    <div *ngIf="m.option_type=='Radio Button'" class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-10"><mat-radio-button  value="{{ m.option_id }}"><span style="font-size: 16px!important;">{{ m.option_text }} ({{ data.question.section_id }}-{{ m.option_id }})</span></mat-radio-button></div>
+                    </div>
+                </ng-container>
+            </mat-radio-group>
+        </mat-card-content>
+    </mat-card>
+    <!-- Checkbox Group: Each option is saved as an individual value -->
+    <mat-card *ngIf="data?.question.option_type=='Checkbox Group'"  style="margin-bottom: 20px;">
+        <div class="row">
+            <div class="col-12 p-1" style="text-align: right;">
+               <table>
+                    <tr>
+<td style="width:40px;">
+    <span *ngIf="data.question.allow_comment=='N'">&nbsp; </span>
+    <button (click)="showComments()" *ngIf="data.question.allow_comment=='Y'&&data.comments.length==0"  class="btn btn-primary" style="margin-left:20px;"><i class="bi bi-chat-square-text"></i></button>
+    <button (click)="showComments()" *ngIf="data.question.allow_comment=='Y'&&data.comments.length!=0"  class="btn btn-success" style="margin-left:20px;"><i class="bi bi-chat-square-text"></i></button>
+</td>
+<td style="width:40px;">
+    <span *ngIf="data.question.allow_photo=='N'">&nbsp; </span>    
+    <button (click)="showPhotos()" *ngIf="data.question.allow_photo=='Y'&&showingphotos=='N'" class="btn btn-primary" style="margin-left:20px; margin-right:20px;"><i class="bi bi-camera"></i></button>    
+</td>
+                    </tr>
+               </table> 
+            </div>
+        </div>
+        <app-upload-option-photo (close)="hidePhotos()" *ngIf="showingphotos=='Y'" [survey_id]="survey_id" [section_id]="data.question.section_id" [option_id]="data.question.id" [asset_id]="data.question.asset_id" [data]="data"></app-upload-option-photo>
+        <app-upload-option-comments (close)="hideComments()" *ngIf="showingcomments=='Y'" [survey_id]="survey_id" [section_id]="data.question.section_id" [option_id]="data.question.id" [asset_id]="data.question.asset_id" [data]="data"></app-upload-option-comments>
+         <mat-card-title  style="padding:20px; font-size: 18px;"><span style="font-size: 16px!important;">{{ data.question.option_text }}  ({{ data.question.section_id }}-{{ data.question.option_id }})</span></mat-card-title>
+        <mat-card-content>
+                <ng-container *ngFor="let m of data.options">
+                    <div *ngIf="m.option_type=='Checkbox'" class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-10"><mat-checkbox (change)="primaryCheckboxChange($event, m.option_id)" [(ngModel)]="data?.formData['p'+m.option_id]"><span style="font-size: 16px!important;">{{ m.option_text }} ({{ data.question.section_id }}-{{ m.option_id }})</span></mat-checkbox></div>
+                    </div>                    
+                </ng-container>
+        </mat-card-content>
+    </mat-card>
+
+    <!-- Subtitle: Just prints a line without any answers. -->
+    <mat-card *ngIf="data?.question.option_type=='Subtitle'||data?.question.option_type=='Title'"  style="margin-bottom: 20px;">
+        <mat-card-title  style="padding:20px; font-size: 18px;"><span style="font-size: 16px!important;">{{ data.question.option_text }} ({{ data.question.id }})</span></mat-card-title>
+        <mat-card-content>
+                <ng-container *ngFor="let m of data.options">
+                    <div *ngIf="m.option_type=='Checkbox'" class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-10"><mat-checkbox ><span style="font-size: 16px!important;">{{ m.option_text }} ({{ data.question.section_id }}-{{ m.option_id }})</span></mat-checkbox></div>
+                    </div>   
+                    <div *ngIf="m.option_type=='Text'" class="row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-9">
+                            <mat-form-field floatLabel="always">
+                                <mat-label><span style="font-size: 16px!important;">{{ m.option_text }} ({{ data.question.section_id }}-{{ m.option_id }})</span></mat-label>
+                                <input matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>                                        
+                </ng-container>
+        </mat-card-content>
+    </mat-card>
+
+    <!-- Text: Single Row Question with an input text. -->
+    <div *ngIf="data?.question.option_type=='Text'" class="row">
+        <mat-card>
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-7">
+                    <span style="font-size: 16px!important;">{{ data.question.option_text }}</span>
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control">
+                </div>                
+            </div>
+        </div>
+        </mat-card>
+    </div>
+    <!-- Text: Single Row Question with an input text. -->
+    <div *ngIf="data?.question.option_type=='Textarea'" class="row">
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-12">
+                    <span style="font-size: 16px!important;">{{ data.question.option_text }}</span>
+                </div>         
+            </div>
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10"><textarea class="form-control"></textarea></div>
+            </div>
+        </div>
+    </div>           
+    <!-- This section is conditional based on the value checked -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div *ngFor="let m of data?.boilerplate">
+                <app-question-panel [hidden]="data?.formData[m.model]!='Y'" [level]="level" [survey_id]="'10'" [question_id]="m.option_id"></app-question-panel>  
+            </div>
+        </div>
+    </div>
+</div>

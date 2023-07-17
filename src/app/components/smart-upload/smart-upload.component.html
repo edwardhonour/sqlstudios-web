@@ -1,0 +1,22 @@
+<h2>Upload Document</h2>
+<p>If the filename of the documents you upload match a document in the Worksapace the document will be added as a new version of an existing document.</p>
+<p>If the filename does not match an existing document it will be added as a new document.  If you want to upload an existing document with a new file name, select the 
+    document from the list below before uploading.
+</p>
+    <file-upload class="fileUpload"  
+            (ngFileDrop)="drop();" 
+            [control]="fileUploadControl" 
+            [(ngModel)]="uploadedFiles" 
+            name="files"></file-upload>
+            <div [innerHTML]="uploadedList"></div>
+            <div class="progress form-group" *ngIf="progress > 0">
+                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress">
+                </div>
+            </div>
+    <div class="row p-2">
+        <div class="col-4"></div>
+        <div class="col-2"></div>
+        <div class="col-4"><button (click)="uploadFiles()" class="btn btn-secondary">Upload</button>
+            <button (click)="cancelUpload()" style="margin-left:20px;" class="btn btn-light">Cancel / Close</button>
+        </div>
+    </div>

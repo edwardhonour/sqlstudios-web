@@ -1,0 +1,313 @@
+<div class="row">
+  <div class="col-lg-4 col-xl-3 col-xxl-2">
+    <app-sitebar-wrapper></app-sitebar-wrapper>       
+  </div>
+<div class="col-lg-8 col-xl-9 col-xxl-10">
+<div class="content-wrappe">
+    <div class="row">
+      <div class="col-12">
+        <div class="row">
+          <div class="card">
+              <div class="card-header">
+                <div class="row" style="width:95%">
+                    <div class="col-8">
+                        <h1>Video Clips</h1>
+                    </div>
+                    <div class="col-2"><button (click)="toggleEdit()" class="btn btn-primary">New Video Clip</button></div>
+                </div>
+              </div>
+              <div class="card-body">
+                  <div *ngIf="edit=='Y'" class="row" style="background-color: aliceblue;">
+                      <div class="col-12">
+                          <div class="card" style="margin-top:20px;">
+                              <h2 style="margin-left:20px;">Create Video Clip</h2>
+                              <div class="card-body">
+                                <div class="row">
+                                </div>
+                                  <div class="row">
+                                      <div class="col-6">
+                                        <div class="mb-3">
+                                          <label for="exampleFormControlInput1" class="form-label">Audio Source</label>
+                                          <select [(ngModel)]="data.formData['source']" class="form-control" name="source" id="exampleFormControlInput1" placeholder="">
+                                              <option value="">-- Select a Source --</option>
+                                              <option value="script">New Script</option>
+                                              <option value="audio">Existing Audio</option>                                              
+                                          </select>
+                                        </div> 
+                                        <div *ngIf="data.formData['source']!=''" class="mb-3">
+                                          <label for="exampleFormControlInput1" class="form-label">Video Clip Name</label>
+                                          <input [(ngModel)]="data.formData['video_name']" type="text" class="form-control" name="video_name" id="exampleFormControlInput1" placeholder="">
+                                        </div>
+                                        <div  *ngIf="data.formData['source']!=''" class="mb-3">
+                                          <label for="exampleFormControlInput1" class="form-label">Face Name</label>
+                                          <select [(ngModel)]="data.formData['face_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                              <option value="0">-- Select a Face --</option>
+                                              <option *ngFor="let n of data.faces" value="{{ n.id }}">{{ n.face_name }}</option>
+                                          </select>
+                                        </div>
+                                        <div *ngIf="data.formData['source']=='audio'" class="mb-3">
+                                          <label for="exampleFormControlInput1" class="form-label">Audio Clip</label>
+                                          <select [(ngModel)]="data.formData['audio_id']" class="form-control" name="audio_id" id="exampleFormControlInput1" placeholder="">
+                                              <option value="0">-- Select a Clip --</option>
+                                              <option *ngFor="let n of data.audio_list" value="{{ n.id }}">{{ n.id }}-{{ n.clip_name }}</option>
+                                          </select>
+                                        </div>                                         
+                                        <div *ngIf="data.formData['source']=='script'" class="mb-3">
+                                          <label for="exampleFormControlInput1" class="form-label">Voice Name</label>
+                                          <select [(ngModel)]="data.formData['voice_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                              <option value="0">-- Select a Voice --</option>
+                                              <option *ngFor="let n of data.voices" value="{{ n.id }}">{{ n.voice_name }}</option>
+                                          </select>
+                                        </div> 
+                                        <div  *ngIf="data.formData['source']=='script'"   class="mb-3">
+                                          <label for="exampleFormControlTextarea1" class="form-label">Script:</label>
+                                          <textarea [(ngModel)]="data.formData['script']" class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+                                        </div>          
+                                        <div class="mb-3">
+                                          <label for="exampleFormControlInput1" class="form-label">Output Type</label>
+                                          <select [(ngModel)]="data.formData['output_type']" class="form-control" name="output_type" id="exampleFormControlInput1" placeholder="">
+                                              <option value="green">Green Screen</option>
+                                              <option value="image">Image Background</option>          
+                                              <option value="video">Video Background</option>                                                                                            
+                                          </select>
+                                        </div>
+                                        <div *ngIf="data.formData['output_type']=='image'||data.formData['output_type']=='video'" class="mb-3">
+                                          <label for="exampleFormControlInput1" class="form-label">Face Position</label>
+                                          <select [(ngModel)]="data.formData['position']" class="form-control" name="position" id="exampleFormControlInput1" placeholder="">
+                                              <option value="0">Middle Left</option>
+                                              <option value="1">Middle Center</option>
+                                              <option value="2">Middle Right</option>       
+                                              <option value="3">Bottom Left</option>
+                                              <option value="4">Bottom Center</option>
+                                              <option value="5">Bottom Right</option>    
+                                              <option value="6">Upper Left (Circle)</option>
+                                              <option value="7">Upper Right (Circle)</option>                                          
+                                          </select>
+                                        </div>  
+                                        <div *ngIf="data.formData['output_type']=='image'" class="mb-3">
+                                          <label for="exampleFormControlInput1" class="form-label">Background File</label>
+                                          <select [(ngModel)]="data.backData['image_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                            <option *ngFor="let n of data.background_images" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
+                                          </select>
+                                        </div>   
+                                        <div *ngIf="data.formData['output_type']=='video'" class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label">Background Video</label>
+                                        <select [(ngModel)]="data.backData['image_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                          <option *ngFor="let n of data.background_videos" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
+                                        </select>
+                                      </div>                                                                                    
+                                            <div class="row">
+                                              <div class="col-12" style="text-align: right;">
+                                                  <button (click)="toggleEdit()" class="btn btn-secondary">Cancel</button>
+                                                  <button style="margin-left:20px;" (click)="postForm()" class="btn btn-primary">Submit</button>
+                                              </div>
+                                            </div>
+                                      </div>
+                                <div class="col-6">
+                                <div class="row">
+                                  <div *ngFor="let k of data.faces" class="col-3">
+                                    <div class="card">
+                                      <img src="assets/{{ k.img_path }}" class="card-img-top" alt="...">
+                                      <div class="card-body">
+                                        <button (click)="selectFace(k);" class="btn btn-light">{{ k.face_name }}</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                              </div>
+                          </div>
+                          </div>
+                  </div>
+                  <div class="row">
+                    <tr>
+                      <td colspan="8">
+
+                      </td>
+                    </tr>
+                    </div> 
+                <div class="row">  
+                  <table class="table table-striped table-condensed">
+                      <thead>
+                          <tr>
+                              <th style="width:100px;">ID</th>
+                              <th style="width:120px;">Date/Time</th>
+                              <th style="width:100px;">Clip Name</th>
+                              <th style="width:100px;">Face Name</th>
+                              <th>Script</th>
+                              <th style="width:100px;">Status</th>
+                              <th style="width:150px;"></th> 
+                              <th style="width:150px;"></th> 
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let m of data.list">
+                          <tr *ngIf="m.edit=='N'&&m.speed=='N'&&m.back=='N'">
+                            <td>{{ m.id }}</td>
+                            <td>{{ m.create_timestamp }}</td>
+                            <td>{{ m.video_name }}</td>
+                            <td>{{ m.face_name }}</td>
+                            <td>{{ m.script }}</td>
+                            <td>{{ m.status }}</td>
+                            <td *ngIf="m.video=='N'">
+                              <button *ngIf="m.show=='Y'" (click)="toggleV(m);" style="margin-top:10px; width:200px;" class="btn btn-success">View Video</button>
+                              <button  *ngIf="m.show_green=='Y'" (click)="toggleB(m);" style="margin-top:10px; width:200px;" class="btn btn-secondary">Change Background</button>                            
+                            </td>
+                            <td *ngIf="m.video=='N'">
+                              <button (click)="toggleS(m);" style="margin-top:10px; width:200px;" class="btn btn-secondary">Change Position</button>
+                              <button (click)="toggleV(m);" style="margin-top:10px; width:200px;" class="btn btn-secondary">Trim Video</button>
+                              <button (click)="toggleE(m);" style="margin-top:10px; width:200px;" class="btn btn-secondary">Split Video</button>                                  
+                            </td>
+                            <td colspan="2" *ngIf="m.video=='Y'">
+                              <video style="max-width:480px" class="library" controls preload="auto" data-config="some-js-object-here">
+                                <source src="{{ m.file_url }}" type='video/mp4'>
+                              </video>    
+                              <button (click)="toggleV(m);" style="margin-top:10px; width:200px;" class="btn btn-light">Close</button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="m.back=='Y'">
+                          <td colspan="7">
+                            <h2>Select a Background</h2>
+                            <div class="row">
+                              <div *ngFor="let k of data.background_images" class="col-3">
+                                <div class="card">
+                                  <img src="https://sqlstudios.com/uploads/{{ k.img_path }}" class="card-img-top" alt="...">
+                                  <div class="card-body">
+                                    <button (click)="selectBack(k);" class="btn btn-light">{{ k.upload_name }} (image)</button>
+                                  </div>
+                                </div>
+                              </div>
+                              <div *ngFor="let k of data.background_videos" class="col-3">
+                                <div class="card">
+                                  <video style="max-width:480px" class="library" controls preload="auto" data-config="some-js-object-here">
+                                    <source src="https://sqlstudios.com/uploads/{{ k.img_path }}" type='video/mp4'>
+                                  </video>    
+                                  <div class="card-body">
+                                    <button (click)="selectBack(k);" class="btn btn-light">{{ k.upload_name }} (video)</button>
+                                  </div>
+                                </div>
+                              </div>                              
+                            </div>
+                          </td>
+
+                        <tr *ngIf="m.back=='Y'">
+                          <td>{{ m.id }}</td>
+                          <td></td>
+                          <td></td>
+                          <td colspan="2">
+                            <select [(ngModel)]="data.backData['image_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                              <option *ngFor="let n of data.background_images" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
+                              <option *ngFor="let n of data.background_videos" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
+                            </select>
+                          <td>
+                            <button (click)="postBackgroundChange()" style="margin-top:10px; width:200px;" class="btn btn-primary">Submit</button><br>
+                            <button (click)="toggleB(m);" style="margin-top:10px; width:200px;" class="btn btn-light">Cancel</button><br>                              
+                          </td>
+                          <td>
+                          
+                          </td>
+                      </tr>
+                        <tr *ngIf="m.edit=='Y'">
+                          <td>{{ m.id }}</td>
+                          <td></td>
+                          <td></td>
+                          <td colspan="2">
+                            <textarea [(ngModel)]="data.formData['script']" class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+                          <td>
+                            <button style="margin-top:10px; width:200px;" class="btn btn-primary">Submit</button><br>
+                            <button (click)="toggleE(m);" style="margin-top:10px; width:200px;" class="btn btn-light">Cancel</button><br>                              
+                          </td>
+                          <td>
+                          
+                          </td>
+                      </tr>
+                      <tr *ngIf="m.position=='Y'">
+                        <td>{{ m.id }}</td>
+                        <td></td>
+                        <td></td>
+                        <td colspan="2">
+                          New Position: 
+                          <select [(ngModel)]="data.positionData['position']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                            <option value="1">Middle Center</option>
+                            <option value="2">Middle Left</option>
+                            <option value="3">Middle Right</option>
+                            <option value="4">Bottom Center</option>
+                            <option value="5">Bottom Left</option>
+                            <option value="6">Bottom Right</option>
+                        </select>
+                        <td>
+                          <button (click)="postPositionChange()" style="margin-top:10px; width:200px;" class="btn btn-primary">Submit</button><br>
+                          <button (click)="toggleS(m);" style="margin-top:10px; width:200px;" class="btn btn-light">Cancel</button><br>                              
+                        </td>
+                        <td>
+                        
+                        </td>
+                    </tr>                        
+                      <tr *ngIf="m.video=='B'">
+                        <td>{{ m.id }}</td>
+                        <td colspan="6">
+                          <div class="row">
+                            <div class="col-4">
+                            <div class="card" style="margin-top:20px;">
+                              <h2 style="margin-left:20px;">Create Video Clip</h2>
+                              <div class="card-body">
+                                <div class="mb-3">
+                                  <label for="exampleFormControlInput1" class="form-label">Video Clip Name (optional)</label>
+                                  <input [(ngModel)]="data.faceData['video_name']" type="text" class="form-control" name="script_name" id="exampleFormControlInput1" placeholder="">
+                                </div>
+                                <div class="mb-3">
+                                  <label for="exampleFormControlInput1" class="form-label">Face Name</label>
+                                  <select [(ngModel)]="data.faceData['face_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                      <option value="0">-- Select a Face --</option>
+                                      <option *ngFor="let n of data.faces" value="{{ n.id }}">{{ n.face_name }}</option>
+                                  </select>
+                                </div> 
+                                <div class="mb-3">
+                                  <label for="exampleFormControlInput1" class="form-label">Output Type</label>
+                                  <select [(ngModel)]="data.faceData['output_type']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                      <option value="0">Green Screen</option>
+                                  </select>
+                                </div>     
+                                <div class="mb-3">
+                                  <label for="exampleFormControlInput1" class="form-label">Position</label>
+                                  <select [(ngModel)]="data.faceData['position']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                      <option value="0">Middle Center</option>
+                                  </select>
+                                </div>                                       
+                                <div class="row">
+                                  <div class="col-12" style="text-align: right;">
+                                      <button (click)="toggleV(m)" class="btn btn-secondary">Cancel</button>
+                                      <button style="margin-left:20px;" (click)="postFace()" class="btn btn-primary">Submit</button>
+                                  </div>
+                                </div>                                                                  
+                              </div>
+                              </div>
+                            </div>
+                            <div class="col-8">
+                              <div class="row">
+                                <div *ngFor="let k of data.faces" class="col-3">
+                                  <div class="card">
+                                    <img src="assets/{{ k.img_path }}" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                      <button (click)="selectFace(k);" class="btn btn-light">{{ k.face_name }}</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                    </tr>
+                        </ng-container>
+                      </tbody>
+                  </table>                                  
+                </div>
+              </div>  
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+</div>

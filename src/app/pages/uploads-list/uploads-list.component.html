@@ -1,0 +1,111 @@
+<div class="row">
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
+      <app-sitebar-wrapper></app-sitebar-wrapper>       
+    </div>
+  <div class="col-lg-8 col-xl-9 col-xxl-10">
+  <div class="content-wrappe">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <div class="card">
+                <div class="card-header">
+                  <div class="row" style="width:95%">
+                      <div class="col-8">
+                          <h1>Uploaded Resources</h1>
+                      </div>
+                      <div class="col-2"><button (click)="toggleEdit()" class="btn btn-primary">Upload Resuorce</button></div>
+                  </div>
+                </div>
+                <div class="card-body">
+                    <div *ngIf="edit=='Y'" class="row" style="background-color: aliceblue;">
+                        <div class="col-6">
+                            <div class="card" style="margin-top:20px;">
+                                <h2 style="margin-left:20px;">Upload File/Resource</h2>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label">Resource Name:</label>
+                                        <input [(ngModel)]="upload_name" type="text" class="form-control" name="script_name" id="exampleFormControlInput1" placeholder="">
+                                      </div>      
+                                      <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label">Resource Type</label>
+                                        <select [(ngModel)]="upload_type" class="form-control" name="position" id="exampleFormControlInput1" placeholder="">
+                                            <option value="image">Background Image</option>
+                                            <option value="video">Background Video</option>      
+                                            <option value="srt">SRT File (Closed Captioning)</option>     
+                                            <option value="wav">Auto File (WAV)</option>                                                                                                                             
+                                        </select>
+                                      </div>                                        
+                                      <div class="mb-3">
+                                        <label for="exampleFormControlTextarea1" class="form-label">Description:</label>
+                                        <textarea [(ngModel)]="dsc" class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+                                      </div>
+                                    <div class="row">
+                                        (Background images and videos should be 1280x720px)
+                                        <div class="col-12">
+                                            <file-upload class="fileUpload"  
+                                            (ngFileDrop)="drop();" 
+                                            [control]="fileUploadControl" 
+                                            [(ngModel)]="uploadedFiles" 
+                                            name="files"></file-upload>
+                                            <div [innerHTML]="uploadedList"></div>
+                                            <div class="progress form-group" *ngIf="progress > 0">
+                                                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress">
+                                                </div>
+                                            </div>
+                                    <div class="row p-2">
+                                        <div class="col-4"></div>
+                                        <div class="col-2"></div>
+                                        <div class="col-4"><button (click)="uploadFiles()" class="btn btn-secondary">Upload</button>
+                                            <button (click)="toggleEdit()" style="margin-left:20px;" class="btn btn-light">Cancel / Close</button>
+                                        </div>
+                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                  <div class="row">  
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>File Name</th>
+                                <th>Description</th>
+                                <th></th>
+                                <th style="width:100px;">
+    
+                                </th>                              
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let m of data?.list">
+                                <td>{{ m.id }}</td>
+                                <td>{{ m.upload_name }}</td>
+                                <td>{{ m.file_name }}</td>
+                                <td>{{ m.dsc }}</td>
+                                <td *ngIf="m.upload_type=='image'">
+                                     <img src="https://sqlstudios.com/uploads/{{ m.img_path }}" style="width:160px; height:120px;">
+                                </td>
+                                <td *ngIf="m.upload_type!='image'">
+                                    <video style="max-width:160px" class="library" controls preload="auto" data-config="some-js-object-here">
+                                        <source src="https://sqlstudios.com/uploads/{{ m.img_path }}" type='video/mp4'>
+                                      </video>    
+                               </td>
+                                <td>
+                                    <!--<audio *ngIf="m.file_name!=''" controls><source src="https://sqlstudios.com/audio/{{ m.file_name }}" type="audio/wav"></audio>-->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>                                  
+                  </div>
+                </div>  
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  </div>
+  </div>

@@ -1,0 +1,31 @@
+<h3>Upload Document</h3>
+    <file-upload class="fileUpload"  
+            (ngFileDrop)="drop();" 
+            [control]="fileUploadControl" 
+            [(ngModel)]="uploadedFiles" 
+            name="files"></file-upload>
+            <div [innerHTML]="uploadedList"></div>
+            <div class="progress form-group" *ngIf="progress > 0">
+                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Document Name</label>
+                <input type="text" [(ngModel)]="document_name" class="form-control" id="exampleFormControlInput1">
+              </div>
+              <div class="mb-3">
+                <p>Category</p>
+              <select [(ngModel)]="document_type" class="form-select">
+                <option selected>Select Category</option>
+                <option *ngFor="let m of data.document_types" value="{{ m.id }}">{{ m.options }}</option>
+              </select>
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                <textarea [(ngModel)]="dsc" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              </div>
+    <div class="row p-2">
+        <div class="col-4"></div>
+        <div class="col-2"></div>
+        <div class="col-2"><button (click)="uploadFiles()" class="btn btn-secondary">Upload</button></div>
+        </div>

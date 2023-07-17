@@ -1,0 +1,48 @@
+<div class="card p-3">
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <img src="assets/studentpopulation_v.jpg" class="card-img-top" alt="...">
+              </div>
+        </div>
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Student Population</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+              </div>       
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-12 p-2" style="background-color: lightgray;">
+            <button (click)="togglePhotos()" class="btn btn-primary">Photos ({{ data?.photos.length }})</button>
+            <button (click)="toggleDocuments()" style="margin-left: 20px;" class="btn btn-primary">Documents ({{ data?.documents.length }})</button>
+            <button (click)="toggleComments()" style="margin-left: 20px;" class="btn btn-primary">Comments ({{ data?.comments.length }})</button>            
+    <!--        <button (click)="toggleSaa()" style="margin-left: 20px;" class="btn btn-primary">Critical Areas ({{ data?.saa.length }})</button>   -->
+      </div>
+    </div>
+    <div *ngIf="show_comments!='Y'&&show_documents!='Y'&&show_photos!='Y'&&show_comments!='Y'" class="card card-body mt-2">
+        <div class="mb-3" style="color: black">
+            <label style="color: black" for="exampleFormControlInput1" class="form-label">Number of Students</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
+          </div>
+          <div class="mb-3">
+            <label style="color: black" for="exampleFormControlInput1" class="form-label">Number of Teachers</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
+          </div>
+          <div class="mb-3">
+            <label style="color: black" for="exampleFormControlInput1" class="form-label">Number of Admin Staff</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
+          </div>
+          <div class="mb-3">
+            <label style="color: black" for="exampleFormControlInput1" class="form-label">Number of Other Staff</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
+          </div>                            
+</div>
+<app-section-comments *ngIf="show_comments=='Y'" [data]="data" [survey_id]="org_id" [section_id]="'20'" (close)="closeAll()"></app-section-comments>
+<app-section-documents *ngIf="show_documents=='Y'" [data]="data"  [survey_id]="org_id" [section_id]="'20'" (close)="closeAll()"></app-section-documents>
+<app-section-photos *ngIf="show_photos=='Y'" [data]="data" [survey_id]="org_id" [section_id]="'20'" (close)="closeAll()"></app-section-photos>
+<!-- <app-section-saa *ngIf="show_saa=='Y'" [data]="data" [survey_id]="org_id" [section_id]="'20'" (close)="closeAll()"></app-section-saa> -->
+<app-section-panel  *ngIf="show_comments!='Y'&&show_documents!='Y'&&show_photos!='Y'&&show_saa!='Y'"  [survey_id]="org_id" [section_id]="'20'"></app-section-panel>
+</div>

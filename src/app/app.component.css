@@ -1,0 +1,16 @@
+.sidebar-wrapper {
+    width: 240px;
+    padding: 0;
+    height: calc(100vh - 20px);
+    border-radius: 10px 90px 90px 10px;
+    background: #ffffff;
+    position: fixed;
+    top: 10px;
+    left: 20px;
+    z-index: 999;
+    -webkit-transition: left .3s ease, width .3s ease;
+    transition: left .3s ease, width .3s ease;
+    /************* Sidebar Brand *************/
+    /************* Sidebar Icon Animation *************/
+    /************* Sidebar Menu *************/
+  }

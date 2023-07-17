@@ -1,0 +1,22 @@
+<sql-form 
+ [table]="'doc_document'" [embedded]="'N'"
+ [title]="'Add Document to Workspace'" [reload]="'Y'"
+ [id]="''" [id2]="workspace_id" [id3]="user_id"
+ [default_col]= "'id'" [default_col2]="'workspace_id'" [default_col3]="'user_id'"
+ >
+<div class="row">
+<div class="col-12">
+<!--   <sql-data-select [col]="'doc_type_id'" [style]="'width:400px; margin-left:10px;'" [label]="'Select Document Type'" [sql]="'select id, options from doc_doc_type order by 2'">
+   </sql-data-select>
+-->
+   <sql-input [col]="'document_name'" [style]="'width:400px; margin-left:10px;'" [label]="'Document Name/Title'">
+  </sql-input>
+
+  <sql-textarea [col]="'document_dsc'" [style]="'width:400px;'" [label]="'Description'">
+  </sql-textarea>
+
+   <sql-submit></sql-submit> 
+</div>
+</div>
+</sql-form>
+<button class="btn btn-light" (click)="cancelUpload()">Cancel / Close</button>

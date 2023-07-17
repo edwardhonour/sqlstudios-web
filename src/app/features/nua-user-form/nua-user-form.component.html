@@ -1,0 +1,102 @@
+<sql-form 
+ [table]="'nua_user'" [embedded]="'Y'"
+ [title]="'nua_user'"
+ [id]="'0'" [id2]="''" [id3]="''"
+ [default_col]= "''" [default_value]="''">
+
+  
+<div class="row">
+<div class="col-sm-12 col-lg-6 col-xl-4">
+    <sql-input [col]="'user_name'" [style]="'width:400px;'" [label]="'user_name'">
+    </sql-input>
+
+    <sql-input [col]="'full_name'" [style]="'width:400px;'" [label]="'full_name'">
+    </sql-input>
+
+    <sql-input [col]="'email'" [style]="'width:400px;'" [label]="'email'">
+    </sql-input>
+
+    <sql-input [col]="'phone_mobile'" [style]="'width:400px;'" [label]="'phone_mobile'">
+    </sql-input>
+
+    <sql-input [col]="'role'" [style]="'width:400px;'" [label]="'role'">
+    </sql-input>
+
+   <sql-datepicker [col]="'last_login_date'" [style]="'width:400px;'" [label]="'last_login_date'">
+    </sql-datepicker>
+ 
+   <sql-data-select [col]="'last_login'" [style]="'width:400px;'" [label]="'last_login'" [sql]="''">
+   </sql-data-select>
+ 
+   <sql-data-select [col]="'last_timestamp'" [style]="'width:400px;'" [label]="'last_timestamp'" [sql]="''">
+   </sql-data-select>
+ 
+    <sql-input [col]="'status'" [style]="'width:400px;'" [label]="'status'">
+    </sql-input>
+
+</div>
+<div class="col-sm-12 col-lg-6 col-xl-4">
+    <sql-input [col]="'login_code'" [style]="'width:400px;'" [label]="'login_code'">
+    </sql-input>
+
+   <sql-data-select [col]="'company_id'" [style]="'width:400px;'" [label]="'company_id'" [sql]="''">
+   </sql-data-select>
+ 
+    <sql-input [col]="'notification_status'" [style]="'width:400px;'" [label]="'notification_status'">
+    </sql-input>
+
+    <sql-input [col]="'invite_code'" [style]="'width:400px;'" [label]="'invite_code'">
+    </sql-input>
+
+   <sql-data-select [col]="'password_status'" [style]="'width:400px;'" [label]="'password_status'" [sql]="''">
+   </sql-data-select>
+ 
+    <sql-input [col]="'avatar'" [style]="'width:400px;'" [label]="'avatar'">
+    </sql-input>
+
+   <sql-data-select [col]="'employee_id'" [style]="'width:400px;'" [label]="'employee_id'" [sql]="''">
+   </sql-data-select>
+ 
+    <sql-input [col]="'first_name'" [style]="'width:400px;'" [label]="'first_name'">
+    </sql-input>
+
+    <sql-input [col]="'last_name'" [style]="'width:400px;'" [label]="'last_name'">
+    </sql-input>
+
+</div>
+<div class="col-sm-12 col-lg-6 col-xl-4">
+    <sql-input [col]="'middle_initial'" [style]="'width:400px;'" [label]="'middle_initial'">
+    </sql-input>
+
+    <sql-input [col]="'address'" [style]="'width:400px;'" [label]="'address'">
+    </sql-input>
+
+    <sql-input [col]="'city'" [style]="'width:400px;'" [label]="'city'">
+    </sql-input>
+
+    <sql-input [col]="'state'" [style]="'width:400px;'" [label]="'state'">
+    </sql-input>
+
+    <sql-input [col]="'zip'" [style]="'width:400px;'" [label]="'zip'">
+    </sql-input>
+
+    <sql-input [col]="'company_name'" [style]="'width:400px;'" [label]="'company_name'">
+    </sql-input>
+
+    <sql-input [col]="'work_phone'" [style]="'width:400px;'" [label]="'work_phone'">
+    </sql-input>
+
+   <sql-data-select [col]="'workgroup_id'" [style]="'width:400px;'" [label]="'workgroup_id'" [sql]="''">
+   </sql-data-select>
+ 
+</div>
+<div class="col-sm-12 col-lg-6 col-xl-4">
+<div class="row">
+<div class="col-sm-12">
+<sql-submit></sql-submit><sql-delete></sql-delete>
+</div>
+</div>
+</div>
+</div>
+</sql-form>
+

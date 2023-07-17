@@ -1,0 +1,101 @@
+<div class="row">
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
+      <app-sitebar-wrapper></app-sitebar-wrapper>       
+    </div>
+  <div class="col-lg-8 col-xl-9 col-xxl-10">
+  <div class="content-wrappe">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <div class="card">
+                <div class="card-header">
+                  <div class="row" style="width:95%">
+                      <div class="col-8">
+                          <h1>Voice Model List</h1>
+                      </div>
+                      <div class="col-2"><button (click)="toggleEdit()" class="btn btn-primary">New Audio Clip</button></div>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                    <div *ngIf="edit=='Y'" class="row" style="background-color: aliceblue;">
+                        <div class="col-6">
+                            <div class="card" style="margin-top:20px;">
+                                <h2 style="margin-left:20px;">Add Voice Model</h2>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlInput1" class="form-label">Voice Name</label>
+                                                <input [(ngModel)]="data.formData['voice_name']" type="text" class="form-control" name="voice_name" id="exampleFormControlInput1" placeholder="">
+                                              </div>
+                                              <div class="mb-3">
+                                                <label for="exampleFormControlInput1" class="form-label">Gender</label>
+                                                <select [(ngModel)]="data.formData['gender']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                    <option value="F">Female</option>
+                                                    <option value="M">Male</option>
+                                                </select>
+                                              </div>          
+                                              <div class="mb-3">
+                                                <label for="exampleFormControlInput1" class="form-label">Trained Model</label>
+                                                <input [(ngModel)]="data.formData['model_id']" type="text" class="form-control" name="model_id" id="exampleFormControlInput1" placeholder="">
+                                              </div>
+                                              <div class="mb-3">
+                                                <label for="exampleFormControlInput1" class="form-label">Speaker Index</label>
+                                                <input [(ngModel)]="data.formData['speaker_index']" type="text" class="form-control" name="speaker_index" id="exampleFormControlInput1" placeholder="">
+                                              </div>                                              
+                                              <div class="mb-3">
+                                                <label for="exampleFormControlTextarea1" class="form-label">Description:</label>
+                                                <textarea [(ngModel)]="data.formData['dsc']" class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+                                              </div>
+                                              <div class="row">
+                                                <div class="col-12" style="text-align: right;">
+                                                    <button (click)="toggleEdit()" class="btn btn-secondary">Cancel</button>
+                                                    <button style="margin-left:20px;" (click)="postForm()" class="btn btn-primary">Submit</button>
+                                                </div>
+                                              </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                  <div class="row">  
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Gender</th>
+                                <th>Model</th>
+                                <th>Speaker Index</th>
+                                <th>Description</th>
+                                <th style="width:100px;">
+    
+                                </th>                              
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let m of data.list">
+                                <td>{{ m.id }}</td>
+                                <td>{{ m.voice_name }}</td>
+                                <td>{{ m.gender }}</td>
+                                <td>{{ m.model_id }}</td>
+                                <td>{{ m.speaker_index }}</td>
+                                <td>{{ m.description }}</td>
+                                <td>
+                                    <!--<audio *ngIf="m.file_name!=''" controls><source src="https://sqlstudios.com/audio/{{ m.file_name }}" type="audio/wav"></audio>-->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>                                  
+                  </div>
+                </div>  
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  </div>
+  </div>

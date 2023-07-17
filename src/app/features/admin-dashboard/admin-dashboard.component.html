@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-lg-4 col-xl-3 col-xxl-2">
+    <app-sitebar-wrapper></app-sitebar-wrapper>       
+  </div>
+<div class="col-lg-8 col-xl-9 col-xxl-10">
+<div class="content-wrappe">
+    <div class="row">
+      <div class="card">
+          <div class="card-header">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Welcome to SQL Studios</h1>
+                </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">  
+                <div class="col-3">
+                  <a [routerLink]="['/text-to-voice']"><div class="card">
+                      <img src="assets/generaldescription.jpg" class="card-img-top" alt="...">
+                      <div class="card-body">
+                          <h2>Audio Clips</h2>
+                      </div>
+                    </div></a>
+              </div>                                    
+            <div class="col-3">
+              <a [routerLink]="['/text-to-video']"><div class="card">
+                  <img src="assets/physicalaccess.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                      <h2>Video Clips</h2>
+                  </div>
+                </div></a>
+          </div>
+            <div class="col-3">
+            <a [routerLink]="['/projects']"><div class="card">
+                <img src="assets/internetaccess.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h2>Projects</h2>
+                </div>
+              </div></a>
+            </div>  
+            <div class="col-3">
+              <a [routerLink]="['/uploads']"><div class="card">
+                  <img src="assets/studio.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                      <h2>Resources</h2>
+                  </div>
+                </div></a>
+              </div>                                  
+            </div>
+          </div>  
+        </div>
+    </div>
+</div>
+</div>
+</div>

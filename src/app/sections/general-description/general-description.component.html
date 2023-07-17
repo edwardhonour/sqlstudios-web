@@ -1,0 +1,101 @@
+<div class="card p-3">
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <img src="assets/generaldescription_v.jpg" class="card-img-top" alt="...">
+              </div>
+        </div>
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">General Background</h5>
+                  <p class="card-text">This section provides background about the facility or location.  Information in this section is also used in the the reports.
+                  </p>
+                  <p class="card-text">If you don't see some questions you expect to see, don't worry.  Everything is covered in other sections.</p>
+                </div>
+              </div>       
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 p-2" style="background-color: lightgray;">
+            <button (click)="togglePhotos()" class="btn btn-primary">Photos ({{ data?.photos.length }})</button>
+            <button (click)="toggleDocuments()" style="margin-left: 20px;" class="btn btn-primary">Documents ({{ data?.documents.length }})</button>
+            <button (click)="toggleComments()" style="margin-left: 20px;" class="btn btn-primary">Comments ({{ data?.comments.length }})</button>            
+            <button (click)="toggleSaa()" style="margin-left: 20px;" class="btn btn-primary">Participants ({{ data?.participants.length }})</button>   
+      </div>
+  </div>
+      <app-section-comments *ngIf="show_comments=='Y'" [data]="data" [survey_id]="org_id" [section_id]="'10'" (close)="closeAll()"></app-section-comments>
+      <app-section-documents *ngIf="show_documents=='Y'" [data]="data"  [survey_id]="org_id" [section_id]="'10'" (close)="closeAll()"></app-section-documents>
+      <app-section-photos *ngIf="show_photos=='Y'" [data]="data" [survey_id]="org_id" [section_id]="'10'" (close)="closeAll()"></app-section-photos>
+      <app-section-participants *ngIf="show_saa=='Y'" [data]="data" [survey_id]="org_id" (close)="closeAll()"></app-section-participants>
+        <div  *ngIf="show_comments!='Y'&&show_documents!='Y'&&show_photos!='Y'&&show_saa!='Y'" class="card card-body mt-2">
+          <div class="mb-3" style="color: black">
+              <label style="color: black" for="exampleFormControlInput1" class="form-label">Facility Name</label>
+              <input type="text" [(ngModel)]="data?.formData.facility_name" class="form-control" id="exampleFormControlInput1" placeholder="">
+            </div>
+            <div class="mb-3" style="color: black">
+              <label style="color: black" for="exampleFormControlInput1" class="form-label">Organization Name</label>
+              <input type="text" [(ngModel)]="data?.formData.org_name" class="form-control" id="exampleFormControlInput1" placeholder="">
+            </div>            
+            <div class="mb-3">
+              <label style="color: black" for="exampleFormControlInput1" class="form-label">Address</label>
+              <input type="text" [(ngModel)]="data?.formData.facility_address"  class="form-control" id="exampleFormControlInput1" placeholder="">
+            </div>
+            <div class="row">
+              <div class="col-3">
+                      <label style="color: black" for="exampleFormControlInput1" class="form-label">City</label>
+                      <input type="text" [(ngModel)]="data?.formData.facility_city"  class="form-control" id="exampleFormControlInput1" placeholder="">
+              </div>
+              <div class="col-3">
+                  <label style="color: black" for="exampleFormControlInput1" class="form-label">State</label>
+                  <input type="text" [(ngModel)]="data?.formData.facility_state"  class="form-control" id="exampleFormControlInput1" placeholder="">
+          </div>
+          <div class="col-3">
+              <label style="color: black" for="exampleFormControlInput1" class="form-label">Zip</label>
+              <input type="text" [(ngModel)]="data?.formData.facility_zip"  class="form-control" id="exampleFormControlInput1" placeholder="">
+          </div>
+          </div>    
+          <div class="row mb-3">
+            <div class="mb-3">
+              <label style="color: black" for="exampleFormControlInput1" class="form-label">Contact Name</label>
+              <input type="text" [(ngModel)]="data?.formData.contact_name"  class="form-control" id="exampleFormControlInput1" placeholder="">
+            </div>
+          </div>   
+          <div class="row mb-3">
+            <div class="mb-3">
+              <label style="color: black" for="exampleFormControlInput1" class="form-label">Contact Email</label>
+              <input type="text" [(ngModel)]="data?.formData.contact_email"  class="form-control" id="exampleFormControlInput1" placeholder="">
+            </div>
+          </div>   
+          <div class="row mb-3">
+            <div class="mb-3">
+              <label style="color: black" for="exampleFormControlInput1" class="form-label">Contact Phone</label>
+              <input type="text" [(ngModel)]="data?.formData.contact_phone"  class="form-control" id="exampleFormControlInput1" placeholder="">
+            </div>  
+            </div>
+            <div class="row mb-3">
+              <div class="mb-3">
+                <label style="color: black" for="exampleFormControlInput1" class="form-label">Business Description</label>
+                <textarea style="width:95%; height: 240px;" type="text" [(ngModel)]="data?.formData.general_description"  class="form-control" id="exampleFormControlInput1" placeholder=""></textarea>
+              </div>  
+              </div>
+              <div class="row mb-3">
+                <div class="mb-3">
+                  <label style="color: black" for="exampleFormControlInput1" class="form-label">Reason for Assessment</label>
+                  <textarea style="width:95%; height: 240px;" type="text" [(ngModel)]="data?.formData.assessment_reason"  class="form-control" id="exampleFormControlInput1" placeholder=""></textarea>
+                </div>  
+                </div>
+
+      <div class="row mb-3">
+        <div class="col-4"></div>
+        <div class="col-4"></div>
+        <div class="col-4">
+            <button class="btn btn-primary" (click)="postForm()">Save Changes</button>
+        </div>
+    </div>  
+
+        
+     <!--      <app-section-background [data]="data?.data" [survey_id]="org_id" [section_id]="'10'" (close)="closeAll()"></app-section-background> -->
+          <app-section-panel  *ngIf="show_comments!='Y'&&show_documents!='Y'&&show_photos!='Y'&&show_saa!='Y'" [survey_id]="org_id" [section_id]="'10'"></app-section-panel>      
+    </div>

@@ -1,0 +1,75 @@
+<div class="card" style="margin-top:20px;">
+    <div class="card-header">
+        <div class="row" style="width:95%;">
+            <div class="col-10">
+                <div style="font-size: 20px;">Section Documents</div>
+            </div>
+            <div  class="col-2" style="text-align: right;">
+                    <button (click)="toggleUpload()" class="btn btn-primary">Upload</button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div *ngIf="uploading=='Y'" class="row">
+            <div class="col-12">
+                <app-upload-document [data]="data" [survey_id]="survey_id" [section_id]="section_id" [asset_id]="asset_id" ></app-upload-document>
+            </div>
+        </div>
+        <div *ngIf="adding=='Y'" class="row">
+            <div class="col-12">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Name</label>
+                    <input [(ngModel)]="document_name" type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Description:</label>
+                    <textarea [(ngModel)]="text" class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <p>Area/Asset Type</p>
+                  <select [(ngModel)]="document_type" class="form-select">
+                    <option selected>Document Type</option>
+                    <option *ngFor="let m of data.documents_types" value="m.id">{{ m.options }}</option>
+                  </select>
+                  </div>
+                  <div class="row">
+                    <div class="col-12" style="text-align: right;">
+                        <button (click)="toggleAdd()" class="btn btn-secondary">Cancel</button>
+                        <button style="margin-left:20px;" (click)="postForm()" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="uploading!='Y'" class="row">
+            <div class="col-12">
+                <h3>Existing Documents (this section)</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Document Name</th>
+                            <th>Date/Time</th>
+                            <th>Type</th>
+                            <th>Uploaded By</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let m of data.documents">
+                            <td>{{ m.document_name }}</td>
+                            <td>{{ m.create_timestamp }}</td>
+                            <td>{{ m.type_name }}</td>
+                            <td>{{ m.full_name }}</td>
+                            <td><button class="btn btn-secondary"><i class="bi bi-download"></i></button></td>
+                            <td><button (click)="edit(m);" class="btn btn-secondary"><i class="bi bi-pencil-square"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12" style="text-align: right;">
+                <button (click)="closeIt()" class="btn btn-secondary">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

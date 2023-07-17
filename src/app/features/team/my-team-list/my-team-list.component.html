@@ -1,0 +1,131 @@
+<div class="row">
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
+      <app-sitebar-wrapper></app-sitebar-wrapper>       
+    </div>
+  <div class="col-lg-8 col-xl-9 col-xxl-10">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-sm-12 p-4">
+                    <h1 style="font-size: 24px; font-weight: bold;">My Team / Collaborators</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row card card-body m-3">
+            <div class="row">
+                <div class="col-6">
+                    <button class="btn btn-secondary" (click)="toggleInviteT()">Invite Team</button>
+                    <button style="margin-left: 20px;" class="btn btn-secondary" (click)="toggleInviteT()">Invite Another School</button>
+                </div>           
+                <div class="col-6" style="text-align: right;">
+                </div>
+            </div>
+        </div> 
+        <div *ngIf="inviting=='Y'" class="card p-3">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Invite Team Member</h2>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" style="color: black" class="form-label">Email address</label>
+                        <input [(ngModel)]="formData.email" type="email" class="form-control" id="exampleFormControlInput1">
+                      </div>
+                      <div class="mb-3">
+                        <label for="exampleFormControlInput1" style="color: black" class="form-label">Full Name</label>
+                        <input [(ngModel)]="formData.full_name" type="text" class="form-control" id="exampleFormControlInput1">
+                      </div>
+                      <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" style="color: black" class="form-label">Custom Message</label>
+                        <textarea [(ngModel)]="formData.custom_msg" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      </div>
+                      <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" style="color: black" class="form-label">Default Role</label>
+                        <select [(ngModel)]="formData.default_role" class="form-select" aria-label="Default select example">
+                            <option selected>-- Select --</option>
+                            <option value="0">Read Only</option>
+                            <option value="2">Read Write</option>
+                            <option value="3">Full Control</option>
+                            <option value="5">Upload Only</option>
+                            <option value="7">Administrator</option>
+                          </select>
+                     </div>
+                     <div class="mb-3">
+                            <button (click)="sendInviteT()" class="btn btn-primary">Send Invitation</button>
+                            <button style="margin-left: 20px;" (click)="toggleInviteT()" class="btn btn-light">Cancel</button>
+                     </div>
+                </div>
+            </div>
+        </div>     
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12">
+                <div class="row" style="width:1000px;">
+                    <div class="col-2">
+                        <span style="font-size:16px;"><b>Search:</b></span> 
+                    </div>
+                    <div class="col-10">
+                        <input type="text" [(ngModel)]="term" class="form-control">
+                    </div>
+                </div>
+                <div class="card card-body"  style="margin-top: 20px;">
+                <h2>My Team</h2>
+        <table class="table table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Mobile Phone</th>
+                    <th>Default Role</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let m of data?.list | filter: term | paginate: { currentPage: p, itemsPerPage: 25 }">
+                    <td>{{ m.id }}</td>
+                    <td>{{ m.full_name }}</td>
+                    <td>{{ m.email }}</td>
+                    <td>{{ m.phone_mobile }}</td>
+                    <td>{{ m.default_role }}</td>
+                    <td><button class="btn btn-primary" [routerLink]="['/user-dashboard',m.storage_key]"><i class="bi bi-clipboard-data"></i></button></td>
+                </tr>
+            </tbody>
+        </table>
+        <paging-controls (pageChange)="p = $event" [isItemsPerPage]="false"  
+        class="my-pagination"></paging-controls>
+</div>
+        <div class="card card-body">
+
+        <h2>Project Collaborators</h2>
+        <table class="table table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Organization</th>
+                    <th>Default Role</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let m of data?.list2 | filter: term | paginate: { currentPage: p, itemsPerPage: 25 }">
+                    <td>{{ m.id }}</td>
+                    <td>{{ m.full_name }}</td>
+                    <td>{{ m.email }}</td>
+                    <td>{{ m.org_name }}</td>
+                    <td>{{ m.default_role }}</td>
+                    <td><button class="btn btn-primary" [routerLink]="['/user-dashboard',m.storage_key]"><i class="bi bi-clipboard-data"></i></button></td>
+                </tr>
+            </tbody>
+        </table>
+        <paging-controls (pageChange)="p = $event" [isItemsPerPage]="false"  
+        class="my-pagination"></paging-controls>
+        </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>

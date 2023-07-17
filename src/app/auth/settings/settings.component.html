@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
+      <app-sitebar-wrapper></app-sitebar-wrapper>       
+    </div>
+<div class="col-lg-8 col-xl-9 col-xxl-10">
+<div style="margin-left: 30px; " class="card">     
+        <div class="row p-3">
+            <div class="col-6">
+                <div class="card p-3">
+                    <div class="card-header">
+                        <h2>User Information</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="row p-1"><div class="col-6">Name</div><div class="col-6">{{ data?.formData?.full_name }}</div></div>      
+                            <div class="row p-1"><div class="col-6">Email</div><div class="col-6">{{ data?.formData?.email }}</div></div>  
+                            <div class="row p-1"><div class="col-6">Status</div><div class="col-6">{{ data?.formData?.status }}</div></div>  
+                            <div class="row p-1"><div class="col-6">Phone</div><div class="col-6">{{ data?.formData?.phone_number }}</div></div>  
+                            <div class="row p-1"><div class="col-6">Address</div><div class="col-6">{{ data?.formData?.address }}</div></div>  
+                            <div class="row p-1"><div class="col-6">City</div><div class="col-6">{{ data?.formData?.city }}</div></div>  
+                            <div class="row p-1"><div class="col-6">State</div><div class="col-6">{{ data?.formData?.state }}</div></div>  
+                            <div class="row p-1"><div class="col-6">Zip</div><div class="col-6">{{ data?.formData?.zip }}</div></div>  
+                        </div>
+                    </div>
+                </div>   
+            </div>      
+            <div class="col-6">
+                    <div class="card p-3">
+                        <div class="card-header">
+                            <h2>Organization Information</h2>
+                        </div>
+                            <div class="row p-1"><div class="col-6">Name</div><div class="col-6">{{ data?.orgData?.org_name }}</div></div>                        
+                            <div class="row p-1"><div class="col-6">Website</div><div class="col-6">{{ data?.orgData?.website }}</div></div>
+                            <div class="row p-1"><div class="col-6">Organization Type</div><div class="col-6">{{ data?.orgData?.org_type }}</div></div>
+                            <div class="row p-1"><div class="col-6">Contact Name</div><div class="col-6">{{ data?.orgData?.contact_name }}</div></div>
+                            <div class="row p-1"><div class="col-6">Administrator Name</div><div class="col-6">{{ data?.orgData?.administrator_name }}</div></div>
+                            <div class="row p-1"><div class="col-6">Mailing Address</div><div class="col-6">{{ data?.orgData?.mailing_address }}</div></div>
+                            <div class="row p-1"><div class="col-6">Delivery Address</div><div class="col-6">{{ data?.orgData?.delivery_address }}</div></div>
+                            <div class="row p-1"><div class="col-6">City</div><div class="col-6">{{ data?.orgData?.city }}</div></div>
+                            <div class="row p-1"><div class="col-6">State</div><div class="col-6">{{ data?.orgData?.state }}</div></div>
+                            <div class="row p-1"><div class="col-6">Zip</div><div class="col-6">{{ data?.orgData?.zip }}</div></div>
+                            <div class="row p-1"><div class="col-6">County</div><div class="col-6">{{ data?.orgData?.county_name }}</div></div>
+                            <div class="row p-1"><div class="col-6">Telephone</div><div class="col-6">{{ data?.orgData?.telephone }}</div></div>
+                            <div class="row p-1"><div class="col-6">Region</div><div class="col-6">{{ data?.orgData?.region_id }}</div></div>
+                            <div class="row p-1"><div class="col-6">Status</div><div class="col-6">{{ data?.orgData?.status }}</div></div>
+                            <div class="row p-1"><div class="col-6">Grades</div><div class="col-6">{{ data?.orgData?.grades }}</div></div>
+                            <div class="row p-1"><div class="col-6">Internal ID</div><div class="col-6">{{ data?.orgData?.internal_org_id }}</div></div>
+                            <div class="row p-1"><div class="col-6">State Rep</div><div class="col-6">{{ data?.orgData?.state_rep }}</div></div>
+                            <div class="row p-1"><div class="col-6">State Senator</div><div class="col-6">{{ data?.orgData?.state_sen }}</div></div>
+                            <div class="row p-1"><div class="col-6">Fed Congress</div><div class="col-6">{{ data?.orgData?.fed_cong }}</div></div>
+                            <div class="row p-1"><div class="col-6">NCES</div><div class="col-6">{{ data?.orgData?.nces_id }}</div></div>
+                        </div>
+                    </div> 
+                </div>
+        </div>   
+        
+    </div>    
+    <div class="relative flex flex-0 items-center justify-start w-full h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
+            <span class="font-medium text-secondary">SQLLabs Inc. &copy; 2023</span>
+    </div>
+    </div>
+    

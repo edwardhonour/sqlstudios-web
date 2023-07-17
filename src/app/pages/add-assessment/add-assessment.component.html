@@ -1,0 +1,136 @@
+<div class="row">
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
+      <app-sitebar-wrapper></app-sitebar-wrapper>       
+    </div>
+  <div class="col-lg-8 col-xl-9 col-xxl-10">
+  <div class="content-wrappe">
+      <div class="row">
+        <div class="col-12">
+<div class="card">
+  <div class="card-header" style="margin-top: 0px;">
+    <h2>Add Threat Category</h2>
+</div>
+<div class="card-body">
+  <div class="row">
+    <div class="col-12" style="background-color: #f3f2f7">
+      <div class="row">
+        <div class="col-12">
+          <h2>Facility Assessment Profile</h2>
+        </div>
+      </div>
+        <div class="row mt-3 mb-3">
+          <div class="col-12">
+            <div [class]="bs_col">
+              <p>Category Name</p>       
+              <mat-form-field 
+                [ngClass]="''" 
+                [style]="'width: 95%;'" 
+                (change)="handleOrgNameChange()"
+                appearance="outline">
+                  <mat-label>Category Name</mat-label>
+                  <input  [name]="'category_name'" [id]="'cat_name'" [(ngModel)]="data.formData['cat_name']" matInput autocomplete="false" placeholder="Category Name">
+                      <mat-icon matSuffix></mat-icon>
+                      <mat-hint></mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>        
+        <div class="row mt-1 mb-3">
+          <div class="col-3">
+            <div [class]="bs_col">
+              <p>Category Type (1-Threat, 2-Concequence)</p>       
+              <mat-form-field 
+                [ngClass]="''" 
+                [style]="'width: 95%;'" 
+                (change)="handleOrgNameChange()"
+                appearance="outline">
+                  <mat-label>Category Type</mat-label>
+                  <input  [name]="'cat_type'" [id]="'cat_type'" [(ngModel)]="data.formData['cat_type']" matInput autocomplete="false" placeholder="Category Type">
+                      <mat-icon matSuffix></mat-icon>
+                      <mat-hint></mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-3">
+            <div [class]="bs_col">
+              <p>Category ID</p>       
+              <mat-form-field 
+                [ngClass]="''" 
+                [style]="'width: 95%;'" 
+                (change)="handleOrgNameChange()"
+                appearance="outline">
+                  <mat-label>Category ID</mat-label>
+                  <input  [name]="'cat_id'" [id]="'cat_id'" [(ngModel)]="data.formData['cat_id']" matInput autocomplete="false" placeholder="Category ID">
+                      <mat-icon matSuffix></mat-icon>
+                      <mat-hint></mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-3">
+            <div [class]="bs_col">
+              <p>Default Threat</p>       
+              <mat-form-field 
+                [ngClass]="''" 
+                [style]="'width: 95%;'" 
+                (change)="handleOrgNameChange()"
+                appearance="outline">
+                  <mat-label>Default Threat</mat-label>
+                  <input  [name]="'default_threat_level'" [id]="'default_threat_level'" [(ngModel)]="data.formData['default_threat_level']" matInput autocomplete="false" placeholder="Default Threat">
+                      <mat-icon matSuffix></mat-icon>
+                      <mat-hint></mat-hint>
+              </mat-form-field>
+            </div>
+          </div>  
+          <div class="col-3">
+            <div [class]="bs_col">
+              <p>Default Cons</p>       
+              <mat-form-field 
+                [ngClass]="''" 
+                [style]="'width: 95%;'" 
+                (change)="handleOrgNameChange()"
+                appearance="outline">
+                  <mat-label>Default Cons</mat-label>
+                  <input  [name]="'default_cons_level'" [id]="'default_cons_level'" [(ngModel)]="data.formData['default_cons_level']" matInput autocomplete="false" placeholder="Default Cons">
+                      <mat-icon matSuffix></mat-icon>
+                      <mat-hint></mat-hint>
+              </mat-form-field>
+            </div>
+          </div>                    
+        </div>   
+      </div>
+        <div class="row mt-1 mb-3">
+          <div class="col-12">
+            <div [class]="bs_col">
+              <p>Contact Name</p>       
+              <mat-form-field 
+                [ngClass]="''" 
+                [style]="'width: 95%;'" 
+                (change)="handleOrgNameChange()"
+                appearance="outline">
+                  <mat-label>Contact Name</mat-label>
+                  <input  [name]="'contact_name'" [id]="'contact_name'" [(ngModel)]="data.formData['contact_name']" matInput autocomplete="false" placeholder="Contact Name">
+                      <mat-icon matSuffix></mat-icon>
+                      <mat-hint></mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>  
+      <div class="row mt-1 mb-3" style="margin-top: 30px;">
+        <div class="col-6"  style="margin-top: 30px;">
+
+        </div>
+        <div class="col-6"  style="margin-top: 30px;">
+          <div [class]="bs_col">
+            <button [routerLink]="['/assessments']"    class="btn btn-light">Cancel</button>    
+            <button (click)="postForm();" class="btn btn-primary" style="margin-left: 30px;">Save</button>    
+          </div>
+        </div>          
+      </div> 
+    </div>
+  </div> 
+</div>
+</div>
+        </div>
+      </div>
+  </div>
+  </div>

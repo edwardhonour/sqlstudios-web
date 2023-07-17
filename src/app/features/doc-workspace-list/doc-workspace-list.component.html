@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-lg-4 col-xl-3 col-xxl-2">
+    <app-sitebar-wrapper></app-sitebar-wrapper>       
+  </div>
+<div class="col-lg-8 col-xl-9 col-xxl-10">
+<sql-add-table [title]="'Workspace Projects'"
+  [use_parameters]="'Y'"
+  (row_click)="processRow($event)"
+  (button_click)="processButton($event)"
+  [sql]="'select * from doc_workspace order by id desc'">
+<th #column id="id">id</th>
+<th #column id="create_timestamp">create_timestamp</th>
+<th #column id="user_full_name">Created By</th>
+<th #column id="workspace_name">Workspace</th>
+<th #column id="workspace_dsc">Decription</th>
+<th #column id="doc_count">Documents</th>
+<th #column id="user_count">Collaborators</th>
+<th #column id="share_count">Shares</th>
+<button #column class="btn btn-primary"><i class="bi bi-clipboard-data"></i></button>
+<div form>
+  <app-doc-workspace-form></app-doc-workspace-form>
+</div>
+</sql-add-table>
+</div>
+</div>

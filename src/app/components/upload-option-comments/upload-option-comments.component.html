@@ -1,0 +1,26 @@
+<div class="card" style="margin-top:20px;">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                  <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Comment:</label>
+                    <textarea [(ngModel)]="data.commentData.text" class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <p>Comment Type:</p>
+                  <select [(ngModel)]="data.commentData.comment_type" class="form-select">
+                    <option selected>Select Comment Type</option>
+                    <option value="1">Include in Report</option>
+                    <option value="2">Private Comment for Team</option>
+                  </select>
+                  </div>
+                  <div class="row">
+                    <div class="col-12" style="text-align: right;">
+                        <button (click)="closeIt()" class="btn btn-secondary">Cancel</button>
+                        <button style="margin-left:20px;" (click)="postForm()" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

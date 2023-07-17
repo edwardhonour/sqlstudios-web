@@ -1,0 +1,29 @@
+<sql-panel [use_router] = "'Y'"
+     [sql] = "'select * from doc_workspace where id = :id'"
+     [card] = "'Y'" [class] = "''" [style] = "''"
+     [title] = "''">
+     <div header>
+         Workspace Dashboard - #{{ data?.workspace_name }}
+     </div>
+
+     <div footer>
+     	<div class="row">
+           	<div class="col-12">
+           		 
+			     </div>
+			</div>
+
+         <!-- content row -->
+     	<div class="row">
+        	      <!-- Left Column -->
+         	  <div class="col-sm-12 col-lg-6 col-xl-4">
+      	      </div>
+           	  <div class="col-sm-12 col-lg-6 col-xl-4">
+           		<!-- Center Column -->
+      	      </div>
+               <div class="col-sm-12 col-lg-6 col-xl-4">
+           		<!-- Right Column -->
+      	      </div>
+     </div>
+	 </div>
+</sql-panel>

@@ -1,0 +1,127 @@
+<div class="row">
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
+      <app-sitebar-wrapper></app-sitebar-wrapper>       
+    </div>
+<div class="col-lg-8 col-xl-9 col-xxl-10">
+<div style="margin-left: 30px; " class="card">
+    <div class="container-fluid p-3">
+        <div class="row card card-body m-3">
+            <div class="col-sm-5" style="background-color: white;">
+                <h1 class="mt-2">Verify Documents</h1>
+                <p>This screen will match the document you upload with our secure vault to ensure the document you received has not been altered.  It will 
+                    also check that the version you upload is the latest version.
+                </p>
+            </div>     
+        </div>      
+        <div class="row p-3">
+            <div class="col-sm-6 p-3">
+                <div class="card p-3">
+                <h2>Upload Document to Verify (document will not be stored)</h2>
+                <file-upload class="fileUpload"  
+                        (ngFileDrop)="drop();" 
+                        [control]="fileUploadControl" 
+                        [(ngModel)]="uploadedFiles" 
+                        name="files"></file-upload>
+                        <div [innerHTML]="uploadedList"></div>
+                        <div class="progress form-group" *ngIf="progress > 0">
+                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress">
+                            </div>
+                        </div>
+                <div class="row p-2">
+                    <div class="col-4"></div>
+                    <div class="col-2"></div>
+                    <div class="col-2"><button (click)="uploadFiles()" class="btn btn-secondary">Upload</button></div>
+                    <div style="margin-left: 20px;" class="col-2"><button (click)="clear()" class="btn btn-light">Clear</button></div>
+                </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                <div class="card-header">
+                    <h2>Results</h2>
+                </div>
+                <div class="card-body">
+                    <h2>{{ d.error_dsc }}</h2>
+                    <p *ngIf="d.error_code==0">
+                        The file has been found in the Document Ledger Vault and is the most recent version of the document.
+                    </p>
+                    <p *ngIf="d.error_code==1">
+                        The file has been found in the Document Ledger Vault <span style="color:red"> IS NOT THE MOST RECENT VERSION OF THE DOCUMENT.</span>
+                    </p>  
+                    <p *ngIf="d.error_code==99">
+                        <span style="color:red">The file WAS NOT FOUND in the Document Ledger Vault.</span>
+                    </p>                                        
+                    <div *ngIf="d.error_code==0" class="card card-body">
+                        <div class="row p-2">
+                            <div class="col-4">
+                                Document Name:
+                            </div>
+                            <div class="col-8">
+                                {{ d.document.document_name }}
+                            </div>
+                        </div>
+                        <div class="row p-2">
+                            <div class="col-4">
+                                Description:
+                            </div>
+                            <div class="col-8">
+                                {{ d.document.document_dsc }}
+                            </div>
+                        </div>    
+                        <div class="row p-2">
+                            <div class="col-4">
+                                Timestamp:
+                            </div>
+                            <div class="col-8">
+                                {{ d.document.create_timestamp }}
+                            </div>
+                        </div>                                                
+                    </div>
+                    <div *ngIf="d.error_code==1" class="card card-body">
+                        <div class="row p-2">
+                            <div class="col-4">
+                                Document Name:
+                            </div>
+                            <div class="col-8">
+                                {{ d.document.document_name }}
+                            </div>
+                        </div>
+                        <div class="row p-2">
+                            <div class="col-4">
+                                Description:
+                            </div>
+                            <div class="col-8">
+                                {{ d.document.document_dsc }}
+                            </div>
+                        </div>    
+                        <div class="row p-2">
+                            <div class="col-4">
+                                Timestamp:
+                            </div>
+                            <div class="col-8">
+                                {{ d.document.create_timestamp }}
+                            </div>
+                        </div>                                                
+                    </div>
+                    <div *ngIf="d.error_code==0||d.error_code==1" class="card card-body" style="margin-top:20px;">
+                        <div class="row p-2">
+                            <div class="col-4">
+                                Workspace Name:
+                            </div>
+                            <div class="col-8">
+                                {{ d.workspace.workspace_name }}
+                            </div>
+                        </div>                                                
+                    </div>                    
+                </div>
+                </div>
+            </div>            
+        </div>   
+    </div>
+        
+    </div>    
+    <div class="relative flex flex-0 items-center justify-start w-full h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
+            <span class="font-medium text-secondary">SQLLabs Inc. &copy; 2023</span>
+    </div>
+    </div>
+    

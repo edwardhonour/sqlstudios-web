@@ -1,0 +1,60 @@
+<div class="row" style="margin-top:-100px;">
+  <div class="col-12">
+  <nav class="card card-body" style="border-radius: 10px 90px 90px 10px;" >
+    <div class="container">
+      <div class="sidebar-brand">
+        <a href="index.html" class="logo">
+          <img class="img-fluid" src="assets/sqllabs-logo-dark.png" alt="Document Ledger" />
+        </a>
+      </div>
+    </div>
+  <div class="sidebar-menu">
+    <div class="sidebarMenuScroll">
+          <div class="flex-shrink-0 p-0 bg-white">
+              <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+                <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+                <span class="fs-5 fw-semibold"> &nbsp; &nbsp; SQL Studios</span>
+              </a>
+              <ul class="list-unstyled ps-0">
+                <li class="mb-1">
+                  <button [routerLink]="['/sadmin']" class="btn align-items-center rounded">
+                    <i class="bi bi-house-add"></i><span class="p-3">Home</span>
+                  </button>
+                </li>
+                <li class="mb-1">
+                  <button [routerLink]="['/text-to-video']" class="btn btn-toggle align-items-center rounded">
+                    <i class="bi bi-file-earmark-richtext"></i><span class="p-3">Video Clips</span>
+                  </button>
+                </li>                  
+                <li class="mb-1">
+                  <button [routerLink]="['/text-to-voice']" class="btn align-items-center rounded">
+                    <i class="bi bi-file-lock"></i><span class="p-3">Voice Clips</span>
+                  </button>
+                </li>
+                <li class="mb-1">
+                  <button [routerLink]="['/projects']" class="btn btn-toggle align-items-center rounded">
+                    <i class="bi bi-file-earmark-richtext"></i><span class="p-3">Projects</span>
+                  </button>
+                </li>
+                <li class="mb-1">
+                  <button [routerLink]="['/uploads']" class="btn btn-toggle align-items-center rounded">
+                    <i class="bi bi-file-earmark-richtext"></i><span class="p-3">Resources</span>
+                  </button>
+                </li>                
+                <li class="mb-1">
+                  <button [routerLink]="['/job-queue']" class="btn btn-toggle align-items-center rounded">
+                    <i class="bi bi-file-earmark-richtext"></i><span class="p-3">Job Queue</span>
+                  </button>
+                </li>            
+                <li class="mb-1">
+                  <button [routerLink]="['/logout']" class="btn btn-toggle align-items-center rounded">
+                    <span class="p-3">Logout</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+    </div>
+  </div>    
+</nav>   
+</div>
+</div>

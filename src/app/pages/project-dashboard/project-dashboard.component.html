@@ -1,0 +1,225 @@
+<div class="row">
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
+      <app-sitebar-wrapper></app-sitebar-wrapper>       
+    </div>
+<div class="col-lg-8 col-xl-9 col-xxl-10">
+<div style="margin-left: 30px; " class="card">
+    <div class="container-fluid p-3">
+        <div class="row card card-body m-3">
+            <div class="col-8" style="background-color: white;">
+                <h1>Project Documents</h1>
+                <h2 class="mt-2">{{ data?.formData?.workspace_name }}</h2>
+            </div>   
+        </div>
+        <div class="row card card-body m-3">
+            <div class="row">
+                <div class="col-6">
+                    <button class="btn btn-secondary" (click)="downloadZip()">Invite Team</button>
+                </div>            
+                <div class="col-6" style="text-align: right;">
+                    <button class="btn btn-danger" (click)="downloadZip()">Download Zip</button>
+                </div>
+            </div>
+        </div>        
+        <div class="row p-3">
+            <div class="col-3">
+                <div class="card card-body">
+                    <h2>Main Menu</h2>
+                    <sql-menu (menuClick)="processClick($event);" [active]="'DOCUMENTS'">
+                        <li #row id="INVITE">Invite Collaborator</li>    
+                        <li #row id="MANAGE">Manage Workspace</li>
+                        <li #row id="ADD">New Document</li>
+                        <li #row id="UPLOAD">Smart Upload</li>                    
+                        <li #row id="SHARE">Share Workspace</li>              
+                    </sql-menu>
+                </div>
+            </div>
+    
+            <div class="col-sm-9">
+                <!-- UPLOADNG -->
+                <div *ngIf="uploading=='Y'" class="card p-3">
+                    <app-smart-upload [workspace_id]="data?.formData?.id" document_id="'0'" (cancel)="closeUpload()"></app-smart-upload>
+                </div>
+                <!-- ADDING -->
+                <div *ngIf="adding=='Y'" class="card p-3">
+                    <app-add-document-form (cancel)="toggleAdd()" [workspace_id]="data?.formData?.id" [user_id]="uid"></app-add-document-form>
+                </div>   
+                <div *ngIf="inviting=='Y'" class="card p-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Invite Collaborator</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" style="color: black" class="form-label">Email address</label>
+                                <input [(ngModel)]="formData.email" type="email" class="form-control" id="exampleFormControlInput1">
+                              </div>
+                              <div class="mb-3">
+                                <label for="exampleFormControlInput1" style="color: black" class="form-label">Full Name</label>
+                                <input [(ngModel)]="formData.full_name" type="text" class="form-control" id="exampleFormControlInput1">
+                              </div>
+                              <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" style="color: black" class="form-label">Custom Message</label>
+                                <textarea [(ngModel)]="formData.custom_msg" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                              </div>
+                              <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" style="color: black" class="form-label">Default Role</label>
+                                <select [(ngModel)]="formData.default_role" class="form-select" aria-label="Default select example">
+                                    <option selected>-- Select --</option>
+                                    <option value="0">Read Only</option>
+                                    <option value="2">Read Write</option>
+                                    <option value="3">Full Control</option>
+                                    <option value="5">Upload Only</option>
+                                    <option value="7">Administrator</option>
+                                  </select>
+                             </div>
+                             <div class="mb-3">
+                                    <button (click)="sendInviteT()" class="btn btn-primary">Send Invitation</button>
+                                    <button style="margin-left: 20px;" (click)="toggleInviteT()" class="btn btn-light">Cancel</button>
+                             </div>
+                        </div>
+                    </div>
+                </div>                         
+                <!-- MANAGING -->
+                <div *ngIf="managing=='Y'" class="card p-3">
+                    <div class="card p-3">
+                        <div class="card-heading">
+                            <h2>Manage Workspace</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="row p-2">
+                                <div class="col-9">
+                                    Administrator
+                                </div>
+                                <div class="col-3">
+                                    Edward Honour
+                                </div>
+                            </div>
+                            <div class="row p-2">
+                                    <div class="col-9">
+                                        Require 2FA for Uploads
+                                    </div>
+                                    <div class="col-3">
+                                        N
+                                    </div>
+                            </div> 
+                            <div class="row p-2">
+                                    <div class="col-9">
+                                        Only allow original author to replace documents
+                                    </div>
+                                    <div class="col-3">
+                                        N
+                                    </div>
+                            </div>
+                            <div class="row p-2">
+                                <div class="col-9">
+                                    Allow public validation of documents
+                                </div>
+                                <div class="col-3">
+                                    Y
+                                </div>
+                            </div>                               
+                            <div class="row p-2">
+                                <div class="col-9">
+                                    Max Document Size
+                                </div>
+                                <div class="col-3">
+                                    50M
+                                </div>
+                            </div>
+                           <div class="row p-2">
+                                    <div class="col-9"></div>
+                                    <div class="col-3">
+                                        <button class="btn btn-secondary">Edit</button>
+                                        <button style="margin-left: 20px;" (click)="closeManage()" class="btn btn-light">Close</button>
+                                    </div>
+                                </div>                                         
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="sharing=='Y'" class="card p-3">
+                    <div class="card p-3">
+                        <div class="card-heading">
+                            <h2>Create a Public ShareManage Workspace</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="row p-2">
+                                <div class="col-9">
+                                    Public URL
+                                </div>
+                                <div class="col-3">
+                                    https://publicschoolnews.com/a7ffs
+                                </div>
+                            </div>     
+                            <div class="row p-2">
+                                <div class="col-9">
+                                    Allow Validation
+                                </div>
+                                <div class="col-3">
+                                    Y
+                                </div>
+                            </div>                                                              
+                            <div class="row p-2">
+                                <div class="col-9">
+                                    
+                                </div>
+                                <div class="col-3">
+                                    <button class="btn btn-secondary">Edit</button>
+                                    <button style="margin-left: 20px;" ;(click)="closeManage()" class="btn btn-light">Close</button>
+                                </div>
+                            </div>                                                        
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-3">
+                    <div class="row">
+                        <div class="col-9">
+                            <h2>Documents</h2>
+                        </div>
+                        <div class="col-3"  style="text-align: right;">
+                            <button (click)="toggleUpload();"  class="btn btn-primary">Smart Upload</button>
+                        </div>
+                    </div>
+                    
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Document Name</th>
+                                <th>Document Type</th>
+                                <th>Version</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let m of data.documents">
+                                <td (click)="toggleVersion(m);">{{ m.create_timestamp }}</td>
+                                <td (click)="toggleVersion(m);">{{ m.document_name }}</td>
+                                <td (click)="toggleVersion(m);">{{ m.extension }}</td>
+                                <td (click)="toggleVersion(m);">{{ m.version }}</td>
+                                <td><button [routerLink]="['/document-dashboard',m.storage_key]" class="btn btn-primary"><i class="bi bi-clipboard-data"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row p-2">
+                        <div class="col-6">
+                        </div>
+                        <div class="col-6" style="text-align: right;">
+                            <button (click)="toggleAdd();" class="btn btn-secondary">Add Document</button>
+                        </div>
+                    </div>  
+                </div>
+                <div *ngIf="version=='Y'" class="card p-3">
+                    <hr/>
+                    <app-sql-upload [document_id]="doc_id" [workspace_id]="data.formData.id"></app-sql-upload>
+                </div>
+            </div>
+        </div>   
+    </div>
+    </div>    
+    <div class="relative flex flex-0 items-center justify-start w-full h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
+            <span class="font-medium text-secondary">SQLLabs Inc. &copy; 2023</span>
+    </div>
+    </div>
+    
