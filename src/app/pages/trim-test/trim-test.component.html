@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-lg-4 col-xl-3 col-xxl-2">
+      <app-sitebar-wrapper></app-sitebar-wrapper>       
+    </div>
+<div class="col-lg-8 col-xl-9 col-xxl-10">
+<div style="margin-left: 30px; " class="card">
+    <div class="container-fluid p-3">
+        <div class="row card card-body m-3">
+            <div class="col-8" style="background-color: white;">
+                <h1>Video Clip Editor</h1>
+            </div>   
+        </div>  
+</div>
+</div>
+</div>
+</div>
+<div class="row-12">
+<video
+  controls=""
+  preload="auto"
+  #video
+  (loadedmetadata)="onMetadata($event, video)"
+>
+
+  <source
+    src="https://sqlstudios.com/video/572/572-123-14.mp4"
+    type="video/mp4"
+  />
+  <p>This browser does not support the video element.</p>
+</video>
+
+<canvas style="padding: 10px;"></canvas>
+
+<div style="padding: 10px;">
+  <button (click)="video.play()">Play</button>
+  <button (click)="video.pause()">Pause</button>
+</div>
+
+<div id="parentContainer">
+  <div class="slidecontainer" [ngStyle]="{ width: scaleWidth + 15 + 'px' }">
+    <input
+      type="range"
+      [min]="rangeMin"
+      [max]="rangeMax"
+      [value]="12"
+      class="slider"
+      id="myRange"
+      step="0.00001"
+      (input)="rangeChange($event.target)"
+    />
+  </div>
+  <div class="main-container" [ngStyle]="{ width: scaleWidth + 'px' }">
+    <div class="timeline-container">
+      <div class="scale">
+        <div id="preview" style="width: inherit; height: 50%"></div>
+        <div id="waveform" style="width: inherit; height: 50%"></div>
+      </div>
+      <div
+        class="pointer"
+        [ngStyle]="{ transform: 'translateX(' + pixelStep + 'px)' }"
+      >
+        <div class="pointer-head"></div>
+        <div class="pointer-body"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

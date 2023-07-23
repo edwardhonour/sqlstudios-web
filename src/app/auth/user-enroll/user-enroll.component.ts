@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { DataService } from '/Users/user/sql-components-site/src/app/data.service';
+import { DataService } from 'src/app/data.service';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
