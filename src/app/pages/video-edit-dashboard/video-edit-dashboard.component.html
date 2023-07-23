@@ -7,77 +7,30 @@
     <div class="container-fluid p-3">
         <div class="row card card-body m-3">
             <div class="col-8" style="background-color: white;">
-                <h1>Video Editor</h1>
+                <h1>Video Clip Editor</h1>
                 <h2 class="mt-2">{{ data?.formData?.project_name }}</h2>
             </div>   
-        </div>
-        <div class="row card card-body m-3">
-            <div class="row">
-                <div class="col-12">
-                    <button class="btn btn-success" (click)="toggleImport();">Import Media Clips</button>
-                    <button style="margin-left:20px;" class="btn btn-primary" (click)="toggleUpload">Upload Media</button>
-                    <div style="margin-top:20px;" *ngIf="show_import=='Y'" class="row">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-6">
-                                        Media Type:<br><select [(ngModel)]="media_type" class="form-control"><option value="video">Video Clip</option><option value="audio">Audio Clip</option><option value="uploaded">Uploaded Media</option></select>
-                                    </div>
-                                </div>
-                                <div class="row" *ngIf="media_type=='video'">
-                                    <div class="col-12">
-                                        <h2 style="margin-top:20px;">Select Video Clip</h2>
-                                        <div class="row">
-                                            <div *ngFor="let m of data.video" class="col-3 card">
-                                                <div class="card-header">
-                                                    {{ m.id }}: {{ m.video_name }}
-                                                </div>
-                                                <div class="card-body">
-                                                    <video style="max-width:280px" class="library" controls preload="auto" data-config="some-js-object-here">
-                                                        <source src="{{ m.file_url }}" type='video/mp4'>
-                                                      </video>  
-                                                    <button (click)="addVideo(m);" class="btn btn-light">Add to Project</button>
-                                                </div>
-                                            </div>
-                                        </div>  
-                                    </div>
-                                </div>
-                                <div class="row" *ngIf="media_type=='audio'">
-                                    <div class="col-12">
-                                        <h2 style="margin-top:20px;">Select Audio Clip</h2> 
-                                        <div class="row">
-                                            <div *ngFor="let m of data.audio" class="col-3 card">
-                                                <div class="card-header">
-                                                    {{ m.id }}: {{ m.voice_name }}-{{ m.script_name }}
-                                                </div>
-                                                <div class="card-body">
-                                                    {{ m.script }}<br>
-                                                    <button (click)="addAudio(m);" class="btn btn-light">Add to Project</button>
-                                                </div>
-                                            </div>
-                                        </div>    
-                                    </div>       
-                                </div>   
-                                <div class="row" *ngIf="media_type=='uploaded'">
-                                    <div class="col-12">
-                                        <h2 style="margin-top:20px;">Select Media Clip</h2>
-                                    </div><h2 style="margin-top:20px;">Select Media Clip</h2>
-                                </div>                                
-                            </div>
-                        </div>
-                    </div>
-                </div>            
-            </div>
-        </div>        
+        </div>  
         <div class="row p-3">
             <div class="col-3">
                 <div class="card card-body">
-                    <h2>Main Menu</h2>
-                    <sql-menu (menuClick)="processClick($event);" [active]="'DOCUMENTS'">
-                        <li #row id="ADD">Add Captions</li>    
-                        <li #row id="MERGE">Merge Videos</li>
-                        <li #row id="ARRANGE">Arrange Media</li>
-                        <li #row id="EDIT">Edit Clip</li>                              
+                    <h2>Edit Menu</h2>
+                    <sql-menu (menuClick)="processClick($event);" [active]="'BACKGROUND'">
+                        <li #row id="BACKGROUND">Change Background</li>
+                        <li #row id="CAPTIONS">Add Captions</li>    
+                        <li #row id="TEXT">Add Text</li>
+                        <li #row id="SPLIT">Split Media</li>
+                        <li #row id="EXTRACT">Extract Media Section</li>
+                        <li #row id="SRT">Create SRT (Closed Captions) Text</li>                                
+                        <li #row id="TRIM-FRONT">Trim Front</li>          
+                        <li #row id="TRIM-BACK">Trim Back</li>ß
+                        <li #row id="POSITION">Change Position</li>
+                        <li #row id="RESIZE">Resize Clip</li>
+                        <li #row id="OVERLAY">Overlay Clip</li>
+                        <li #row id="REMOVE-AUDIO">Remove Audio</li>
+                        <li #row id="EXTRACT-AUDIO">Extract Audio</li>
+                        <li #row id="ADD-BACKGROUND-AUDIO">Add Background Audio</li>
+                        <li #row id="RESTORE">Restore Original</li>
                     </sql-menu>
                 </div>
             </div>
@@ -87,45 +40,304 @@
                 </div>
                 <div class="card p-3">
                     <div class="row">
-                        <div class="col-12">
-                            <h2>Project Timeline</h2>
+                        <div class="col-6">
+                            <h2>Current Video Clip</h2>
+                        </div>
+                        <div class="col-6">
+                            <video style="max-width:480px" class="library" controls preload="auto" data-config="some-js-object-here">
+                                <source src="{{ data.file_url }}" type='video/mp4'>
+                              </video>  
                         </div>
                     </div> 
                 </div>
-                <div class="card p-3">
+                <div *ngIf="section=='BACKGROUND'" class="card p-3">
                     <div class="row">
                         <div class="col-12">
-                            <h2>Media Clips</h2>
-                            <h2 style="margin-top:20px;">Video Clips</h2>
+                            <h2>Change Background</h2>
                             <div class="row">
-                                <div *ngFor="let m of data.video_media" class="col-4 card">
-                                    <div class="card-header">
-                                        {{ m.id }}: {{ m.video_name }}
-                                    </div>
                                     <div class="card-body">
-                                        <video style="max-width:280px" class="library" controls preload="auto" data-config="some-js-object-here">
-                                            <source src="{{ m.file_url }}" type='video/mp4'>
-                                          </video>  
-                                          <div class="row">
+                                        <div class="row">
                                             <div class="col-6">
-                                                <button style="width:95%" (click)="addVideo(m);" class="btn btn-success">Add Timeline</button>
+                           <!--                   <h2>Select a Background</h2>
+                                              <div class="row">
+                                                <div *ngFor="let k of data.background_images" class="col-3">
+                                                  <div class="card">
+                                                    <img src="https://sqlstudios.com/uploads/{{ k.img_path }}" class="card-img-top" alt="...">
+                                                    <div class="card-body">
+                                                      <button (click)="selectBack(k);" class="btn btn-light">{{ k.upload_name }} (image)</button>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div *ngFor="let k of data.background_videos" class="col-3">
+                                                  <div class="card">
+                                                    <video style="max-width:480px" class="library" controls preload="auto" data-config="some-js-object-here">
+                                                      <source src="https://sqlstudios.com/uploads/{{ k.img_path }}" type='video/mp4'>
+                                                    </video>    
+                                                    <div class="card-body">
+                                                      <button (click)="selectBack(k);" class="btn btn-light">{{ k.upload_name }} (video)</button>
+                                                    </div>
+                                                  </div>
+                                                </div>                              
+                                              </div>  -->
+                                              </div>
+                                              <div class="col-6">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <p>Background: </p>
+                                                        <select [(ngModel)]="data.backData['image_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                            <option *ngFor="let n of data.background_images" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
+                                                            <option *ngFor="let n of data.background_videos" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
+                                                          </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">
+
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <button (click)="postBackgroundChange()" style="margin-top:10px; width:200px;" class="btn btn-primary">Submit</button><br>    
+                                                    </div>
+                                                </div>
+                                              </div>
+         
+                                    </div>
+                            </div>  
+                        </div>
+                        </div>
+                </div>  
+                </div>               
+                <div *ngIf="section=='CAPTIONS'" class="card p-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Add Captions</h2>
+                            <div class="row">
+                                <div class="card-body">
+                                    <div class="row">
+                                          <div class="col-6">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <p>Closed Captioning (SRT) File: </p>
+                                                    <select [(ngModel)]="data.backData['image_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                        <option *ngFor="let n of data.background_images" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
+                                                        <option *ngFor="let n of data.background_videos" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
+                                                      </select>
+                                                </div>
                                             </div>
-                                            <div class="col-6">
-                                                <button style="width:95%" (click)="addVideo(m);" class="btn btn-danger">Remove</button>
+                                            <div class="row">
+                                                <div class="col-6">
+
+                                                </div>
+                                                <div class="col-6">
+                                                    <button (click)="postBackgroundChange()" style="margin-top:10px; width:200px;" class="btn btn-primary">Submit</button><br>    
+                                                </div>
                                             </div>
                                           </div>
-                                          <div style="margin-top:20px;" class="row">
-                                            <div class="col-12">
-                                                <button style="width:95%" [routerLink]="['/edit',m.id]" class="btn btn-secondary">Edit Clip</button>
+     
+                                </div>
+                        </div>  
+                    </div>
+                        </div>
+                        </div>
+                </div> 
+                <div *ngIf="section=='TEXT'" class="card p-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Add Text to Clip</h2>
+                            <div class="row">
+                                <div class="card-body">
+                                    <div class="row">
+                                          <div class="col-6">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <p>Text To Add: </p>
+                                                    <textarea [(ngModel)]="data.backData['image_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                    </textarea>
+                                                </div>
                                             </div>
-                                          </div>                                    
+                                            <div class="row">
+                                                <div class="col-6">
+
+                                                </div>
+                                                <div class="col-6">
+                                                    <button (click)="postBackgroundChange()" style="margin-top:10px; width:200px;" class="btn btn-primary">Submit</button><br>    
+                                                </div>
+                                            </div>
+                                          </div>
+     
+                                </div>
+                        </div>  
+                    </div>
+                        </div>
+                        </div>
+                </div> 
+                <div *ngIf="section=='SPLIT'" class="card p-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Split Video</h2>
+                            <div class="row">
+                                <div *ngFor="let m of data.video_media" class="col-4 card">
+                                    <div class="card-body">
+                                    
                                     </div>
                                 </div>
                             </div>  
                         </div>
                         </div>
-                    </div> 
-                </div>
+                </div> 
+                <div *ngIf="section=='EXTRACT'" class="card p-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Extract Section of Clip</h2>
+                            <div class="row">
+                                <div *ngFor="let m of data.video_media" class="col-4 card">
+                                    <div class="card-header">
+                                        {{ m.id }}: {{ m.video_name }}
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                        </div>
+                </div> 
+                <div *ngIf="section=='SRT'" class="card p-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Create Closed Captions (SRT) File</h2>
+                            <div class="row">
+                                <div *ngFor="let m of data.video_media" class="col-4 card">
+                                    <div class="card-header">
+                                        {{ m.id }}: {{ m.video_name }}
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                        </div>
+                </div> 
+                <div *ngIf="section=='TRIM-FRONT'" class="card p-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Trim Front of Video</h2>
+                            <div class="row">
+                                <div *ngFor="let m of data.video_media" class="col-4 card">
+                                    <div class="card-header">
+                                        {{ m.id }}: {{ m.video_name }}
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                        </div>
+                </div> 
+                <div *ngIf="section=='TRIM-BACK'" class="card p-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Trim Back of Video</h2>
+                            <div class="row">
+                                <div *ngFor="let m of data.video_media" class="col-4 card">
+                                    <div class="card-header">
+                                        {{ m.id }}: {{ m.video_name }}
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                        </div>
+                </div> 
+                <div *ngIf="section=='POSITION'" class="card p-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Add Captions</h2>
+                            <div class="row">
+                                <div *ngFor="let m of data.video_media" class="col-4 card">
+                                    <div class="card-header">
+                                        {{ m.id }}: {{ m.video_name }}
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                        </div>
+                </div> 
+                <div *ngIf="section=='RESIZE'" class="card p-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Add Captions</h2>
+                            <div class="row">
+                                <div *ngFor="let m of data.video_media" class="col-4 card">
+                                    <div class="card-header">
+                                        {{ m.id }}: {{ m.video_name }}
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                        </div>
+                </div>  
+                <div *ngIf="section=='OVERLAY'" class="card p-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Add Captions</h2>
+                            <div class="row">
+                                <div *ngFor="let m of data.video_media" class="col-4 card">
+                                    <div class="card-header">
+                                        {{ m.id }}: {{ m.video_name }}
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                        </div>
+                </div>       
+                <div *ngIf="section=='REMOVE-AUDIO'" class="card p-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Remove Audio</h2>
+                            <div class="row">
+                                <div *ngFor="let m of data.video_media" class="col-4 card">
+                                    <div class="card-header">
+                                        {{ m.id }}: {{ m.video_name }}
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                        </div>
+                </div>    
+                <div *ngIf="section=='EXTRACT-AUDIO'" class="card p-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Extract Audio</h2>
+                            <div class="row">
+                                <div *ngFor="let m of data.video_media" class="col-4 card">
+                                    <div class="card-header">
+                                        {{ m.id }}: {{ m.video_name }}
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                        </div>
+                </div>                                       
+                <div *ngIf="section=='ADD-BACKGROUND-AUDIO'" class="card p-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Add Background Audio</h2>
+                            <div class="row">
+                                <div *ngFor="let m of data.video_media" class="col-4 card">
+                                    <div class="card-header">
+                                        {{ m.id }}: {{ m.video_name }}
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                        </div>
+                </div> 
+                <div *ngIf="section=='RESTORE'" class="card p-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Restore Original</h2>
+                            <div class="row">
+                                <div *ngFor="let m of data.video_media" class="col-4 card">
+                                    <div class="card-header">
+                                        {{ m.id }}: {{ m.video_name }}
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                        </div>
+                </div>                 
                 <div *ngIf="version=='Y'" class="card p-3">
                     <hr/>
                     <app-sql-upload [document_id]="doc_id" [workspace_id]="data.formData.id"></app-sql-upload>

@@ -71,6 +71,7 @@ export class VideoEditDashboardComponent  {
   show_import: any = 'N';
   show_upload: any = 'N';
   media_type: any = '';
+  section: any='BACKGROUND';
 
   version: any = 'N';
   k: any;
@@ -114,7 +115,13 @@ export class VideoEditDashboardComponent  {
     this.data.importData['import_type']='audio';
     this.postImport();
   }
+selectBack(m:any) {
 
+}
+
+postBackgroundChange() {
+
+}
   postImport() {
     this._dataService.postForm("post-import", this.data.importData).subscribe((data:any)=>{
     //    this.data=data;
@@ -177,55 +184,7 @@ closeUpload() {
   }
 
   processClick(m: any) {
-    if (m.id=='DOCUMENTS') { 
-      this.adding='N';
-      this.uploading='N';
-      this.inviting='N';
-      this.sharing='N';
-      this.managing='N';
-    }
-
-    if (m.id=='MANAGE') { 
-      this.adding='N';
-      this.uploading='N';
-      this.inviting='N';
-      this.sharing='N';
-      this.managing='Y';
-    }
-
-    if (m.id=='ADD') { 
-      this.adding='Y';
-      this.uploading='N';
-      this.inviting='N';
-      this.sharing='N';
-      this.managing='N';
-    }
-
-    if (m.id=='INVITE') { 
-      this.adding='N';
-      this.uploading='N';
-      this.inviting='Y';
-      this.sharing='N';
-      this.managing='N';
-    }
-
-    if (m.id=='UPLOAD') { 
-      this.adding='N';
-      this.uploading='Y';
-      this.inviting='N';
-      this.sharing='N';
-      this.managing='N';
-    }
-
-
-    if (m.id=='SHARING') { 
-      this.adding='N';
-      this.uploading='N';
-      this.inviting='N';
-      this.sharing='Y';
-      this.managing='N';
-    }
-
+    this.section=m.id;
   }
 
   closeManage() {
