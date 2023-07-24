@@ -16,17 +16,12 @@
                 <div class="card card-body">
                     <h2>Edit Menu</h2>
                     <sql-menu (menuClick)="processClick($event);" [active]="'BACKGROUND'">
-                        <li #row id="BACKGROUND">Change Background</li>
+                        <li #row id="BACKGROUND">Change Background(s)</li>
+                        <li #row id="POSITION">Change Position</li>
                         <li #row id="CAPTIONS">Add Captions</li>    
                         <li #row id="TEXT">Add Text</li>
-                        <li #row id="SPLIT">Split Media</li>
-                        <li #row id="EXTRACT">Extract Media Section</li>
+                        <li #row id="TRIM">Trim Media</li>
                         <li #row id="SRT">Create SRT (Closed Captions) Text</li>                                
-                        <li #row id="TRIM-FRONT">Trim Front</li>          
-                        <li #row id="TRIM-BACK">Trim Back</li>ß
-                        <li #row id="POSITION">Change Position</li>
-                        <li #row id="RESIZE">Resize Clip</li>
-                        <li #row id="OVERLAY">Overlay Clip</li>
                         <li #row id="REMOVE-AUDIO">Remove Audio</li>
                         <li #row id="EXTRACT-AUDIO">Extract Audio</li>
                         <li #row id="ADD-BACKGROUND-AUDIO">Add Background Audio</li>
@@ -42,6 +37,28 @@
                     <div class="row">
                         <div class="col-6">
                             <h2>Current Video Clip</h2>
+                            <table class="table table-condensed table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th style="width:150px;">Clip ID</th><td>{{ data.formData['id'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width:150px;">Video Name</th><td>{{ data.formData['clip_name'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width:150px;">Face Name</th><td>{{ data.formData['face_name'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width:150px;">Voice Name</th><td>{{ data.formData['voice_name'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width:150px;">Duration</th><td>{{ data.formData['duration'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width:150px;">Version</th><td>{{ data.formData['version'] }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                         <div class="col-6">
                             <video style="max-width:480px" class="library" controls preload="auto" data-config="some-js-object-here">

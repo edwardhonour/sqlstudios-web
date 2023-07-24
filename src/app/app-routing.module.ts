@@ -52,7 +52,7 @@ const routes: Routes = [
   { path: 'text-to-voice', component: AudioListComponent, resolve: { data: DataResolver }},
   { path: 'projects', component: ProjectListComponent, resolve: { data: DataResolver }},
   { path: 'project/:1', component: ProjectDashboardComponent, resolve: { data: DataResolver }},
-  { path: 'edit/:1', component: TrimTestComponent, resolve: { data: DataResolver }},
+  { path: 'edit/:1', component: VideoEditDashboardComponent, resolve: { data: DataResolver }},
   { path: 'text-to-video', component: VideoListComponent, resolve: { data: DataResolver }},
   { path: 'video', component: VideoListComponent, resolve: { data: DataResolver }},
   { path: 'voices', component: VoiceListComponent, resolve: { data: DataResolver }},

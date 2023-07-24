@@ -143,21 +143,18 @@
                       </thead>
                       <tbody>
                         <ng-container *ngFor="let m of data.list">
-                          <tr *ngIf="m.edit=='N'&&m.speed=='N'&&m.back=='N'">
+                          <tr>
                             <td>{{ m.id }}</td>
                             <td>{{ m.create_timestamp }}</td>
                             <td>{{ m.video_name }}</td>
                             <td>{{ m.face_name }}</td>
                             <td>{{ m.script }}</td>
                             <td>{{ m.status }}</td>
-                            <td *ngIf="m.video=='N'">
-                              <button *ngIf="m.show=='Y'" (click)="toggleV(m);" style="margin-top:10px; width:200px;" class="btn btn-success">View Video</button>
-                              <button  *ngIf="m.show_green=='Y'" (click)="toggleB(m);" style="margin-top:10px; width:200px;" class="btn btn-secondary">Change Background</button>                            
+                            <td *ngIf="m.video=='N'"> 
+                              <button *ngIf="m.show=='Y'" (click)="toggleV(m);" style="margin-top:10px; width:200px;" class="btn btn-success">View Video</button>                      
                             </td>
                             <td *ngIf="m.video=='N'">
-                              <button (click)="toggleS(m);" style="margin-top:10px; width:200px;" class="btn btn-secondary">Change Position</button>
-                              <button (click)="toggleV(m);" style="margin-top:10px; width:200px;" class="btn btn-secondary">Trim Video</button>
-                              <button (click)="toggleE(m);" style="margin-top:10px; width:200px;" class="btn btn-secondary">Split Video</button>                                  
+                              <button [routerLink]="['/edit',m.id]" style="margin-top:10px; width:200px;" class="btn btn-secondary">Edit Clip</button>                            
                             </td>
                             <td colspan="2" *ngIf="m.video=='Y'">
                               <video style="max-width:480px" class="library" controls preload="auto" data-config="some-js-object-here">
@@ -166,7 +163,7 @@
                               <button (click)="toggleV(m);" style="margin-top:10px; width:200px;" class="btn btn-light">Close</button>
                             </td>
                         </tr>
-                        <tr *ngIf="m.back=='Y'">
+<!--                      <tr *ngIf="m.back=='Y'">
                           <td colspan="7">
                             <h2>Select a Background</h2>
                             <div class="row">
@@ -207,8 +204,8 @@
                           <td>
                           
                           </td>
-                      </tr>
-                        <tr *ngIf="m.edit=='Y'">
+                      </tr>  -->
+                      <!--  <tr *ngIf="m.edit=='Y'">
                           <td>{{ m.id }}</td>
                           <td></td>
                           <td></td>
@@ -221,8 +218,8 @@
                           <td>
                           
                           </td>
-                      </tr>
-                      <tr *ngIf="m.position=='Y'">
+                      </tr>  -->
+                      <!-- <tr *ngIf="m.position=='Y'">
                         <td>{{ m.id }}</td>
                         <td></td>
                         <td></td>
@@ -243,7 +240,7 @@
                         <td>
                         
                         </td>
-                    </tr>                        
+                    </tr>  -->                      
                       <tr *ngIf="m.video=='B'">
                         <td>{{ m.id }}</td>
                         <td colspan="6">
