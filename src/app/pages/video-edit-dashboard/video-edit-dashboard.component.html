@@ -15,7 +15,7 @@
             <div class="col-3">
                 <div class="card card-body">
                     <h2>Edit Menu</h2>
-                    <sql-menu (menuClick)="processClick($event);" [active]="'BACKGROUND'">
+                    <sql-menu (menuClick)="processClick($event);">
                         <li #row id="BACKGROUND">Change Background(s)</li>
                         <li #row id="POSITION">Change Position</li>
                         <li #row id="CAPTIONS">Add Captions</li>    
@@ -35,7 +35,7 @@
                 </div>
                 <div class="card p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <h2>Current Video Clip</h2>
                             <table class="table table-condensed table-striped">
                                 <tbody>
@@ -60,69 +60,199 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="col-6">
-                            <video style="max-width:480px" class="library" controls preload="auto" data-config="some-js-object-here">
+                        <div class="col-7">
+                            <video #videoPlayer (timeupdate)="setCurrentTime($event)" style="max-width:480px" class="library" controls preload="auto" data-config="some-js-object-here">
                                 <source src="{{ data.file_url }}" type='video/mp4'>
-                              </video>  
+                              </video>
+                              <div *ngIf="section=='BACKGROUND'||section=='POSITION'||section=='TEXT'||section=='TRIM'||section=='EXTRACT-AUDIO'"class="row">
+                                <div class="col-12">
+                                    <button class="btn btn-primary">From Beginning</button>
+                                    <button style="margin-left:20px;" class="btn btn-primary" (click)="getTime();">Set Start</button>
+                                    <button style="margin-left:20px;" class="btn btn-primary" (click)="getTime();">Set End</button>
+                                    <button style="margin-left:20px;" class="btn btn-primary" (click)="getTime();">Until End</button>
+                                </div>
+                                <div class="col-12"><p>Use the video play above to select your start and end positions.</p></div>
+                              </div>  
+
                         </div>
                     </div> 
-                </div>
-                <div *ngIf="section=='BACKGROUND'" class="card p-3">
                     <div class="row">
                         <div class="col-12">
-                            <h2>Change Background</h2>
+                            <div *ngIf="section=='BACKGROUND'" class="card p-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2>Change Background</h2>
+                                        <div class="row">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                          <h2>Select a Background</h2>
+                                                          <div class="row">
+                                                            <div *ngFor="let k of data.background_images" class="col-3">
+                                                              <div class="card">
+                                                                <img src="https://sqlstudios.com/uploads/{{ k.img_path }}" class="card-img-top" alt="...">
+                                                                <div class="card-body">
+                                                                  <a (click)="selectBack(k);">{{ k.upload_name }} (image)</a>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                            <div *ngFor="let k of data.background_videos" class="col-3">
+                                                              <div class="card">
+                                                                <video style="max-width:480px" class="library" controls preload="auto" data-config="some-js-object-here">
+                                                                  <source src="https://sqlstudios.com/uploads/{{ k.img_path }}" type='video/mp4'>
+                                                                </video>    
+                                                                <div class="card-body">
+                                                                  <a (click)="selectBack(k);">{{ k.upload_name }} (video)</a>
+                                                                </div>
+                                                              </div>
+                                                            </div>                              
+                                                          </div>  
+                                                          </div>
+                                                          <div class="col-6">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <p>Background: </p>
+                                                                    <select [(ngModel)]="data.backData['image_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                        <option *ngFor="let n of data.background_images" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
+                                                                        <option *ngFor="let n of data.background_videos" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
+                                                                      </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-6">
+            
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <button (click)="postBackgroundChange()" style="margin-top:10px; width:200px;" class="btn btn-primary">Submit</button><br>    
+                                                                </div>
+                                                            </div>
+                                                          </div>
+                     
+                                                </div>
+                                        </div>  
+                                    </div>
+                                    </div>
+                            </div>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                <div class="card p-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2>Backgrounds</h2>
+                                </div>
                             <div class="row">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-6">
-                           <!--                   <h2>Select a Background</h2>
-                                              <div class="row">
-                                                <div *ngFor="let k of data.background_images" class="col-3">
-                                                  <div class="card">
-                                                    <img src="https://sqlstudios.com/uploads/{{ k.img_path }}" class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                      <button (click)="selectBack(k);" class="btn btn-light">{{ k.upload_name }} (image)</button>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                                <div *ngFor="let k of data.background_videos" class="col-3">
-                                                  <div class="card">
-                                                    <video style="max-width:480px" class="library" controls preload="auto" data-config="some-js-object-here">
-                                                      <source src="https://sqlstudios.com/uploads/{{ k.img_path }}" type='video/mp4'>
-                                                    </video>    
-                                                    <div class="card-body">
-                                                      <button (click)="selectBack(k);" class="btn btn-light">{{ k.upload_name }} (video)</button>
-                                                    </div>
-                                                  </div>
-                                                </div>                              
-                                              </div>  -->
-                                              </div>
-                                              <div class="col-6">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <p>Background: </p>
-                                                        <select [(ngModel)]="data.backData['image_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
-                                                            <option *ngFor="let n of data.background_images" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
-                                                            <option *ngFor="let n of data.background_videos" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
-                                                          </select>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-6">
-
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <button (click)="postBackgroundChange()" style="margin-top:10px; width:200px;" class="btn btn-primary">Submit</button><br>    
-                                                    </div>
-                                                </div>
+                                              <div class="col-12">
+                                                    <table class="table table-striped table-condensed">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Name</th>
+                                                                <th>Start</th>
+                                                                <th>End</th>
+                                                                <th>Transition</th>
+                                                                <th>Offset</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
                                               </div>
          
                                     </div>
                             </div>  
                         </div>
                         </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card">
+                                <div class="card-header">
+                            <h2>Positions</h2>
+                            </div>
+                            <div class="row">
+                                    <div class="card-body">
+                                        <div class="row">
+                                              <div class="col-12">
+                                                <table class="table table-striped table-condensed">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Position</th>
+                                                            <th>Start</th>
+                                                            <th>End</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                              </div>
+                                        </div>
+                                    </div>
+                            </div>  
+                        </div>
+                        </div>                        
                 </div>  
-                </div>               
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Overlays</h2>
+                            </div>
+                        <div class="row">
+                                <div class="card-body">
+                                    <div class="row">
+                                          <div class="col-12">
+                                                <table class="table table-striped table-condensed">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Start</th>
+                                                            <th>End</th>
+                                                            <th>Transition</th>
+                                                            <th>Offset</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                          </div>
+     
+                                </div>
+                        </div>  
+                    </div>
+                    </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-header">
+                        <h2>Audio Tracks</h2>
+                        </div>
+                        <div class="row">
+                                <div class="card-body">
+                                    <div class="row">
+                                          <div class="col-12">
+                                            <table class="table table-striped table-condensed">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Start</th>
+                                                        <th>End</th>
+                                                        <th>Vol. Level</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                          </div>
+                                    </div>
+                                </div>
+                        </div>  
+                    </div>
+                    </div>                        
+            </div>  
+                </div>                                
                 <div *ngIf="section=='CAPTIONS'" class="card p-3">
                     <div class="row">
                         <div class="col-12">

@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, Output, EventEmitter, HostBindingDecorator, HostListener, HostBinding } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output, EventEmitter, HostBindingDecorator, HostListener, HostBinding, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { FormsModule,  FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-
 import { DataService } from 'src/app/data.service';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxTablePaginationModule } from 'ngx-table-pagination';
@@ -30,6 +29,7 @@ import { SitebarWrapperComponent } from 'src/app/template/sitebar-wrapper/siteba
 export class VideoEditDashboardComponent  {
 
   @Output() onFileDropped = new EventEmitter<any>();
+  @ViewChild("videoPlayer") videoplayer!: HTMLVideoElement;
 
   @HostListener('dragover', ['$event']) onDragOver(evt: any) {
     evt.preventDefault();
@@ -57,7 +57,9 @@ export class VideoEditDashboardComponent  {
     private _dataService: DataService,
     public http: HttpClient,
     private fileUploadService: DataService
-) { }
+) { 
+
+}
   public uploadedFiles: Array<File> = [];
   data: any; 
 
@@ -71,7 +73,7 @@ export class VideoEditDashboardComponent  {
   show_import: any = 'N';
   show_upload: any = 'N';
   media_type: any = '';
-  section: any='BACKGROUND';
+  section: any='BACKGROUN';
 
   version: any = 'N';
   k: any;
@@ -89,6 +91,13 @@ export class VideoEditDashboardComponent  {
     default_role: '0'
   }
 
+  currentTime: number=0;;
+
+  setCurrentTime(data: any) {
+     this.currentTime = data.target.currentTime;
+     console.log(this.currentTime);
+  }
+
   ngOnInit(): void {      
           this._activatedRoute.data.subscribe(({ 
             data, menudata, userdata })=> { 
@@ -102,6 +111,10 @@ export class VideoEditDashboardComponent  {
               this.uid=localStorage.getItem('uid');
             }
           }) 
+  }
+
+  getTime() {
+    console.log(this.videoplayer);
   }
 
   addVideo(m:any) {

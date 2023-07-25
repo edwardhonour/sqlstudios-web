@@ -20,6 +20,7 @@ export class DataService {
   survey: any;
 
   baseApiUrl = 'https://sqlstudios.com/up.php';  
+  baseAudioUrl = 'https://sqlstudios.com/upaudio.php';  
   baseVerifyUrl = 'https://sqlstudios.com/verify.php';  
   public valid: any = {};
 
@@ -204,6 +205,21 @@ postTemplate(file_data:any) {
     });
   }
 
+  uploadAudio(file:File, postData: any): Observable<any> {
+
+    const formData = new FormData();
+
+    formData.append('file', file, file.name);
+    let k: keyof typeof postData;  
+    for (k in postData) {
+      formData.append(k,postData[k]);
+    }
+
+    return this.http.post(this.baseAudioUrl, formData, { 
+      reportProgress: true,
+      observe: 'events',
+    });
+  }
 
   uploadPhoto(file:File, postData: any): Observable<any> {
 

@@ -102,7 +102,7 @@ export class UploadsListComponent implements OnInit {
       uid: this.uid
     }
   
-    this._dataService.upload(droppedFile, postData).subscribe((event: HttpEvent<any>) => {
+    this._dataService.uploadAudio(droppedFile, postData).subscribe((event: HttpEvent<any>) => {
       console.log(event.type)
       switch (event.type) {
       case HttpEventType.Sent:

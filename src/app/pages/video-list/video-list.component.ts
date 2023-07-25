@@ -188,9 +188,9 @@ export class VideoListComponent  implements OnInit, OnDestroy, OnChanges
                   localStorage.removeItem('uid');
                   this._router.navigate(['/forced-off',this.data.user.force_logout]);
               }
-              this.subscription = this.everyFiveSeconds.subscribe(() => {
-                this.getList();
-              });
+   //           this.subscription = this.everyFiveSeconds.subscribe(() => {
+   //             this.getList();
+    //          });
             }) 
     }
 
@@ -198,6 +198,8 @@ export class VideoListComponent  implements OnInit, OnDestroy, OnChanges
     {
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
+        this.everyFiveSeconds = timer(0,0);
+
     }
 
     trackByFn(index: number, item: any): any

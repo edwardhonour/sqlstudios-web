@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, OnChanges } from '@angular/core';
+import { Component, OnDestroy, OnInit, OnChanges, Output, EventEmitter, HostListener } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Subject, takeUntil, Subscription, Observable, timer } from 'rxjs';
 import { FormsModule,  FormGroup, FormControl, Validators } from '@angular/forms';
@@ -8,18 +8,23 @@ import { HttpClient } from '@angular/common/http';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxTablePaginationModule } from 'ngx-table-pagination';
 import { SurveyTableComponent } from '../survey-table/survey-table.component';
+import { FileUploadModule, FileUploadControl, FileUploadValidators } from '@iplab/ngx-file-upload';
 
 import { MatRadioModule } from '@angular/material/radio';
 import { VertSideNavComponent } from 'src/app/layout/panels/vert-side-nav/vert-side-nav.component'; 
 import { DataService } from 'src/app/data.service';
 import { SitebarWrapperComponent } from 'src/app/template/sitebar-wrapper/sitebar-wrapper.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-audio-list',
   standalone: true,
   imports: [CommonModule, VertSideNavComponent, SurveyTableComponent,
-    Ng2SearchPipeModule, RouterModule, SitebarWrapperComponent,
+    Ng2SearchPipeModule, RouterModule, SitebarWrapperComponent, FileUploadModule,
     NgxTablePaginationModule, MatRadioModule,
     FormsModule],
   templateUrl: './audio-list.component.html',
@@ -27,18 +32,34 @@ import { SitebarWrapperComponent } from 'src/app/template/sitebar-wrapper/siteba
 })
 export class AudioListComponent implements OnInit, OnDestroy, OnChanges
 {
+  uploadedFiles: Array<File> = [];
+
+  @Output() onFileDropped = new EventEmitter<any>();
+  @Output() cancel = new EventEmitter<any>();
+  @HostListener('dragover', ['$event']) onDragOver(evt: any) { evt.preventDefault();  evt.stopPropagation(); }
+  @HostListener('dragleave', ['$event']) public onDragLeave(evt: any) { evt.preventDefault(); evt.stopPropagation(); }
+  @HostListener('drop', ['$event']) public ondrop(evt: any) { this.uploadFiles(); }
+
+  data: any; 
+  uploading: any = 'N';
+  adding: any = 'N';
+  edit: any = 'N';
+  version: any = 'N';
+  k: any;
+  uploadedList: any = '';
+  public fileUploadControl = new FileUploadControl();
+  progress: number = 0;
+
   isScreenSmall: boolean = false;
   term: any;
   p: any;
   q: any;
-  uploading: any;
-  data: any;
   currentYear: any;
   email: any;
   user: any;
   isOpen: any = 'N';
   section: any ='N';
-  edit: any = 'N';
+  upload: any = 'N';
   subscription: Subscription = Subscription.EMPTY;
   everyFiveSeconds: Observable<number> = timer(0,5000);
 
@@ -49,7 +70,8 @@ export class AudioListComponent implements OnInit, OnDestroy, OnChanges
       private _activatedRoute: ActivatedRoute,
       private _dataService: DataService,
       private _router: Router,
-      public http: HttpClient  // used by upload
+      public http: HttpClient,
+      private fileUploadService: DataService
   ) { }
 
   toggleSection() {
@@ -90,6 +112,14 @@ export class AudioListComponent implements OnInit, OnDestroy, OnChanges
       this.edit='Y';
     } else {
       this.edit='N';
+    }
+  }
+
+  toggleUpload() {
+    if (this.upload=='N') {
+      this.upload='Y';
+    } else {
+      this.upload='N';
     }
   }
 
@@ -180,5 +210,50 @@ export class AudioListComponent implements OnInit, OnDestroy, OnChanges
     getData(section: any, asset:any) {
       location.href="https://cybersurvey.org/get_section_data.php?section="+section+"&asset="+asset;
     }
+
+
+uploadFiles() {
+  for (const droppedFile of this.uploadedFiles) {
+    console.log(droppedFile.name);
+    console.log(droppedFile.size);
+    console.log(droppedFile.type);
+    let postData= {
+      one: 'one',
+      two: 'two'
+    }
+    this.fileUploadService.uploadAudio(droppedFile, this.data.formData).subscribe((event: HttpEvent<any>) => {
+    switch (event.type) {
+      case HttpEventType.Sent:
+        console.log('Request has been made!');
+        break;
+        case HttpEventType.ResponseHeader:
+          console.log('Response header has been received!');
+          setTimeout(() => {
+            this.progress = 0;
+            location.reload();
+          }, 1500);
+          break;
+      case HttpEventType.UploadProgress:
+        this.progress = Math.round(event.loaded / event.total! * 100);
+        console.log('Uploaded! ' + this.progress);
+        break;
+      case HttpEventType.Response:
+        console.log('User successfully created!', event.body);
+        setTimeout(() => {
+          this.progress = 0;
+          this.uploadedList+=droppedFile.name;
+        }, 1500);
+    }
+  })
+}
+}
+
+drop() {
+  alert('dropped')
+}
+
+public clear(): void {
+  this.uploadedFiles = [];
+}
 
 }

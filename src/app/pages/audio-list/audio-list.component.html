@@ -10,10 +10,13 @@
             <div class="card">
                 <div class="card-header">
                   <div class="row" style="width:95%">
-                      <div class="col-8">
-                          <h1>Text-To-Voice Clips</h1>
+                      <div class="col-9">
+                          <h1>Audio Clips</h1>
                       </div>
-                      <div class="col-2"><button (click)="toggleEdit()" class="btn btn-primary">New Audio Clip</button></div>
+                      <div class="col-3">
+                        <button (click)="toggleEdit()" class="btn btn-primary">New Audio Clip</button>
+                        <button (click)="toggleUpload()" style="margin-left:20px;" class="btn btn-secondary">Upload Audio Clip</button>
+                      </div>
                   </div>
                 </div>
                 <div class="card-body">
@@ -49,9 +52,51 @@
                                     </div>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
+                    <div *ngIf="upload=='Y'" class="row" style="background-color: aliceblue;">
+                      <div class="col-6">
+                          <div class="card" style="margin-top:20px;">
+                              <h2 style="margin-left:20px;">Upload Audio Clip</h2>
+                              <div class="card-body">
+                                  <div class="mb-3">
+                                      <label for="exampleFormControlInput1" class="form-label">Clip Name:</label>
+                                      <input [(ngModel)]="data.formData['script_name']" type="text" class="form-control" name="script_name" id="exampleFormControlInput1" placeholder="">
+                                    </div>  
+                                    <div class="mb-3">
+                                      <label for="exampleFormControlInput1" class="form-label">Voice Name:</label>
+                                      <input [(ngModel)]="data.formData['voice_name']" type="text" class="form-control" name="voice_name" id="exampleFormControlInput1" placeholder="">
+                                    </div>                                                                                
+                                    <div class="mb-3">
+                                      <label for="exampleFormControlTextarea1" class="form-label">Script (Optional):</label>
+                                      <textarea [(ngModel)]="data.formData['script']" class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+                                    </div>
+                                  <div class="row">
+                                      (For best results use .wav and .mp3 files)
+                                      <div class="col-12">
+                                          <file-upload class="fileUpload"  
+                                          (ngFileDrop)="drop();" 
+                                          [control]="fileUploadControl" 
+                                          [(ngModel)]="uploadedFiles" 
+                                          name="files"></file-upload>
+                                          <div [innerHTML]="uploadedList"></div>
+                                          <div class="progress form-group" *ngIf="progress > 0">
+                                              <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress">
+                                              </div>
+                                          </div>
+                                  <div class="row p-2">
+                                      <div class="col-4"></div>
+                                      <div class="col-2"></div>
+                                      <div class="col-4"><button (click)="uploadFiles()" class="btn btn-secondary">Upload</button>
+                                          <button (click)="toggleEdit()" style="margin-left:20px;" class="btn btn-light">Cancel / Close</button>
+                                      </div>
+                                  </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>                    
                   <div class="row">  
                     <table class="table table-striped table-condensed">
                         <thead>
