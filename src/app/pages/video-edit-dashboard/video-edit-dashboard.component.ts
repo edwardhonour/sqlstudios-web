@@ -64,6 +64,7 @@ export class VideoEditDashboardComponent  {
   data: any; 
 
 
+  button_visible: any = 'N';
 
   uploading: any = 'N';
   adding: any = 'N';
@@ -93,9 +94,27 @@ export class VideoEditDashboardComponent  {
 
   currentTime: number=0;;
 
+
   setCurrentTime(data: any) {
      this.currentTime = data.target.currentTime;
      console.log(this.currentTime);
+    }
+
+
+  setBeginning() {
+    this.data.backData['start_time']=0;
+  }
+
+  setStart() {
+    this.data.backData['start_time']=this.currentTime;
+  }
+
+  setEnd() {
+    this.data.backData['end_time']=this.currentTime;
+  }
+
+  setLong() {
+    this.data.backData['end_time']=this.data.formData['duration'];
   }
 
   ngOnInit(): void {      
@@ -129,12 +148,64 @@ export class VideoEditDashboardComponent  {
     this.postImport();
   }
 selectBack(m:any) {
-
+  this.data.backData['image_id']=m.id;
 }
 
+selectPosition(m:any) {
+  this.data.backData['image_id']=m;
+}
 postBackgroundChange() {
-
+  this._dataService.postForm("post-background-change", this.data.backData).subscribe((data:any)=>{
+        this.data=data;
+  });
 }
+postPositionChange() {
+  this._dataService.postForm("post-position-change", this.data.backData).subscribe((data:any)=>{
+        this.data=data;
+  });
+}
+postOverlay() {
+  this._dataService.postForm("post-overlay", this.data.backData).subscribe((data:any)=>{
+        this.data=data;
+  });
+}
+
+postCopy() {
+  this._dataService.postForm("post-copy", this.data.backData).subscribe((data:any)=>{
+        this.data=data;
+  });
+}
+
+postDelete() {
+  this._dataService.postForm("post-delete", this.data.backData).subscribe((data:any)=>{
+        this.data=data;
+  });
+}
+
+postTrim() {
+  this._dataService.postForm("post-trim", this.data.backData).subscribe((data:any)=>{
+        this.data=data;
+  });
+}
+
+postRestore() {
+  this._dataService.postForm("post-background-change", this.data.backData).subscribe((data:any)=>{
+        this.data=data;
+  });
+}
+
+postAddAudio() {
+  this._dataService.postForm("post-background-change", this.data.backData).subscribe((data:any)=>{
+        this.data=data;
+  });
+}
+postText() {
+  this._dataService.postForm("post-text", this.data.backData).subscribe((data:any)=>{
+        this.data=data;
+  });
+}
+
+
   postImport() {
     this._dataService.postForm("post-import", this.data.importData).subscribe((data:any)=>{
     //    this.data=data;
@@ -199,6 +270,8 @@ closeUpload() {
   processClick(m: any) {
     this.section=m.id;
   }
+
+
 
   closeManage() {
     this.managing='N';

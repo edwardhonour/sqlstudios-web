@@ -18,14 +18,12 @@
                     <sql-menu (menuClick)="processClick($event);">
                         <li #row id="BACKGROUND">Change Background(s)</li>
                         <li #row id="POSITION">Change Position</li>
-                        <li #row id="CAPTIONS">Add Captions</li>    
-                        <li #row id="TEXT">Add Text</li>
-                        <li #row id="TRIM">Trim Media</li>
-                        <li #row id="SRT">Create SRT (Closed Captions) Text</li>                                
-                        <li #row id="REMOVE-AUDIO">Remove Audio</li>
-                        <li #row id="EXTRACT-AUDIO">Extract Audio</li>
-                        <li #row id="ADD-BACKGROUND-AUDIO">Add Background Audio</li>
+                        <li #row id="OVERLAY">Overlay Media</li>    
+                        <li #row id="TEXT">Overlay Text</li>
+                        <li #row id="TRIM">Trim Media</li>                           
+                        <li #row id="COPY2">Copy Video</li>
                         <li #row id="RESTORE">Restore Original</li>
+                        <li #row id="DELETE">Delete Video</li>
                     </sql-menu>
                 </div>
             </div>
@@ -64,19 +62,19 @@
                             <video #videoPlayer (timeupdate)="setCurrentTime($event)" style="max-width:480px" class="library" controls preload="auto" data-config="some-js-object-here">
                                 <source src="{{ data.file_url }}" type='video/mp4'>
                               </video>
-                              <div *ngIf="section=='BACKGROUND'||section=='POSITION'||section=='TEXT'||section=='TRIM'||section=='EXTRACT-AUDIO'"class="row">
+                              <div *ngIf="(section=='BACKGROUND'&&data.backData['default_background']!='Y')||section=='POSITION'||section=='TEXT'||section=='TRIM'||section=='EXTRACT-AUDIO'"class="row">
                                 <div class="col-12">
-                                    <button class="btn btn-primary">From Beginning</button>
-                                    <button style="margin-left:20px;" class="btn btn-primary" (click)="getTime();">Set Start</button>
-                                    <button style="margin-left:20px;" class="btn btn-primary" (click)="getTime();">Set End</button>
-                                    <button style="margin-left:20px;" class="btn btn-primary" (click)="getTime();">Until End</button>
+                                    <button (click)="setBeginning();" class="btn btn-primary">From Beginning</button>
+                                    <button (click)="setStart();" style="margin-left:20px;" class="btn btn-primary" (click)="getTime();">Set Start</button>
+                                    <button (click)="setEnd();" style="margin-left:20px;" class="btn btn-primary" (click)="getTime();">Set End</button>
+                                    <button (click)="setLong();" style="margin-left:20px;" class="btn btn-primary" (click)="getTime();">Until End</button>
                                 </div>
                                 <div class="col-12"><p>Use the video play above to select your start and end positions.</p></div>
                               </div>  
 
                         </div>
                     </div> 
-                    <div class="row">
+                    <div class="row">  <!-- SECTION BEGIN -->
                         <div class="col-12">
                             <div *ngIf="section=='BACKGROUND'" class="card p-3">
                                 <div class="row">
@@ -89,20 +87,20 @@
                                                           <h2>Select a Background</h2>
                                                           <div class="row">
                                                             <div *ngFor="let k of data.background_images" class="col-3">
-                                                              <div class="card">
+                                                              <div (click)="selectBack(k);" class="card">
                                                                 <img src="https://sqlstudios.com/uploads/{{ k.img_path }}" class="card-img-top" alt="...">
                                                                 <div class="card-body">
-                                                                  <a (click)="selectBack(k);">{{ k.upload_name }} (image)</a>
+                                                                  <a>(image)</a>
                                                                 </div>
                                                               </div>
                                                             </div>
                                                             <div *ngFor="let k of data.background_videos" class="col-3">
-                                                              <div class="card">
+                                                              <div (click)="selectBack(k);"  class="card">
                                                                 <video style="max-width:480px" class="library" controls preload="auto" data-config="some-js-object-here">
                                                                   <source src="https://sqlstudios.com/uploads/{{ k.img_path }}" type='video/mp4'>
                                                                 </video>    
                                                                 <div class="card-body">
-                                                                  <a (click)="selectBack(k);">{{ k.upload_name }} (video)</a>
+                                                                  <a>(video)</a>
                                                                 </div>
                                                               </div>
                                                             </div>                              
@@ -118,6 +116,74 @@
                                                                       </select>
                                                                 </div>
                                                             </div>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <p>Default Background: </p>
+                                                                    <select [(ngModel)]="data.backData['default_background']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                        <option value="Y">Yes - Default Background</option>
+                                                                        <option value="N ">No - Not Default Background</option>
+                                                                      </select>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="data.backData['default_background']!='Y'" class="row">
+                                                                <div class="col-6">
+                                                                    <p>Start Time: </p>
+                                                                    <input type="text" [(ngModel)]="data.backData['start_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <p>End Time: </p>
+                                                                    <input type="text" [(ngModel)]="data.backData['end_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                </div>
+                                                            </div>     
+                                                            <div *ngIf="data.backData['default_background']!='Y'" class="row">
+                                                                <div class="col-6">
+                                                                    <p>Transition: </p>
+                                                                    <select [(ngModel)]="data.backData['transition']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                        <option value="none">-- None --</option>
+                                                                        <option value="wipeleft">Wipe Left</option>
+                                                                        <option value="wipeup">Wipe Up</option>
+                                                                        <option value="wipeleft">Wipe Down</option>
+                                                                        <option value="smoothright">Smooth Right</option>
+                                                                        <option value="smoothleft">Smooth Left</option>
+                                                                        <option value="smoothup">Smooth Up</option>
+                                                                        <option value="smoothdown">Smooth Down</option>
+                                                                        <option value="circlecrop">Circle Crop</option>
+                                                                        <option value="rectcrop">Rectangle Crop</option>
+                                                                        <option value="fadewhite">Fade White</option>
+                                                                        <option value="fadeblack">Fade Black</option>
+                                                                        <option value="hblur">Horizontal Blur</option>
+                                                                        <option value="vdslice">Vertical Down Slice</option>
+                                                                        <option value="vusdlice">Vertical Up Slice</option>
+                                                                        <option value="hrslice">Horizontal Right Slice</option>
+                                                                        <option value="vdslice">Horizontal Left Slice</option>
+                                                                        <option value="pixelize">Vertical Down Slice</option>
+                                                                        <option value="circleclose">Vertical Down Slice</option>
+                                                                        <option value="radial">Vertical Down Slice</option>
+                                                                        <option value="slideright">Vertical Down Slice</option>
+                                                                        <option value="slideleft">Vertical Down Slice</option>
+                                                                        <option value="slideup">Vertical Down Slice</option>
+                                                                        <option value="slidedown">Vertical Down Slice</option>
+                                                                        <option value="wipetl">Vertical Down Slice</option>
+                                                                        <option value="wipetr">Vertical Down Slice</option>
+                                                                        <option value="wipebl">Vertical Down Slice</option>
+                                                                        <option value="squeezev">Vertical Down Slice</option>
+                                                                        <option value="squeezeh">Vertical Down Slice</option>
+                                                                        <option value="vertopen">Vertical Down Slice</option>
+                                                                        <option value="vertclose">Vertical Down Slice</option>
+                                                                      </select>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <p>Transition Length: </p>
+                                                                    <select [(ngModel)]="data.backData['transition_length']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                        <option value="0.25">0.25s</option>
+                                                                        <option value="0.5 ">0.5s</option>
+                                                                        <option value="0.75">0.75s</option>
+                                                                        <option value="1">1s</option>
+                                                                        <option value="1.5">1.5s</option>
+                                                                        <option value="2">2s</option>
+                                                                      </select>
+                                                                </div>
+                                                            </div>                                                                                                                        
                                                             <div class="row">
                                                                 <div class="col-6">
             
@@ -135,7 +201,455 @@
                             </div>  
                             </div>
                         </div>
-                    </div>
+                    </div>  <!-- SECTION END -->
+                    <div  *ngIf="section=='POSITION'" class="row">  <!-- SECTION BEGIN -->
+                        <div class="col-12">
+                            <div class="card p-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2>Change Position</h2>
+                                        <div class="row">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                          <h2>Select a Position</h2>
+                                                          <div class="row">
+                                                            <div class="col-3">
+                                                              <div (click)="selectPosition(0);" class="card">
+                                                                <img src="assets/middle-center.jpg" class="card-img-top" alt="...">
+                                                                <div class="card-body">
+                                                                  <a>Middle Center</a>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-3">
+                                                                <div (click)="selectPosition(1);" class="card">
+                                                                  <img src="assets/middle-left.jpg" class="card-img-top" alt="...">
+                                                                  <div class="card-body">
+                                                                    <a>Middle Left</a>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="col-3">
+                                                                <div (click)="selectPosition(2);" class="card">
+                                                                  <img src="assets/middle-right.jpg" class="card-img-top" alt="...">
+                                                                  <div class="card-body">
+                                                                    <a>Middle Right</a>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="col-3">
+                                                                <div (click)="selectPosition(3);" class="card">
+                                                                  <img src="assets/bottom-center.jpg" class="card-img-top" alt="...">
+                                                                  <div class="card-body">
+                                                                    <a>Bottom Center</a>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="col-3">
+                                                                <div (click)="selectPosition(4);" class="card">
+                                                                  <img src="assets/bottom-left.jpg" class="card-img-top" alt="...">
+                                                                  <div class="card-body">
+                                                                    <a>Bottom Left</a>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="col-3">
+                                                                <div (click)="selectPosition(5);" class="card">
+                                                                  <img src="assets/bottom-right.jpg" class="card-img-top" alt="...">
+                                                                  <div class="card-body">
+                                                                    <a>Bottom Right</a>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="col-3">
+                                                                <div (click)="selectPosition(6);" class="card">
+                                                                  <img src="assets/none.jpg" class="card-img-top" alt="...">
+                                                                  <div class="card-body">
+                                                                    <a>None</a>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="col-3">
+                                                                <div (click)="selectPosition(7);" class="card">
+                                                                  <img src="assets/upper-left-circle.jpg" class="card-img-top" alt="...">
+                                                                  <div class="card-body">
+                                                                    <a>Circle Upper Left</a>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="col-3">
+                                                                <div (click)="selectPosition(8);" class="card">
+                                                                  <img src="assets/upper-right-circle.jpg" class="card-img-top" alt="...">
+                                                                  <div class="card-body">
+                                                                    <a>Circle Upper Right</a>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="col-3">
+                                                                <div (click)="selectPosition(9);" class="card">
+                                                                  <img src="assets/lower-left-circle.jpg" class="card-img-top" alt="...">
+                                                                  <div class="card-body">
+                                                                    <a>Circle Lower Left</a>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="col-3">
+                                                                <div (click)="selectPosition(10);" class="card">
+                                                                  <img src="assets/lower-right-circle.jpg" class="card-img-top" alt="...">
+                                                                  <div class="card-body">
+                                                                    <a>Circle Lower Right</a>
+                                                                  </div>
+                                                                </div>
+                                                              </div>                           
+                                                          </div>  
+                                                          </div>
+                                                          <div class="col-6">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <p>New Position: </p>
+                                                                    <select [(ngModel)]="data.backData['image_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                        <option value="0">Middle Center</option>
+                                                                        <option value="1">Left Center</option>
+                                                                        <option value="2">Right Center</option>
+                                                                        <option value="3">Middle Bottom</option>
+                                                                        <option value="4">Left Bottom</option>
+                                                                        <option value="5">Right Bottom</option>
+                                                                        <option value="6">None</option>
+                                                                        <option value="7">Circle Top Left</option>
+                                                                        <option value="8">Circle Top Right</option>
+                                                                        <option value="9">Circle Bottom Left</option>
+                                                                        <option value="10">Circle Bottom Right</option>
+                                                                      </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <p>Default Position: </p>
+                                                                    <select [(ngModel)]="data.backData['default_background']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                        <option value="Y">Yes - Default Position</option>
+                                                                        <option value="N ">No - Not Default Position</option>
+                                                                      </select>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="data.backData['default_background']!='Y'" class="row">
+                                                                <div class="col-6">
+                                                                    <p>Start Time: </p>
+                                                                    <input type="text" [(ngModel)]="data.backData['start_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <p>End Time: </p>
+                                                                    <input type="text" [(ngModel)]="data.backData['end_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                </div>
+                                                            </div>                                                                                                                           
+                                                            <div class="row">
+                                                                <div class="col-6">
+            
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <button (click)="postPositionChange()" style="margin-top:10px; width:200px;" class="btn btn-primary">Submit</button><br>    
+                                                                </div>
+                                                            </div>
+                                                          </div>
+                     
+                                                </div>
+                                        </div>  
+                                    </div>
+                                    </div>
+                            </div>  
+                            </div>
+                        </div>
+                    </div>  
+                    <div *ngIf="section=='OVERLAY'" class="row">  <!-- SECTION BEGIN -->
+                        <div class="col-12">
+                            <div  class="card p-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2>Overlay Media</h2>
+                                        <div class="row">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                          <div class="col-6">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <p>Overlay Media: </p>
+                                                                    <input type="text" [(ngModel)]="data.copyData['video_name']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-6">
+            
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            <p>Media File: </p>
+                                                                            <select [(ngModel)]="data.backData['image_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                                <option *ngFor="let n of data.background_images" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
+                                                                                <option *ngFor="let n of data.background_videos" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
+                                                                              </select>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-6">
+                                                                                <p>Start Time: </p>
+                                                                                <input type="text" [(ngModel)]="data.backData['start_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <p>End Time: </p>
+                                                                                <input type="text" [(ngModel)]="data.backData['end_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                            </div>
+                                                                        </div>   
+                                                                        <div class="row">
+                                                                            <div class="col-6">
+                                                                                <p>Vertical (Y) Position: </p>
+                                                                                <input type="text" [(ngModel)]="data.backData['start_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <p>Horizontal (X) Position: </p>
+                                                                                <input type="text" [(ngModel)]="data.backData['end_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                            </div>
+                                                                        </div>   
+                                                                    </div>
+                                                                    <button (click)="postOverlay()" style="margin-top:10px; width:200px;" class="btn btn-primary">Submit</button><br>    
+                                                                </div>
+                                                            </div>
+                                                          </div>
+                     
+                                                </div>
+                                        </div>  
+                                    </div>
+                                    </div>
+                            </div>  
+                            </div>
+                        </div>
+                    </div>  <!-- SECTION END -->
+                    <div *ngIf="section=='COPY2'" class="row">  <!-- SECTION BEGIN -->
+                        <div class="col-12">
+                            <div  class="card p-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2>Copy File</h2>
+                                        <div class="row">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                          <div class="col-6">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <p>Video Clip Name: </p>
+                                                                    <input type="text" [(ngModel)]="data.copyData['video_name']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-6">
+            
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <button (click)="postCopy()" style="margin-top:10px; width:200px;" class="btn btn-primary">Submit</button><br>    
+                                                                </div>
+                                                            </div>
+                                                          </div>
+                     
+                                                </div>
+                                        </div>  
+                                    </div>
+                                    </div>
+                            </div>  
+                            </div>
+                        </div>
+                    </div>  <!-- SECTION END -->
+                    <div *ngIf="section=='DELETE'" class="row">  <!-- SECTION BEGIN -->
+                        <div class="col-12">
+                            <div  class="card p-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2>Delete Video</h2>
+                                        <div class="row">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                          <div class="col-6">
+                                                            <div class="row">
+                                                                <div class="col-6">
+            
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <button (click)="postDelete()" style="margin-top:10px; width:200px;" class="btn btn-danger">Delete</button><br>    
+                                                                </div>
+                                                            </div>
+                                                          </div>
+                     
+                                                </div>
+                                        </div>  
+                                    </div>
+                                    </div>
+                            </div>  
+                            </div>
+                        </div>
+                    </div>  <!-- SECTION END -->   
+                    <div *ngIf="section=='TEXT'" class="row">  <!-- SECTION BEGIN -->
+                        <div class="col-12">
+                            <div  class="card p-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2>Overlay Text</h2>
+                                        <div class="row">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                          <div class="col-12">
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            <p>Text: </p>
+                                                                            <input type="text" [(ngModel)]="data.backData['text']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                        </div>
+                                                                    </div>  
+                                                                    <div class="row">
+                                                                        <div class="col-4">
+                                                                            <p>Font Name: </p>
+                                                                            <select [(ngModel)]="data.backData['image_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                                <option *ngFor="let n of data.background_images" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
+                                                                                <option *ngFor="let n of data.background_videos" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
+                                                                              </select>
+                                                                              </div>
+                                                                            <div class="col-4">
+                                                                                <p>Font Size: </p>
+                                                                                <select [(ngModel)]="data.backData['image_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                                    <option *ngFor="let n of data.background_images" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
+                                                                                    <option *ngFor="let n of data.background_videos" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
+                                                                                  </select>
+                                                                            </div>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col-6">
+                                                                            <p>Start Time: </p>
+                                                                            <input type="text" [(ngModel)]="data.backData['start_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <p>End Time: </p>
+                                                                            <input type="text" [(ngModel)]="data.backData['end_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                        </div>
+                                                                    </div>   
+                                                                    <div class="row">
+                                                                        <div class="col-6">
+                                                                            <p>Vertical (Y) Position: </p>
+                                                                            <input type="text" [(ngModel)]="data.backData['start_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <p>Horizontal (X) Position: </p>
+                                                                            <input type="text" [(ngModel)]="data.backData['end_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                        </div>
+                                                                    </div> 
+                                                                    <button (click)="postText()" style="margin-top:10px; width:200px;" class="btn btn-danger">Delete</button><br>    
+                                                                </div>
+                                                            </div>
+                                                          </div>
+                     
+                                                </div>
+                                        </div>  
+                                    </div>
+                                    </div>
+                            </div>  
+                            </div>
+                        </div>
+                    </div>  <!-- SECTION END -->   
+                    <div *ngIf="section=='TRIM'" class="row">  <!-- SECTION BEGIN -->
+                        <div class="col-12">
+                            <div  class="card p-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2>Trim Media</h2>
+                                        <div class="row">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                          <div class="col-12">
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            Select the region of the clip YOU WANT TO KEEP!.
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-6">
+                                                                            <p>Start Time: </p>
+                                                                            <input type="text" [(ngModel)]="data.backData['start_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <p>End Time: </p>
+                                                                            <input type="text" [(ngModel)]="data.backData['end_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                        </div>
+                                                                    </div>   
+                                                                    <button (click)="postTrim()" style="margin-top:10px; width:200px;" class="btn btn-primary">Trim</button><br>    
+                                                                </div>
+                                                            </div>
+                                                          </div>
+                     
+                                                </div>
+                                        </div>  
+                                    </div>
+                                    </div>
+                            </div>  
+                            </div>
+                        </div>
+                    </div>  <!-- SECTION END -->   
+                    <div *ngIf="section=='RESTORE'" class="row">  <!-- SECTION BEGIN -->
+                        <div class="col-12">
+                            <div  class="card p-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2>Restore Original</h2>
+                                        <div class="row">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                          <div class="col-6">
+                                                            <div class="row">
+                                                                <div class="col-6">
+            
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <button (click)="postRestore()" style="margin-top:10px; width:200px;" class="btn btn-danger">Restore</button><br>    
+                                                                </div>
+                                                            </div>
+                                                          </div>
+                     
+                                                </div>
+                                        </div>  
+                                    </div>
+                                    </div>
+                            </div>  
+                            </div>
+                        </div>
+                    </div>  <!-- SECTION END -->     
+                    <div *ngIf="section=='ADD-BACKGROUND-AUDIO'" class="row">  <!-- SECTION BEGIN -->
+                        <div class="col-12">
+                            <div  class="card p-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2>Restore Original</h2>
+                                        <div class="row">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                          <div class="col-6">
+                                                            <div class="row">
+                                                                <div class="col-6">
+            
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <button (click)="postAddAudio()" style="margin-top:10px; width:200px;" class="btn btn-primary">Save</button><br>    
+                                                                </div>
+                                                            </div>
+                                                          </div>
+                     
+                                                </div>
+                                        </div>  
+                                    </div>
+                                    </div>
+                            </div>  
+                            </div>
+                        </div>
+                    </div>  <!-- SECTION END -->                                        
                 </div>
                 </div>
                 <div class="row">
@@ -456,35 +970,7 @@
                             </div>  
                         </div>
                         </div>
-                </div>                                       
-                <div *ngIf="section=='ADD-BACKGROUND-AUDIO'" class="card p-3">
-                    <div class="row">
-                        <div class="col-12">
-                            <h2>Add Background Audio</h2>
-                            <div class="row">
-                                <div *ngFor="let m of data.video_media" class="col-4 card">
-                                    <div class="card-header">
-                                        {{ m.id }}: {{ m.video_name }}
-                                    </div>
-                                </div>
-                            </div>  
-                        </div>
-                        </div>
-                </div> 
-                <div *ngIf="section=='RESTORE'" class="card p-3">
-                    <div class="row">
-                        <div class="col-12">
-                            <h2>Restore Original</h2>
-                            <div class="row">
-                                <div *ngFor="let m of data.video_media" class="col-4 card">
-                                    <div class="card-header">
-                                        {{ m.id }}: {{ m.video_name }}
-                                    </div>
-                                </div>
-                            </div>  
-                        </div>
-                        </div>
-                </div>                 
+                </div>                                                 
                 <div *ngIf="version=='Y'" class="card p-3">
                     <hr/>
                     <app-sql-upload [document_id]="doc_id" [workspace_id]="data.formData.id"></app-sql-upload>
