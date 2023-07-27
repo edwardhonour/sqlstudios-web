@@ -92,7 +92,7 @@
                                         </div>   
                                         <div *ngIf="data.formData['output_type']=='video'" class="mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">Background Video</label>
-                                        <select [(ngModel)]="data.backData['image_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                        <select [(ngModel)]="data.formData['image_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
                                           <option *ngFor="let n of data.background_videos" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
                                         </select>
                                       </div>                                                                                    

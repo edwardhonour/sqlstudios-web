@@ -30,6 +30,7 @@
                                         <label for="exampleFormControlInput1" class="form-label">Resource Type</label>
                                         <select [(ngModel)]="upload_type" class="form-control" name="position" id="exampleFormControlInput1" placeholder="">
                                             <option value="image">Background Image</option>
+                                            <option value="overlay">Overlay Image</option>                                            
                                             <option value="video">Background Video</option>      
                                             <option value="srt">SRT File (Closed Captioning)</option>     
                                             <option value="wav">Auto File (WAV)</option>                                                                                                                             
@@ -86,10 +87,10 @@
                                 <td>{{ m.upload_name }}</td>
                                 <td>{{ m.file_name }}</td>
                                 <td>{{ m.dsc }}</td>
-                                <td *ngIf="m.upload_type=='image'">
+                                <td *ngIf="m.upload_type=='image'||m.upload_type=='overlay'">
                                      <img src="https://sqlstudios.com/uploads/{{ m.img_path }}" style="width:160px; height:120px;">
                                 </td>
-                                <td *ngIf="m.upload_type!='image'">
+                                <td *ngIf="m.upload_type!='image'&&m.upload_type!='overlay'">
                                     <video style="max-width:160px" class="library" controls preload="auto" data-config="some-js-object-here">
                                         <source src="https://sqlstudios.com/uploads/{{ m.img_path }}" type='video/mp4'>
                                       </video>    

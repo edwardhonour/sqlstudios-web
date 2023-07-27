@@ -22,7 +22,6 @@
                         <li #row id="TEXT">Overlay Text</li>
                         <li #row id="TRIM">Trim Media</li>                           
                         <li #row id="COPY2">Copy Video</li>
-                        <li #row id="RESTORE">Restore Original</li>
                         <li #row id="DELETE">Delete Video</li>
                     </sql-menu>
                 </div>
@@ -62,7 +61,7 @@
                             <video #videoPlayer (timeupdate)="setCurrentTime($event)" style="max-width:480px" class="library" controls preload="auto" data-config="some-js-object-here">
                                 <source src="{{ data.file_url }}" type='video/mp4'>
                               </video>
-                              <div *ngIf="(section=='BACKGROUND'&&data.backData['default_background']!='Y')||section=='POSITION'||section=='TEXT'||section=='TRIM'||section=='EXTRACT-AUDIO'"class="row">
+                              <div *ngIf="(section=='BACKGROUND'&&data.backData['default_background']!='Y')||section=='POSITION'||section=='OVERLAY'||section=='TEXT'||section=='TRIM'||section=='EXTRACT-AUDIO'"class="row">
                                 <div class="col-12">
                                     <button (click)="setBeginning();" class="btn btn-primary">From Beginning</button>
                                     <button (click)="setStart();" style="margin-left:20px;" class="btn btn-primary" (click)="getTime();">Set Start</button>
@@ -369,52 +368,37 @@
                                         <div class="row">
                                                 <div class="card-body">
                                                     <div class="row">
-                                                          <div class="col-6">
-                                                            <div class="row">
-                                                                <div class="col-12">
-                                                                    <p>Overlay Media: </p>
-                                                                    <input type="text" [(ngModel)]="data.copyData['video_name']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-6">
-            
-                                                                </div>
                                                                 <div class="col-6">
                                                                     <div class="row">
                                                                         <div class="col-12">
                                                                             <p>Media File: </p>
-                                                                            <select [(ngModel)]="data.backData['image_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
-                                                                                <option *ngFor="let n of data.background_images" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
-                                                                                <option *ngFor="let n of data.background_videos" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
+                                                                            <select [(ngModel)]="data.overData['image_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                                <option *ngFor="let n of data.overlay_list" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
                                                                               </select>
                                                                         </div>
                                                                         <div class="row">
                                                                             <div class="col-6">
                                                                                 <p>Start Time: </p>
-                                                                                <input type="text" [(ngModel)]="data.backData['start_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                                <input type="text" [(ngModel)]="data.overData['start_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
                                                                             </div>
                                                                             <div class="col-6">
                                                                                 <p>End Time: </p>
-                                                                                <input type="text" [(ngModel)]="data.backData['end_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                                <input type="text" [(ngModel)]="data.overData['end_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
                                                                             </div>
                                                                         </div>   
                                                                         <div class="row">
                                                                             <div class="col-6">
                                                                                 <p>Vertical (Y) Position: </p>
-                                                                                <input type="text" [(ngModel)]="data.backData['start_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                                <input type="text" [(ngModel)]="data.overData['y_position']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
                                                                             </div>
                                                                             <div class="col-6">
                                                                                 <p>Horizontal (X) Position: </p>
-                                                                                <input type="text" [(ngModel)]="data.backData['end_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                                <input type="text" [(ngModel)]="data.overData['x_position']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
                                                                             </div>
                                                                         </div>   
                                                                     </div>
                                                                     <button (click)="postOverlay()" style="margin-top:10px; width:200px;" class="btn btn-primary">Submit</button><br>    
                                                                 </div>
-                                                            </div>
-                                                          </div>
-                     
                                                 </div>
                                         </div>  
                                     </div>
@@ -435,8 +419,8 @@
                                                           <div class="col-6">
                                                             <div class="row">
                                                                 <div class="col-12">
-                                                                    <p>Video Clip Name: </p>
-                                                                    <input type="text" [(ngModel)]="data.copyData['video_name']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                    <p>New Video Clip Name: </p>
+                                                                    <input type="text" [(ngModel)]="data.copyData['clip_name']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
                                                                 </div>
                                                             </div>
                                                             <div class="row">
@@ -496,55 +480,69 @@
                                                     <div class="row">
                                                           <div class="col-12">
                                                             <div class="row">
-                                                                <div class="col-6">
+                                                                <div class="col-9">
                                                                     <div class="row">
                                                                         <div class="col-12">
                                                                             <p>Text: </p>
-                                                                            <input type="text" [(ngModel)]="data.backData['text']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                            <input type="text" [(ngModel)]="data.overData['text']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
                                                                         </div>
                                                                     </div>  
                                                                     <div class="row">
                                                                         <div class="col-4">
                                                                             <p>Font Name: </p>
-                                                                            <select [(ngModel)]="data.backData['image_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
-                                                                                <option *ngFor="let n of data.background_images" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
-                                                                                <option *ngFor="let n of data.background_videos" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
+                                                                            <select [(ngModel)]="data.overData['font_name']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                                <option value="arial">Arial</option>
                                                                               </select>
                                                                               </div>
                                                                             <div class="col-4">
                                                                                 <p>Font Size: </p>
-                                                                                <select [(ngModel)]="data.backData['image_id']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
-                                                                                    <option *ngFor="let n of data.background_images" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
-                                                                                    <option *ngFor="let n of data.background_videos" value="{{ n.id }}">{{ n.id }}-{{ n.upload_name }}</option>
-                                                                                  </select>
+                                                                                <select [(ngModel)]="data.overData['font_size']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                                    <option value="10">10</option>
+                                                                                    <option value="11">11</option>
+                                                                                    <option value="12">12</option>
+                                                                                    <option value="14">14</option>
+                                                                                    <option value="16">16</option>
+                                                                                    <option value="18">18</option>
+                                                                                    <option value="20">20</option>
+                                                                                    <option value="24">24</option>
+                                                                                    <option value="28">28</option>
+                                                                                    <option value="30">30</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-4">
+                                                                                <p>Font Color: </p>
+                                                                                <select [(ngModel)]="data.overData['text_color']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                                    <option value="white">White</option>
+                                                                                    <option value="black">Black</option>
+                                                                                    <option value="blue">Blue</option>
+                                                                                </select>
                                                                             </div>
                                                                     </div>
 
                                                                     <div class="row">
                                                                         <div class="col-6">
                                                                             <p>Start Time: </p>
-                                                                            <input type="text" [(ngModel)]="data.backData['start_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                            <input type="text" [(ngModel)]="data.overData['start_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
                                                                         </div>
                                                                         <div class="col-6">
                                                                             <p>End Time: </p>
-                                                                            <input type="text" [(ngModel)]="data.backData['end_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                            <input type="text" [(ngModel)]="data.overData['end_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
                                                                         </div>
                                                                     </div>   
                                                                     <div class="row">
                                                                         <div class="col-6">
                                                                             <p>Vertical (Y) Position: </p>
-                                                                            <input type="text" [(ngModel)]="data.backData['start_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                            <input type="text" [(ngModel)]="data.overData['y_position']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
                                                                         </div>
                                                                         <div class="col-6">
                                                                             <p>Horizontal (X) Position: </p>
-                                                                            <input type="text" [(ngModel)]="data.backData['end_time']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                            <input type="text" [(ngModel)]="data.overData['x_position']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
                                                                         </div>
                                                                     </div> 
-                                                                    <button (click)="postText()" style="margin-top:10px; width:200px;" class="btn btn-danger">Delete</button><br>    
+                                                                    <button (click)="postText()" style="margin-top:10px; width:200px;" class="btn btn-primary">Save</button><br>    
                                                                 </div>
                                                             </div>
                                                           </div>
-                     
                                                 </div>
                                         </div>  
                                     </div>
@@ -673,9 +671,20 @@
                                                                 <th>End</th>
                                                                 <th>Transition</th>
                                                                 <th>Offset</th>
+                                                                <th>Default</th>
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let m of data.backgrounds">
+                                                                <td>{{ m.background_name }}</td>
+                                                                <td>{{ m.start_time }}</td>
+                                                                <td>{{ m.end_time }}</td>
+                                                                <td>{{ m.transition }}</td>
+                                                                <td>{{ m.transition_length }}</td>
+                                                                <td><button class="btn btn-danger">Delete</button></td>
+                                                            </tr>
+                                                        </tbody>
                                                     </table>
                                               </div>
          
@@ -702,6 +711,14 @@
                                                             <th></th>
                                                         </tr>
                                                     </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let m of data.positions">
+                                                            <td>{{ m.position_id }}</td>
+                                                            <td>{{ m.start_time }}</td>
+                                                            <td>{{ m.end_time }}</td>
+                                                            <td><button class="btn btn-danger">Delete</button></td>
+                                                        </tr>
+                                                    </tbody>
                                                 </table>
                                               </div>
                                         </div>
@@ -711,7 +728,7 @@
                         </div>                        
                 </div>  
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-header">
                                 <h2>Overlays</h2>
@@ -726,11 +743,29 @@
                                                             <th>Name</th>
                                                             <th>Start</th>
                                                             <th>End</th>
-                                                            <th>Transition</th>
-                                                            <th>Offset</th>
+                                                            <th>Text</th>
+                                                            <th>X</th>
+                                                            <th>Y</th>
+                                                            <th>Font Name</th>
+                                                            <th>Font Size</th>
+                                                            <th>Font Color</th>
                                                             <th></th>
                                                         </tr>
                                                     </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let m of data.overlays">
+                                                            <td>{{ m.overlay_name }}</td>
+                                                            <td>{{ m.start_time }}</td>
+                                                            <td>{{ m.end_time }}</td>
+                                                            <td>{{ m.text }}</td>
+                                                            <td>{{ m.x_position }}</td>
+                                                            <td>{{ m.y_position }}</td>
+                                                            <td>{{ m.font_name }}</td>
+                                                            <td>{{ m.font_size }}</td>
+                                                            <td>{{ m.font_color }}</td>
+                                                            <td><button class="btn btn-danger">Delete</button></td>
+                                                        </tr>
+                                                    </tbody>
                                                 </table>
                                           </div>
      

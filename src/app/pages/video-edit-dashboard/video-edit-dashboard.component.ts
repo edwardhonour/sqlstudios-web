@@ -165,13 +165,13 @@ postPositionChange() {
   });
 }
 postOverlay() {
-  this._dataService.postForm("post-overlay", this.data.backData).subscribe((data:any)=>{
+  this._dataService.postForm("post-overlay", this.data.overData).subscribe((data:any)=>{
         this.data=data;
   });
 }
 
 postCopy() {
-  this._dataService.postForm("post-copy", this.data.backData).subscribe((data:any)=>{
+  this._dataService.postForm("post-copy", this.data.copyData).subscribe((data:any)=>{
         this.data=data;
   });
 }
@@ -183,7 +183,7 @@ postDelete() {
 }
 
 postTrim() {
-  this._dataService.postForm("post-trim", this.data.backData).subscribe((data:any)=>{
+  this._dataService.postForm("post-trim",   this.data.backData).subscribe((data:any)=>{
         this.data=data;
   });
 }
@@ -200,7 +200,7 @@ postAddAudio() {
   });
 }
 postText() {
-  this._dataService.postForm("post-text", this.data.backData).subscribe((data:any)=>{
+  this._dataService.postForm("post-text", this.data.overData).subscribe((data:any)=>{
         this.data=data;
   });
 }

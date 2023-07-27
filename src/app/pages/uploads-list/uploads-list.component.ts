@@ -102,7 +102,7 @@ export class UploadsListComponent implements OnInit {
       uid: this.uid
     }
   
-    this._dataService.uploadAudio(droppedFile, postData).subscribe((event: HttpEvent<any>) => {
+    this._dataService.upload(droppedFile, postData).subscribe((event: HttpEvent<any>) => {
       console.log(event.type)
       switch (event.type) {
       case HttpEventType.Sent:
@@ -112,7 +112,7 @@ export class UploadsListComponent implements OnInit {
         console.log('Response header has been received!');
         setTimeout(() => {
           this.progress = 0;
-          location.reload();
+      //    location.reload();
         }, 1500);
         break;
       case HttpEventType.UploadProgress:
