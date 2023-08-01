@@ -70,7 +70,24 @@
                                 </div>
                                 <div class="col-12"><p>Use the video play above to select your start and end positions.</p></div>
                               </div>  
+                              <div *ngIf="rendering=='N'&&(section!='BACKGROUND'||data.backData['default_background']=='Y')&&section!='POSITION'&&section!='OVERLAY'&&section!='TEXT'&&section!='TRIM'&&section!='EXTRACT-AUDIO'"class="row">
+                                <div class="col-6">
 
+                                </div>
+                                <div class="col-6">
+                                    <button (click)="render();" style="margin-left:20px;" class="btn btn-primary" (click)="getTime();">Render Video</button>
+                                </div>
+                              </div>  
+                              <div *ngIf="rendering=='Y'">
+                                <div class="col-12">
+                                    <h2>Rendering in Process</h2>
+                                </div>
+                              </div>
+                              <div *ngIf="rendering=='C'">
+                                <div class="col-12">
+                                    <h2>Rendering Complete <button (click)="doReload()" class="btn btn-success">Reload</button></h2>
+                                </div>
+                              </div>
                         </div>
                     </div> 
                     <div class="row">  <!-- SECTION BEGIN -->
@@ -136,7 +153,7 @@
                                                             </div>     
                                                             <div *ngIf="data.backData['default_background']!='Y'" class="row">
                                                                 <div class="col-6">
-                                                                    <p>Transition: </p>
+                                                                    <p>Start Transition: </p>
                                                                     <select [(ngModel)]="data.backData['transition']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
                                                                         <option value="none">-- None --</option>
                                                                         <option value="wipeleft">Wipe Left</option>
@@ -154,26 +171,75 @@
                                                                         <option value="vdslice">Vertical Down Slice</option>
                                                                         <option value="vusdlice">Vertical Up Slice</option>
                                                                         <option value="hrslice">Horizontal Right Slice</option>
-                                                                        <option value="vdslice">Horizontal Left Slice</option>
-                                                                        <option value="pixelize">Vertical Down Slice</option>
-                                                                        <option value="circleclose">Vertical Down Slice</option>
-                                                                        <option value="radial">Vertical Down Slice</option>
-                                                                        <option value="slideright">Vertical Down Slice</option>
-                                                                        <option value="slideleft">Vertical Down Slice</option>
-                                                                        <option value="slideup">Vertical Down Slice</option>
-                                                                        <option value="slidedown">Vertical Down Slice</option>
-                                                                        <option value="wipetl">Vertical Down Slice</option>
-                                                                        <option value="wipetr">Vertical Down Slice</option>
-                                                                        <option value="wipebl">Vertical Down Slice</option>
-                                                                        <option value="squeezev">Vertical Down Slice</option>
-                                                                        <option value="squeezeh">Vertical Down Slice</option>
-                                                                        <option value="vertopen">Vertical Down Slice</option>
-                                                                        <option value="vertclose">Vertical Down Slice</option>
+                                                                        <option value="vdslice">Veritical Down Slice</option>
+                                                                        <option value="pixelize">Pkxelize</option>
+                                                                        <option value="circleclose">Circle Close</option>
+                                                                        <option value="radial">Radial</option>
+                                                                        <option value="slideright">Slide Right</option>
+                                                                        <option value="slideleft">Slide Left</option>
+                                                                        <option value="slideup">Slide Up</option>
+                                                                        <option value="slidedown">Slide Down</option>
+                                                                        <option value="wipetl">Wipe TL</option>
+                                                                        <option value="wipetr">Wipe TR</option>
+                                                                        <option value="wipebl">Wipe BL</option>
+                                                                        <option value="squeezev">Veritcal Squeeze</option>
+                                                                        <option value="squeezeh">Horizontal Squeeze</option>
+                                                                        <option value="vertopen">Vertical Open</option>
+                                                                        <option value="vertclose">Vertical Close</option>
                                                                       </select>
                                                                 </div>
                                                                 <div class="col-6">
-                                                                    <p>Transition Length: </p>
+                                                                    <p>Transition Duration: </p>
                                                                     <select [(ngModel)]="data.backData['transition_length']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                        <option value="0.25">0.25s</option>
+                                                                        <option value="0.5 ">0.5s</option>
+                                                                        <option value="0.75">0.75s</option>
+                                                                        <option value="1">1s</option>
+                                                                        <option value="1.5">1.5s</option>
+                                                                        <option value="2">2s</option>
+                                                                      </select>
+                                                                </div>
+                                                            </div>    
+                                                            <div *ngIf="data.backData['default_background']!='Y'" class="row">
+                                                                <div class="col-6">
+                                                                    <p>End Transition: </p>
+                                                                    <select [(ngModel)]="data.backData['end_transition']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
+                                                                        <option value="none">-- None --</option>
+                                                                        <option value="wipeleft">Wipe Left</option>
+                                                                        <option value="wipeup">Wipe Up</option>
+                                                                        <option value="wipeleft">Wipe Down</option>
+                                                                        <option value="smoothright">Smooth Right</option>
+                                                                        <option value="smoothleft">Smooth Left</option>
+                                                                        <option value="smoothup">Smooth Up</option>
+                                                                        <option value="smoothdown">Smooth Down</option>
+                                                                        <option value="circlecrop">Circle Crop</option>
+                                                                        <option value="rectcrop">Rectangle Crop</option>
+                                                                        <option value="fadewhite">Fade White</option>
+                                                                        <option value="fadeblack">Fade Black</option>
+                                                                        <option value="hblur">Horizontal Blur</option>
+                                                                        <option value="vdslice">Vertical Down Slice</option>
+                                                                        <option value="vusdlice">Vertical Up Slice</option>
+                                                                        <option value="hrslice">Horizontal Right Slice</option>
+                                                                        <option value="vdslice">Veritical Down Slice</option>
+                                                                        <option value="pixelize">Pkxelize</option>
+                                                                        <option value="circleclose">Circle Close</option>
+                                                                        <option value="radial">Radial</option>
+                                                                        <option value="slideright">Slide Right</option>
+                                                                        <option value="slideleft">Slide Left</option>
+                                                                        <option value="slideup">Slide Up</option>
+                                                                        <option value="slidedown">Slide Down</option>
+                                                                        <option value="wipetl">Wipe TL</option>
+                                                                        <option value="wipetr">Wipe TR</option>
+                                                                        <option value="wipebl">Wipe BL</option>
+                                                                        <option value="squeezev">Veritcal Squeeze</option>
+                                                                        <option value="squeezeh">Horizontal Squeeze</option>
+                                                                        <option value="vertopen">Vertical Open</option>
+                                                                        <option value="vertclose">Vertical Close</option>
+                                                                      </select>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <p>Transition Duration: </p>
+                                                                    <select [(ngModel)]="data.backData['end_transition_length']" class="form-control" name="voice_id" id="exampleFormControlInput1" placeholder="">
                                                                         <option value="0.25">0.25s</option>
                                                                         <option value="0.5 ">0.5s</option>
                                                                         <option value="0.75">0.75s</option>

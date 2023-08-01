@@ -83,6 +83,7 @@ export class VideoEditDashboardComponent  {
   progress: number = 0;
   uid: any = 0;
   doc_id: any = 0;
+  rendering: any = 'N';
 
   formData: any = {
     org_id: 0,
@@ -100,6 +101,14 @@ export class VideoEditDashboardComponent  {
      console.log(this.currentTime);
     }
 
+    render() {
+
+      this.rendering='Y';
+      this._dataService.postForm("render", this.data.backData).subscribe((data:any)=>{
+            this.rendering='C';
+      });
+
+    }
 
   setBeginning() {
     this.data.backData['start_time']=0;
@@ -107,6 +116,10 @@ export class VideoEditDashboardComponent  {
 
   setStart() {
     this.data.backData['start_time']=this.currentTime;
+  }
+
+  doReload() {
+      location.reload();
   }
 
   setEnd() {
